@@ -27,7 +27,8 @@ Route::group(['middleware' => 'auth'],function(){
     Route::post('/workspace/create', [WorkspaceController::class, 'store'])->name('workspace.store');
 
     Route::get('/workspace/{workspace}', [WorkspaceController::class, 'index'])->name('workspace.index');
-    Route::get('/workspace/{workspace}/collections', [WorkspaceController::class, 'collections'])->name('workspace.collections');
+    Route::get('/workspace/{workspace}/collection', [WorkspaceController::class, 'collections'])->name('workspace.collections');
+    Route::get('/workspace/{workspace}/collection/view_{collection}', [WorkspaceController::class, 'viewCollection'])->name('workspace.viewCollection');
     Route::get('/workspace/{workspace}/history', [WorkspaceController::class, 'history'])->name('workspace.history');
     Route::get('/workspace/{workspace}/trash', [WorkspaceController::class, 'trash'])->name('workspace.trash');
     Route::get('/add-collections-tabs/{collection}', [WorkspaceController::class, 'addToCollectionTabs'])->name('add.collection.tabs');

@@ -148,4 +148,27 @@ class WorkspaceController extends Controller
         }
         return redirect()->back();
     }
+
+    public function viewCollection(Request $request,$workSpaceid,$id) {
+        $selectedWorkspaceId = $request->session()->get('selected_workspace_id');
+        $selectedWorkspace = Workspace::find($selectedWorkspaceId);
+
+        if (!$selectedWorkspace) {
+            return redirect()->route('home.index')->with('error', 'Workspace not found');
+        }
+        if($id == -1){
+            $collection = new Collection;
+            $collection->id = -1;
+            $collection->name = 'New Collection';
+        } 
+        else {
+            $collection = Collection::find($id);
+        }
+        $data = $request->session()->all();
+        $data['workspaces'] = Workspace::get()->all();
+        $data['selectedWorkspace'] = $selectedWorkspace;
+        $data['selectedCollection'] = $collection;
+
+        return view('collection_template', $data);
+    }
 }
