@@ -70,26 +70,24 @@
         <ul class="nav nav-tabs flex-row" style="height: 55px;">
             @php
                 $collection_tabs = session('collection_tabs', []);
-            @endphp
-            @if(is_array($collection_tabs) && count($collection_tabs) > 0)
-                @foreach($collection_tabs as $collection)
+            @endphp     
+            @foreach(array_reverse($collection_tabs) as $collection)
                     <li class="nav-items">
-                        <button class="nav-link fst-italic" data-bs-toggle="tab" href="#collection_{{$collection->id}}">{{$collection->name}}
+                        <button class="nav-link fst-italic" id="tab_{{$collection->id}}" data-bs-toggle="tab" href="#tab_{{$collection->id}}" aria-controls="tab_{{$collection->id}}">{{$collection->name}}
                             <a class="btn d-flex justify-content-center align-items-center p-1" href="{{ route('delete.collection.tabs', ['collection' => $collection->id]) }}">
                                 <span class="material-symbols-outlined">close</span>
                             </a>
                         </button>
                     </li>
-                @endforeach
-            @endif
-            <a style="text-decoration: none" href="" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
+            @endforeach
+            <a style="text-decoration: none" href="{{route('add.new.tabs')}}" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
                 <span class="material-symbols-outlined">add</span>
             </a>
         </ul>
         {{-- <!-- Tabs Content -->
         <div class="tab-content">
-            @foreach($collections->reverse() as $index => $collection)
-            <div class="tab-pane" id="collection_{{$collection->id}}">
+            @foreach(array_reverse($collection_tabs) as $collection)
+            <div class="tab-pane" id="tab_{{$collection->id}}">
                 <div class="container-fluid p-3">
                     <div class="col d-flex flex-row justify-content-between align-items-center p-0 mb-2">
                         <h5>{{$collection->name}}</h5>

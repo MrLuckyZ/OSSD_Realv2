@@ -31,14 +31,9 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/workspace/{workspace}/history', [WorkspaceController::class, 'history'])->name('workspace.history');
     Route::get('/workspace/{workspace}/trash', [WorkspaceController::class, 'trash'])->name('workspace.trash');
     Route::get('/add-collections-tabs/{collection}', [WorkspaceController::class, 'addToCollectionTabs'])->name('add.collection.tabs');
+    Route::get('/add-new-tab', [WorkspaceController::class, 'addNewTabs'])->name('add.new.tabs');
     Route::get('/delete-collections-tabs/{collection}', [WorkspaceController::class, 'deleteFromCollectionTabs'])->name('delete.collection.tabs');
-    Route::get('/workspace/{workspace}/collections/{collection}', [WorkspaceController::class, 'viewCollection'])->name('workspace.viewCollection');
 
-    Route::get('/workspace/{workspace}/delete-collection', [WorkspaceController::class, 'deleteCollection'])->name('workspace.deleteCollection');
-
-
-
-    Route::get('/workspace/{workspace}/add-file', [WorkspaceController::class, 'add_file'])->name('workspace.add_file');
 
     Route::delete('/logout',[AuthController::class,'logout'])->name('logout');
 });

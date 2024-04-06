@@ -90,18 +90,39 @@ class WorkspaceController extends Controller
         $data = $request->session()->all();
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = $selectedWorkspace;
-
+        Session::flush();
         return view('trash', $data);
     }
 
 
 
     public function addToCollectionTabs(Request $request, $id) {
+        $collection = Collection::find($id);
         if ($request->session()->has('collection_tabs')) {
             $collection_tabs = $request->session()->get('collection_tabs');
 
             if (!in_array($id, array_column($collection_tabs, 'id'))) {
-                $collection = Collection::find($id);
+                $collection_tabs[] = $collection;
+            }  
+        } else {
+            $collection_tabs = [];
+            $collection_tabs[] = $collection;
+        }      
+    
+        $request->session()->put('collection_tabs', $collection_tabs);
+
+        return redirect()->back();
+    }
+
+    public function addNewTabs(Request $request) {
+        $collection = new Collection;
+        $collection->name = 'New Collection';
+        $collection->user_create = auth()->user()->user_id;
+        $collection->id = -1;
+        if ($request->session()->has('collection_tabs')) {
+            $collection_tabs = $request->session()->get('collection_tabs');
+
+            if (!in_array(-1, array_column($collection_tabs, 'id'))) {
                 $collection_tabs[] = $collection;
             }  
         } else {
