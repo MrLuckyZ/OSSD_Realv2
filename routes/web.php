@@ -36,7 +36,7 @@ Route::group(['middleware' => 'auth'],function(){
 
     Route::get('/workspace/{workspace}/delete-collection', [WorkspaceController::class, 'deleteCollection'])->name('workspace.deleteCollection');
 
-
+    Route::get('/workspace/{workspace}/setting', [WorkspaceController::class,'setting'])->name('workspace.setting');
 
     Route::get('/workspace/{workspace}/add-file', [WorkspaceController::class, 'add_file'])->name('workspace.add_file');
 
