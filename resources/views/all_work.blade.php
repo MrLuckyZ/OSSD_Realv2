@@ -24,6 +24,7 @@
                 <option selected >Sort by A to Z</option>
             </select> 
         </div>
+        {{-- แสดง workspace ทั้งหมด --}}
         <div class="mt-3">
             <ul class="p-0" style="list-style-type:none;">
                 @foreach ($workspaces as $index => $workspace)

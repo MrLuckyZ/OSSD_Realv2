@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title','Home'); ?>
 
 <?php $__env->startSection('content'); ?>
@@ -10,7 +8,7 @@
             <div class="input-group" style="width: 220px; height:35px; ">
                 <i class="fa fa-search " style="font-size: 14px; margin-top: 4.5px;"></i>
                 <div>
-                    <input type="search" class="form-control me-3 rounded-2" style="width: 211px; height:35px; " placeholder="Search workspaces">
+                    <input type="search" class="form-control me-3 rounded-2 search dtsp-workspaces" style="width: 211px; height:35px; " placeholder="Search workspaces">
                 </div>
             </div>
             
@@ -24,6 +22,7 @@
                 <option selected >Sort by A to Z</option>
             </select> 
         </div>
+        
         <div class="mt-3">
             <ul class="p-0" style="list-style-type:none;">
                 <?php $__currentLoopData = $workspaces; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $workspace): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
