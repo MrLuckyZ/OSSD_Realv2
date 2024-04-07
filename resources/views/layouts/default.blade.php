@@ -411,7 +411,7 @@
      <aside class="d-flex flex-shrink-0 flex-column primary" style="width:5.625rem; min-height: 100vh; overflow-y: auto;">
         <div class="list-group flex-column mb-auto">
             <a href="{{ route('home.index') }}" style="height: 65px" class="text-decoration-none d-flex justify-content-center align-items-center">
-                <img width="50px" src="https://media.discordapp.net/attachments/994685233087643719/1215261876972429323/circle_logo.png?ex=65fc1bd1&is=65e9a6d1&hm=2ca5c2f0daef63d683772b7d936e3398948ccc82dff64fe57dcca0eedd499900&=&format=webp&quality=lossless" alt="clicknext-logo">
+                <img width="50px" src="{{ url('/assets/icon/clicknext_logo.webp') }}" alt="clicknext-logo">
             </a>
             @yield('sidebar')
         </div>

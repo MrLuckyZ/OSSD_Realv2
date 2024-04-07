@@ -291,7 +291,7 @@
                     <p class="mb-5" style="font-size: 32px; font-weight: 300">API Documentation & Design Tools</p>
                 </div>
                 <div>
-                    <img style="border-radius: 100%;" src="C:\xampp\htdocs\OSSD_Clicknext\OSSD_Realv2\resources\image_assets\image_singup.webp" alt="" width="460px" height="460px">
+                    <img src="<?php echo e(url('/assets/icon/singin_logo.webp')); ?>" alt="" width="460px" height="460px">
                 </div>
             </div>
             <div class="col">
