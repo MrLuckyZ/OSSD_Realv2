@@ -151,12 +151,19 @@
             border-radius: 5px;
             box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
         }
-        .table{
-            border-left: 2px solid #F2F2F2;
-            border-right: 2px solid #F2F2F2;
+        .table-form {
+            border: 2px solid #F2F2F2;
+            border-radius: 5px;
         }
+
         .custom-textfield{
             border: none;
+            outline: none;
+        }
+        .custom-textfield:focus{
+            border: none;
+            outline: none;
+            box-shadow: none;
         }
         .textfield {
             width: auto;
@@ -171,6 +178,10 @@
             border:dodgerblue solid 2px;
             box-shadow: 0px 0px 0px 3px rgba(30, 143, 255, 0.3);
             transition: all 0.3s;
+        }
+        .btn:focus{
+            border: none;
+            box-shadow: none;
         }
         .btn-dropdown{
             height: 100%;

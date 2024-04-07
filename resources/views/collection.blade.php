@@ -75,13 +75,11 @@
                 <li class="nav-items">
                 <button class="nav-link fst-italic @if(request()->routeIs('workspace.editCollection') && request('collection') == $collection->id) active @endif" onclick="window.location='{{ route('workspace.editCollection',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'" role="tab" id="view_{{$collection->id}}" data-bs-toggle="tab">
                 {{$collection->name}}
-                {{$collection->id}}
-
-                <a class="btn fs-5 p-0 material-symbols-outlined" onclick="window.location='{{ route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'">close</a>
-            </button>
+                    <a class="btn fs-5 p-0 material-symbols-outlined" href='{{ route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'">close</a>
+                </button>
                 </li>
             @endforeach
-            <a style="text-decoration: none" href="{{route('add.new.tabs')}}" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
+            <a style="text-decoration: none" href="{{route('workspace.editCollection',['workspace' => $selectedWorkspace->id, 'collection' => -1])}}" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
                 <span class="material-symbols-outlined">add</span>
             </a>
         </ul>

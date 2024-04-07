@@ -29,231 +29,248 @@
     </div>
 </div>  
 <div class="container-fluid p-3">
-    <!-- Method -->
-   <table class="table">
-    <thead class="" style="background-color: #F2F2F2; border-radius:5px;">
-        <tr>
-            <td class="col-2 text-center">Method</td>
-            <td class="col-10 text-center">Route</td>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td class="col-2" style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2; border-radius:5px;">
-                <div class="d-flex justify-content-center">
-                    <select class="form-select custom-textfield" aria-label="Default select example">
-                        <option value="GET" selected>GET</option>
-                        <option value="POST">POST</option>
-                        <option value="PUT">PUT</option>
-                        <option value="PATCH">PATCH</option>
-                        <option value="DELETE">DELETE</option>
-                        <option value="HEAD">HEAD</option>
-                        <option value="OPTION">OPTION</option>
-                    </select>
+    <?php $__currentLoopData = $methods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $method): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+          <!-- Method -->
+    <div class="table-form">
+        <table style="width: 100%">
+            <thead  class="" style="background-color: #F2F2F2;">
+                <tr>
+                    <td class="col-2 text-center">Method</td>
+                    <td class="col-10 text-center">Route</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="col-2" style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2; border-radius:5px;">
+                        <div class="d-flex justify-content-center">
+                            <select class="form-select custom-textfield" aria-label="Default select example">
+                                <option value="GET" selected>GET</option>
+                                <option value="POST">POST</option>
+                                <option value="PUT">PUT</option>
+                                <option value="PATCH">PATCH</option>
+                                <option value="DELETE">DELETE</option>
+                                <option value="HEAD">HEAD</option>
+                                <option value="OPTION">OPTION</option>
+                            </select>
+                        </div>
+                    </td>
+                    <td class="col-2 " style="border-top: 2px solid #F2F2F2; border-radius:5px;">
+                        <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+   
+    
+    <div class="mb-3">
+        <button class="btn p-0" style="background-color: white;" type="button" data-bs-toggle="collapse" data-bs-target="#TestExample" aria-expanded="false" aria-controls="TestExample">
+            <span id="dropdown-nav-icon" class="material-icons" style="color: #EF5B25">chevron_right</span>
+        </button>
+        <div class="collapse" id="TestExample">
+            <div class="card card-body mt-3" style="border: none;">
+                  
+                <label class="mb-1" for="">Request Headers</label>
+                <div class="table-form">
+                    <table style="width: 100%">
+                        <thead class="" style="background-color: #F2F2F2;">
+                            <tr>
+                                <td class="col-1 text-center">No</td>
+                                <td class="col-4 text-center">Key</td>    
+                                <td class="col-1 text-center">Required</td>   
+                                <td class="col-6 text-center">Description</td>   
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                <td class="col-1" style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
+    
+                                </td>
+                                <td class="col-4" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
+                                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
+                                </td>
+                                <td class="col-1" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
+                                    <div class="form-check d-flex justify-content-center align-items-center mt-1">
+                                        <input class="form-check-input" type="checkbox" style="height: 20px; width:20px;" value="" id="flexCheckDefault">
+                                    </div>
+                                </td>
+                                <td class="col-6" style="border-top: 2px solid #F2F2F2;">
+                                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-            </td>
-            <td class="col-2 " style="border-top: 2px solid #F2F2F2; border-radius:5px;">
-                <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
-            </td>
-        </tr>
-    </tbody>
-    </table>
-    <div class="d-flex justify-content-end">
-        <a href="">
-            <span class="material-symbols-outlined" style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
-        </a>    
-    </div>
-    
-    
-    <label class="mb-1" for="">Request Headers</label>
-    <table class="table">
-        <thead class="" style="background-color: #F2F2F2;">
-            <tr>
-                <td class="col-1 text-center">No</td>
-                <td class="col-4 text-center">Key</td>    
-                <td class="col-1 text-center">Required</td>   
-                <td class="col-6 text-center">Description</td>   
-            </tr>
-        </thead>
-        
-        <tbody>
-            <tr>
-                <td class="col-1" style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
+                <div class="d-flex justify-content-end">
+                    <a href="">
+                        <span class="material-symbols-outlined" style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
+                    </a>    
+                </div>
 
-                </td>
-                <td class="col-4" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
-                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
-                </td>
-                <td class="col-1" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
-                    <div class="form-check d-flex justify-content-center align-items-center mt-1">
-                        <input class="form-check-input" type="checkbox" style="height: 20px; width:20px;" value="" id="flexCheckDefault">
-                    </div>
-                </td>
-                <td class="col-6" style="border-top: 2px solid #F2F2F2;">
-                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="d-flex justify-content-end">
-        <a href="">
-            <span class="material-symbols-outlined" style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
-        </a>    
-    </div>
-
+                
+                <label class="mb-1" for="">Request Parameters</label>
+                <div class="table-form">
+                    <table style="width: 100%">
+                        <thead class="" style="background-color: #F2F2F2;">
+                            <tr>
+                                <td class="col-1 text-center">No</td>
+                                <td class="col-3 text-center">Key</td>    
+                                <td class="col-2 text-center">Param Type</td>   
+                                <td class="col-2 text-center">Date Type</td>  
+                                <td class="col-1 text-center">Required</td>  
+                                <td class="col-3 text-center">Description</td>  
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                <td class="col-1" style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
     
-    <label class="mb-1" for="">Request Parameters</label>
-    <table class="table">
-        <thead class="" style="background-color: #F2F2F2;">
-            <tr>
-                <td class="col-1 text-center">No</td>
-                <td class="col-3 text-center">Key</td>    
-                <td class="col-2 text-center">Param Type</td>   
-                <td class="col-2 text-center">Date Type</td>  
-                <td class="col-1 text-center">Required</td>  
-                <td class="col-3 text-center">Description</td>  
-            </tr>
-        </thead>
-        
-        <tbody>
-            <tr>
-                <td class="col-1" style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
+                                </td>
+                                <td class="col-3" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
+                                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
+                                </td>
+                                <td class="col-2" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
+                                    <div class="d-flex justify-content-center">
+                                        <select class="form-select custom-textfield" aria-label="Default select example">
+                                            <option value="Q" selected>Q</option>
+                                            <option value="P">P</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="col-2" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
+                                    <div class="d-flex justify-content-center">
+                                        <select class="form-select custom-textfield" aria-label="Default select example">
+                                            <option value="String" selected>String</option>
+                                            <option value="Int">Int</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="col-1" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
+                                    <div class="form-check d-flex justify-content-center align-items-center mt-1">
+                                        <input class="form-check-input " type="checkbox" style="height: 20px; width:20px;" value="" id="flexCheckDefault">
+                                    </div>
+                                </td>
+                                <td class="col-3" style="border-top: 2px solid #F2F2F2;">
+                                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a href="">
+                        <span class="material-symbols-outlined" style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
+                    </a>    
+                </div>
 
-                </td>
-                <td class="col-3" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
-                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
-                </td>
-                <td class="col-2" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
-                    <div class="d-flex justify-content-center">
-                        <select class="form-select custom-textfield" aria-label="Default select example">
-                            <option value="Q" selected>Q</option>
-                            <option value="P">P</option>
-                        </select>
-                    </div>
-                </td>
-                <td class="col-2" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
-                    <div class="d-flex justify-content-center">
-                        <select class="form-select custom-textfield" aria-label="Default select example">
-                            <option value="String" selected>String</option>
-                            <option value="Int">Int</option>
-                        </select>
-                    </div>
-                </td>
-                <td class="col-1" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
-                    <div class="form-check d-flex justify-content-center align-items-center mt-1">
-                        <input class="form-check-input " type="checkbox" style="height: 20px; width:20px;" value="" id="flexCheckDefault">
-                    </div>
-                </td>
-                <td class="col-3" style="border-top: 2px solid #F2F2F2;">
-                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="d-flex justify-content-end">
-        <a href="">
-            <span class="material-symbols-outlined" style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
-        </a>    
-    </div>
-
+                
+                <label class="mb-1" for="">Request Body</label>
+                <div class="table-form">
+                    <table style="width: 100%">
+                        <thead class="" style="background-color: #F2F2F2;">
+                            <tr>
+                                <td class="col-1 text-center">No</td>
+                                <td class="col-3 text-center">Key</td>    
+                                <td class="col-2 text-center">Date Type</td>  
+                                <td class="col-2 text-center">Required</td>  
+                                <td class="col-4 text-center">Description</td>  
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                <td class="col-1" style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
     
-    <label class="mb-1" for="">Request Body</label>
-    <table class="table">
-        <thead class="" style="background-color: #F2F2F2;">
-            <tr>
-                <td class="col-1 text-center">No</td>
-                <td class="col-3 text-center">Key</td>    
-                <td class="col-2 text-center">Date Type</td>  
-                <td class="col-2 text-center">Required</td>  
-                <td class="col-4 text-center">Description</td>  
-            </tr>
-        </thead>
-        
-        <tbody>
-            <tr>
-                <td class="col-1" style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
-
-                </td>
-                <td class="col-3" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
-                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
-                </td>
-                <td class="col-2" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
-                    <div class="d-flex justify-content-center">
-                        <select class="form-select custom-textfield" aria-label="Default select example">
-                            <option value="String" selected>String</option>
-                            <option value="Int">Int</option>
-                        </select>
-                    </div>
-                </td>
-                <td class="col-2" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
-                    <div class="form-check d-flex justify-content-center align-items-center mt-1">
-                        <input class="form-check-input" type="checkbox" style="height: 20px; width:20px;" value="" id="flexCheckDefault">
-                    </div>
-                </td>
-                <td class="col-3" style="border-top: 2px solid #F2F2F2;">
-                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="d-flex justify-content-end">
-        <a href="">
-            <span class="material-symbols-outlined" style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
-        </a>    
-    </div>
+                                </td>
+                                <td class="col-3" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
+                                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
+                                </td>
+                                <td class="col-2" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
+                                    <div class="d-flex justify-content-center">
+                                        <select class="form-select custom-textfield" aria-label="Default select example">
+                                            <option value="String" selected>String</option>
+                                            <option value="Int">Int</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="col-2" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
+                                    <div class="form-check d-flex justify-content-center align-items-center mt-1">
+                                        <input class="form-check-input" type="checkbox" style="height: 20px; width:20px;" value="" id="flexCheckDefault">
+                                    </div>
+                                </td>
+                                <td class="col-3" style="border-top: 2px solid #F2F2F2;">
+                                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a href="">
+                        <span class="material-symbols-outlined" style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
+                    </a>    
+                </div>
+                
+                <div class="d-flex justify-content-between align-items-center mt-2">
+                    <label class="mb-1" for="">Request Body</label>
+                    <div class="d-flex align-items-center p-0">
+                        <label class="me-2" for="">Status</label>
+                        <div class="d-flex justify-content-between">
+                            <input class="textfield text-center" type="text" name="" id="" placeholder="status">
+                            <input class="textfield text-center" type="number" name="" id="" placeholder="code">
+                        </div>
+                        <button class="btn" style="border: 2px solid #F2F2F2;">
+                            <span class="material-symbols-outlined mt-1 fs-6" style="">expand_more</span>
+                        </button>
+                    </div>    
+                </div>
+                <div class="table-form">
+                    <table style="width: 100%">
+                        <thead class="" style="background-color: #F2F2F2;">
+                            <tr>
+                                <td class="col-1 text-center">No</td>
+                                <td class="col-3 text-center">Key</td>    
+                                <td class="col-2 text-center">Date Type</td>  
+                                <td class="col-6 text-center">Description</td>  
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                <td class="col-1" style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
     
-    <div class="d-flex justify-content-between align-items-center mt-2">
-        <label class="mb-1" for="">Request Body</label>
-        <div class="d-flex align-items-center p-0">
-            <label class="me-2" for="">Status</label>
-            <div class="d-flex justify-content-between">
-                <input class="textfield text-center" type="text" name="" id="" placeholder="status">
-                <input class="textfield text-center" type="number" name="" id="" placeholder="code">
+                                </td>
+                                <td class="col-3" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
+                                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
+                                </td>
+                                <td class="col-2" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
+                                    <div class="d-flex justify-content-center">
+                                        <select class="form-select custom-textfield" aria-label="Default select example">
+                                            <option value="String" selected>String</option>
+                                            <option value="Int">Int</option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="col-6" style="border-top: 2px solid #F2F2F2;">
+                                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="d-flex justify-content-end">
+                    <a href="">
+                        <span class="material-symbols-outlined" style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
+                    </a>    
+                </div>
             </div>
-            <button class="btn" style="border: 2px solid #F2F2F2;">
-                <span class="material-symbols-outlined mt-1 fs-6" style="">expand_more</span>
-            </button>
         </div>    
     </div>
-       
-    <table class="table mt-2">
-        <thead class="" style="background-color: #F2F2F2;">
-            <tr>
-                <td class="col-1 text-center">No</td>
-                <td class="col-3 text-center">Key</td>    
-                <td class="col-2 text-center">Date Type</td>  
-                <td class="col-6 text-center">Description</td>  
-            </tr>
-        </thead>
-        
-        <tbody>
-            <tr>
-                <td class="col-1" style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
-
-                </td>
-                <td class="col-3" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
-                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
-                </td>
-                <td class="col-2" style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
-                    <div class="d-flex justify-content-center">
-                        <select class="form-select custom-textfield" aria-label="Default select example">
-                            <option value="String" selected>String</option>
-                            <option value="Int">Int</option>
-                        </select>
-                    </div>
-                </td>
-                <td class="col-6" style="border-top: 2px solid #F2F2F2;">
-                    <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text" name="" id="">
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="d-flex justify-content-end">
-        <a href="">
-            <span class="material-symbols-outlined" style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
-        </a>    
-    </div>
-
+    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+  
 </div>      
 
 <?php $__env->stopSection(); ?>

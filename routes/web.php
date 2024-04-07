@@ -28,12 +28,12 @@ Route::group(['middleware' => 'auth'],function(){
 
     Route::get('/workspace/{workspace}', [WorkspaceController::class, 'index'])->name('workspace.index');
     Route::get('/workspace/{workspace}/collection', [WorkspaceController::class, 'collections'])->name('workspace.collections');
-    Route::get('/workspace/{workspace}/collection/view_{collection}', [WorkspaceController::class, 'viewCollection'])->name('workspace.viewCollection');
+    // Route::get('/workspace/{workspace}/collection/view_{collection}', [WorkspaceController::class, 'viewCollection'])->name('workspace.viewCollection');
     Route::get('/workspace/{workspace}/collection/edit_{collection}', [WorkspaceController::class, 'editCollection'])->name('workspace.editCollection');
     Route::get('/workspace/{workspace}/history', [WorkspaceController::class, 'history'])->name('workspace.history');
     Route::get('/workspace/{workspace}/trash', [WorkspaceController::class, 'trash'])->name('workspace.trash');
     // Route::get('/add-collections-tabs/{collection}', [WorkspaceController::class, 'addToCollectionTabs'])->name('add.collection.tabs');
-    Route::get('/add-new-tab', [WorkspaceController::class, 'addNewTabs'])->name('add.new.tabs');
+    // Route::get('/add-new-tab', [WorkspaceController::class, 'addNewTabs'])->name('add.new.tabs');
     Route::get('/delete-collections-tabs/{collection}', [WorkspaceController::class, 'deleteFromCollectionTabs'])->name('delete.collection.tabs');
 
 

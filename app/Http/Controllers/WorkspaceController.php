@@ -137,18 +137,28 @@ class WorkspaceController extends Controller
     }
 
     public function deleteFromCollectionTabs(Request $request,$id) {
+        $selectedWorkspaceId = $request->session()->get('selected_workspace_id');
+        $workspace = Workspace::find($selectedWorkspaceId);
         if ($request->session()->has('collection_tabs')) {
             $collection_tabs = $request->session()->get('collection_tabs');
+            
             foreach ($collection_tabs as $index => $collection) {
                 if ($collection->id == $id) {
                     unset($collection_tabs[$index]);
+                    $request->session()->put('collection_tabs', $collection_tabs);   
                     break;
                 }
             }
-            $request->session()->put('collection_tabs', $collection_tabs);
+            if (count($collection_tabs) > 0) {
+                $collectionId = reset($collection_tabs)->id;
+                return redirect()->route('workspace.editCollection',['workspace'=>$workspace->id ,'collection'=>$collectionId]);
+            }
+            else {
+                return redirect()->route('workspace.collections',['workspace'=>$workspace->id]);
+            }
         }
-        return redirect()->back();
     }
+    
 
     public function viewCollection(Request $request,$workSpaceid,$id) {
         $selectedWorkspaceId = $request->session()->get('selected_workspace_id');
@@ -174,7 +184,6 @@ class WorkspaceController extends Controller
     }
     
     public function editCollection(Request $request,$workSpaceid,$id) {
-        $collection = Collection::find($id);
         $workspace = Workspace::find($workSpaceid);
 
         if ($request->session()->has('collection_tabs')) {
@@ -183,10 +192,11 @@ class WorkspaceController extends Controller
             $collection_tabs = [];
         }      
 
-        if($id == -1){
+        if($id == "-1"){
             $collection = new Collection;
-            $collection->id = -1;
             $collection->name = 'New Collection';
+            $collection->user_create = auth()->user()->user_id;
+            $collection->id = -1;    
         } 
         else {
             $collection = Collection::find($id);
@@ -200,6 +210,8 @@ class WorkspaceController extends Controller
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = $workspace;
         $data['selectedCollection'] = $collection;
+        $methods = $collection->methods;
+        $data['methods'] = $methods;
         $request->session()->put('collection_tabs', $collection_tabs);
 
         return view('collection_template', $data);
