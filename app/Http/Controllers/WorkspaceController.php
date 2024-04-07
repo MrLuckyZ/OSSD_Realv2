@@ -171,4 +171,18 @@ class WorkspaceController extends Controller
 
         return view('collection_template', $data);
     }
+
+    public function delete_collection(Request $request,$id){
+        $selectedCollection = Collection::find($id);
+        
+        if (!$id) {
+            return redirect()->route('home.index')->with('error', 'Collection not found');
+        }
+        if($selectedCollection->methods() != null){
+            $selectedCollection->methods()->delete();
+            $selectedCollection->delete();
+            return redirect()->back();
+        }
+
+    }
 }

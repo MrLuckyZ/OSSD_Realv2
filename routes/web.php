@@ -34,6 +34,7 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/add-collections-tabs/{collection}', [WorkspaceController::class, 'addToCollectionTabs'])->name('add.collection.tabs');
     Route::get('/add-new-tab', [WorkspaceController::class, 'addNewTabs'])->name('add.new.tabs');
     Route::get('/delete-collections-tabs/{collection}', [WorkspaceController::class, 'deleteFromCollectionTabs'])->name('delete.collection.tabs');
+    Route::get('/delete-collection/{collection}', [WorkspaceController::class, 'delete_collection'])->name('delete.collection');
 
 
     Route::delete('/logout',[AuthController::class,'logout'])->name('logout');

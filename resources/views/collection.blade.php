@@ -54,7 +54,7 @@
                         </button>
                         <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
                             <li><a class="dropdown-item" href="#">Rename</a></li>
-                            <li><a class="dropdown-item" href="#">Delete</a></li>
+                            <li><a class="dropdown-item" href="{{Route('delete.collection',['collection' => $collection->id])}}">Delete</a></li>
                         </ul>
                     </button>
                 </div>
