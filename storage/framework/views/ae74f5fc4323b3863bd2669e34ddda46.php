@@ -1,29 +1,27 @@
-@extends('layouts.default')
+<?php $__env->startSection('title', 'Trash'); ?>
 
-@section('title', 'Trash')
-
-@section('sidebar')
-    <a href="{{ route('workspace.collections', ['workspace' => $selectedWorkspace->id]) }}"
-        class="list-group-items hover-white btn-menu @if (request()->routeIs('workspace.collections')) focus @endif"
+<?php $__env->startSection('sidebar'); ?>
+    <a href="<?php echo e(route('workspace.collections', ['workspace' => $selectedWorkspace->id])); ?>"
+        class="list-group-items hover-white btn-menu <?php if(request()->routeIs('workspace.collections')): ?> focus <?php endif; ?>"
         style="text-decoration: none;">
         <span class="material-symbols-outlined" style="font-size: 36px;">folder</span>
         <label class="fw-normal cursor" style="color: white" for="">Collections</label>
     </a>
-    <a href="{{ route('workspace.history', ['workspace' => $selectedWorkspace->id]) }}"
-        class="list-group-items hover-white  btn-menu @if (request()->routeIs('workspace.history')) focus @endif"
+    <a href="<?php echo e(route('workspace.history', ['workspace' => $selectedWorkspace->id])); ?>"
+        class="list-group-items hover-white  btn-menu <?php if(request()->routeIs('workspace.history')): ?> focus <?php endif; ?>"
         style="text-decoration: none;">
         <span class="material-symbols-outlined" style="font-size: 36px;">manage_history</span>
         <label class="fw-normal cursor" style="color: white" for="">History</label>
     </a>
-    <a href="{{ route('workspace.trash', ['workspace' => $selectedWorkspace->id]) }}"
-        class="list-group-items hover-white  btn-menu @if (request()->routeIs('workspace.trash')) focus @endif"
+    <a href="<?php echo e(route('workspace.trash', ['workspace' => $selectedWorkspace->id])); ?>"
+        class="list-group-items hover-white  btn-menu <?php if(request()->routeIs('workspace.trash')): ?> focus <?php endif; ?>"
         style="text-decoration: none;">
         <span class="material-symbols-outlined" style="font-size: 36px;">delete</span>
         <label class="fw-normal cursor" style="color: white" for="">Trash</label>
     </a>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="p-0 mt-4 " style="height:300px;">
         <h2 class="ps-4">Trash</h2>
         <p class="ms-4">
@@ -42,8 +40,8 @@
                         <label class="ms-5">Action</label>
                     </div>
                 </div>
-                @foreach ($collections as $data_collection => $collection)
-                    @if ($data_collection ->status="deleted")
+                <?php $__currentLoopData = $collections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data_collection => $collection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php if($data_collection ->status="deleted"): ?>
                         <div class="d-flex align-items-center" style="height: 50px ; border-top:#f2f2f2 solid 1px">
                             <div class="col d-flex align-items-center">
                                 <label class="ms-4">Test name</label>
@@ -67,12 +65,14 @@
                                 </label>
                             </div>
                         </div>
-                    @endif
-                @endforeach
+                    <?php endif; ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             </div>
         </ul>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-@endsection
+<?php $__env->startSection('js'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\OSSD_Realv2\resources\views/trash.blade.php ENDPATH**/ ?>

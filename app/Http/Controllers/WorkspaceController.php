@@ -90,6 +90,8 @@ class WorkspaceController extends Controller
         $data = $request->session()->all();
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = $selectedWorkspace;
+        $collection = $selectedWorkspace->collections();
+        $data['collections'] = $collection;
 
         return view('trash', $data);
     }
