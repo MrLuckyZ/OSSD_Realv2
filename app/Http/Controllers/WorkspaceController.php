@@ -23,8 +23,11 @@ class WorkspaceController extends Controller
         return view('workspace', $data);
     }
 
-
-
+    public function setting($id){
+        $data['workspaces'] = Workspace::get()->all();
+        $data['selectedWorkspace'] = Workspace::find($id);
+        return view('setting_work', $data);
+    }
     public function create() {
         $data['workspaces'] = Workspace::orderBy('id','desc')->paginate(5);
         return view('create', $data);
