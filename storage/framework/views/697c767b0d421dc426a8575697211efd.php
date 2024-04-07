@@ -39,6 +39,10 @@
         .hover-black:hover{
             color: #000;
         }
+        .btn:focus{
+            border: none;
+            box-shadow: none;
+        }
         .btn-menu {
             cursor: pointer;
             color: #fff;

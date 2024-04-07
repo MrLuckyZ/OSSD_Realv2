@@ -44,20 +44,29 @@
             <!-- Collections List -->
             @foreach ($selectedWorkspace->collections as $collection)
             <div class="row">
-                <div class="col p-0">
+                <div class="col p-0 d-flex">
                     <button class="btn-collapse dropdown hover-black d-flex align-items-center" style="height: 30px; width: 100%; text-decoration:none;" href="" type="button" data-bs-toggle="collapse" data-bs-target="#collection_{{$collection->id}}" aria-expanded="false" aria-controls="collection_{{$collection->id}}">
                         <span class="material-symbols-outlined ms-1 me-2">chevron_right</span>
                         <span class="fs-6" style="font-weight: 500">{{$collection->name}}</span>
-                    </button>
-                    <div class="collapse" id="collection_{{$collection->id}}">
-                        {{-- Method List --}}
-                        @foreach ($collection->methods as $method)
-                        <ul class="navbar-nav">
-                            <li><a href="{{route('add.collection.tabs',['collection' => $collection->id])}}"><label class="me-2" style="font-size: 14px;  font-weight: 500;" for="">{{$method->type}}</label><label for="" style="font-size: 14px; color: #000;">{{$method->path}}</label></a></li>
+                        {{-- ปุ่ม Rename กับ Delete Collection --}}
+                        <button class="btn d-flex justify-content-center align-items-center mt-1" style="height: 25px;" type="button" id="workspace_option" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="material-icons">more_horiz</span>
+                        </button>
+                        <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
+                            <li><a class="dropdown-item" href="#">Rename</a></li>
+                            <li><a class="dropdown-item" href="#">Delete</a></li>
                         </ul>
-                        @endforeach
-                    </div>
+                    </button>
                 </div>
+                <div class="collapse" id="collection_{{$collection->id}}">
+                    {{-- Method List --}}
+                    @foreach ($collection->methods as $method)
+                    <ul class="navbar-nav">
+                        <li><a href="{{route('add.collection.tabs',['collection' => $collection->id])}}"><label class="me-2" style="font-size: 14px;  font-weight: 500;" for="">{{$method->type}}</label><label for="" style="font-size: 14px; color: #000;">{{$method->path}}</label></a></li>
+                    </ul>
+                    @endforeach
+                </div>
+
             </div>
             @endforeach
 

@@ -42,20 +42,29 @@
             <!-- Collections List -->
             <?php $__currentLoopData = $selectedWorkspace->collections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $collection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="row">
-                <div class="col p-0">
+                <div class="col p-0 d-flex">
                     <button class="btn-collapse dropdown hover-black d-flex align-items-center" style="height: 30px; width: 100%; text-decoration:none;" href="" type="button" data-bs-toggle="collapse" data-bs-target="#collection_<?php echo e($collection->id); ?>" aria-expanded="false" aria-controls="collection_<?php echo e($collection->id); ?>">
                         <span class="material-symbols-outlined ms-1 me-2">chevron_right</span>
                         <span class="fs-6" style="font-weight: 500"><?php echo e($collection->name); ?></span>
-                    </button>
-                    <div class="collapse" id="collection_<?php echo e($collection->id); ?>">
                         
-                        <?php $__currentLoopData = $collection->methods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $method): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                        <ul class="navbar-nav">
-                            <li><a href="<?php echo e(route('add.collection.tabs',['collection' => $collection->id])); ?>"><label class="me-2" style="font-size: 14px;  font-weight: 500;" for=""><?php echo e($method->type); ?></label><label for="" style="font-size: 14px; color: #000;"><?php echo e($method->path); ?></label></a></li>
+                        <button class="btn d-flex justify-content-center align-items-center mt-1" style="height: 25px;" type="button" id="workspace_option" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="material-icons">more_horiz</span>
+                        </button>
+                        <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
+                            <li><a class="dropdown-item" href="#">Rename</a></li>
+                            <li><a class="dropdown-item" href="#">Delete</a></li>
                         </ul>
-                        <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-                    </div>
+                    </button>
                 </div>
+                <div class="collapse" id="collection_<?php echo e($collection->id); ?>">
+                    
+                    <?php $__currentLoopData = $collection->methods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $method): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <ul class="navbar-nav">
+                        <li><a href="<?php echo e(route('add.collection.tabs',['collection' => $collection->id])); ?>"><label class="me-2" style="font-size: 14px;  font-weight: 500;" for=""><?php echo e($method->type); ?></label><label for="" style="font-size: 14px; color: #000;"><?php echo e($method->path); ?></label></a></li>
+                    </ul>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </div>
+
             </div>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
