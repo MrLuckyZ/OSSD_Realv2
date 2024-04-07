@@ -129,4 +129,21 @@ class WorkspaceController extends Controller
         }
         return redirect()->back();
     }
+    
+    public function delete_workspace(Request $request,$id){
+        $selectedWorkspace = Workspace::find($id);
+        
+        if(!$selectedWorkspace){
+            return redirect()->route('home.index')->with('error', 'Workspace not found');
+        }
+
+        if($selectedWorkspace->collections() != null){
+            foreach ($selectedWorkspace->collections as $collection) {
+                $collection->methods()->delete();
+                $collection->delete();
+            }
+            $selectedWorkspace->delete();
+            return redirect()->back();
+        }
+    }
 }
