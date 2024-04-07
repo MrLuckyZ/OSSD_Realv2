@@ -1,5 +1,3 @@
-
-
 <?php $__env->startSection('title','Collection'); ?>
 
 <?php $__env->startSection('sidebar'); ?>
@@ -29,7 +27,7 @@
                     <span class="material-icons mt-2">more_horiz</span>
                 </button>
                 <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
-                  <li><a class="dropdown-item" href="#">Setting</a></li>
+                  <li><a class="dropdown-item " href="<?php echo e(route('workspace.setting',['workspace' => $selectedWorkspace->id])); ?>">Setting</a></li>
                   <li><a class="dropdown-item" href="#">Delete</a></li>
                 </ul>
             </div>

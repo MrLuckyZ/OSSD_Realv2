@@ -40,8 +40,8 @@
                         <label class="ms-5">Action</label>
                     </div>
                 </div>
-                <?php $__currentLoopData = $workspaces; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $workspace): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <?php if($index < 5): ?>
+                <?php $__currentLoopData = $collections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $data_collection => $collection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <?php if($data_collection ->status="deleted"): ?>
                         <div class="d-flex align-items-center" style="height: 50px ; border-top:#f2f2f2 solid 1px">
                             <div class="col d-flex align-items-center">
                                 <label class="ms-4">Test name</label>
