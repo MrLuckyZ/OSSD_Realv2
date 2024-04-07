@@ -14,7 +14,7 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
         <!-- Bootstrap -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-        <title>@yield('title')</title>
+        <title><?php echo $__env->yieldContent('title'); ?></title>
         <style>
             *{
                 font-family: "Roboto", sans-serif;
@@ -291,15 +291,16 @@
                     <p class="mb-5" style="font-size: 32px; font-weight: 300">API Documentation & Design Tools</p>
                 </div>
                 <div>
-                    <img src="{{ url('/assets/icon/singin_logo.webp') }}" alt="" width="460px" height="460px">
+                    <img src="<?php echo e(url('/assets/icon/singin_logo.webp')); ?>" alt="" width="460px" height="460px">
                 </div>
             </div>
             <div class="col">
                 <!-- Content -->
-                @yield('content')
+                <?php echo $__env->yieldContent('content'); ?>
             </div>
         </div>
-        @yield('js')
+        <?php echo $__env->yieldContent('js'); ?>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </body>
 </html>
+<?php /**PATH C:\xampp\htdocs\OSSD_Clicknext\OSSD_Realv2\resources\views/layouts/auth_default.blade.php ENDPATH**/ ?>
