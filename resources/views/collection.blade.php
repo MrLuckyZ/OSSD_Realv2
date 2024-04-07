@@ -45,15 +45,15 @@
             @foreach ($selectedWorkspace->collections as $collection)
             <div class="row">
                 <div class="col p-0">
-                    <button class="btn-collapse dropdown hover-black d-flex align-items-center" style="height: 30px; width: 100%; text-decoration:none;" href="" type="button" data-bs-toggle="collapse" data-bs-target="#collection_{{$collection->id}}" aria-expanded="false" aria-controls="collection_{{$collection->id}}">
-                        <span class="material-symbols-outlined ms-1 me-2">chevron_right</span>
+                    <button class="btn-collapse dropdown hover-black d-flex align-items-center" style="height: 30px; width: 100%; text-decoration:none;" type="button" data-bs-toggle="collapse" data-bs-target="#collection_{{$collection->id}}" aria-expanded="false" aria-controls="collection_{{$collection->id}}">
+                        <span class="material-symbols-outlined ms-1 me-2" name="expand" id="{{$collection->id}}">chevron_right</span>
                         <span class="fs-6" style="font-weight: 500">{{$collection->name}}</span>
                     </button>
-                    <div class="collapse" id="collection_{{$collection->id}}">
+                    <div class="collapse" id="collection_{{$collection->id}}" @if(session()->has('collection_'.$collection->id.'_collapse') && session('collection_'.$collection->id.'_collapse')) aria-expanded="true" @endif>
                         {{-- Method List --}}
                         @foreach ($collection->methods as $method)
                         <ul class="navbar-nav">
-                            <li><a href="{{route('add.collection.tabs',['collection' => $collection->id])}}"><label class="me-2" style="font-size: 14px;  font-weight: 500;" for="">{{$method->type}}</label><label for="" style="font-size: 14px; color: #000;">{{$method->path}}</label></a></li>
+                            <li><a href="{{route('workspace.editCollection',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])}}"><label class="me-2" style="font-size: 14px;  font-weight: 500;" for="">{{$method->type}}</label><label for="" style="font-size: 14px; color: #000;">{{$method->path}}</label></a></li>
                         </ul>
                         @endforeach
                     </div>
@@ -73,10 +73,12 @@
             @endphp     
             @foreach(array_reverse($collection_tabs) as $collection)
                 <li class="nav-items">
-                    <button class="nav-link fst-italic" onclick="window.location='{{ route('workspace.viewCollection',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'" role="tab" id="view_{{$collection->id}}" data-bs-toggle="tab">
-                        {{$collection->name}}
-                        <a class="btn material-symbols-outlined" onclick="window.location='{{ route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'">close</a>
-                    </button>
+                <button class="nav-link fst-italic @if(request()->routeIs('workspace.editCollection') && request('collection') == $collection->id) active @endif" onclick="window.location='{{ route('workspace.editCollection',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'" role="tab" id="view_{{$collection->id}}" data-bs-toggle="tab">
+                {{$collection->name}}
+                {{$collection->id}}
+
+                <a class="btn fs-5 p-0 material-symbols-outlined" onclick="window.location='{{ route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'">close</a>
+            </button>
                 </li>
             @endforeach
             <a style="text-decoration: none" href="{{route('add.new.tabs')}}" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
@@ -93,20 +95,33 @@
 
 @section('js')
 <script>
-       document.addEventListener('DOMContentLoaded', function() {
-        const btnCollapse = document.querySelectorAll('.btn-collapse');
+   document.addEventListener('DOMContentLoaded', function() {
+    const collapseList = document.querySelectorAll('.collapse');
 
-        btnCollapse.forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                const chevron = this.querySelector('.material-symbols-outlined');
-                    if (chevron.textContent.trim() === 'chevron_right') {
-                        chevron.textContent = 'expand_more';
-                    } else {
-                        chevron.textContent = 'chevron_right';
-                    }
-                });
-            });
+    collapseList.forEach(function(collapse) {
+        const chevron = collapse.previousElementSibling.querySelector('.material-symbols-outlined[name="expand"]');
+        const id = collapse.getAttribute('id');
+        const isExpanded = sessionStorage.getItem(id);
+
+        if (isExpanded === 'true') {
+            collapse.classList.add('show');
+            chevron.textContent = 'expand_more';
+        }
+
+        collapse.addEventListener('show.bs.collapse', function() {
+            sessionStorage.setItem(id, 'true');
+            chevron.textContent = 'expand_more';
         });
+
+        collapse.addEventListener('hide.bs.collapse', function() {
+            sessionStorage.setItem(id, 'false');
+            chevron.textContent = 'chevron_right';
+        });
+    });
+});
+
+
+
         document.addEventListener('DOMContentLoaded', function() {
             const labels = document.querySelectorAll('.navbar-nav li label:first-child');
 

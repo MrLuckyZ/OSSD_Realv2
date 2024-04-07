@@ -145,7 +145,7 @@ class WorkspaceController extends Controller
                     break;
                 }
             }
-            $request->session()->put('collection_tabs', $collection_tabs);
+\            $request->session()->put('collection_tabs', $collection_tabs);
         }
         return redirect()->back();
     }
@@ -172,8 +172,41 @@ class WorkspaceController extends Controller
 
         return view('collection_template', $data);
     }
+    
+    public function editCollection(Request $request,$workSpaceid,$id) {
+        $collection = Collection::find($id);
+        $workspace = Workspace::find($workSpaceid);
+
+        if ($request->session()->has('collection_tabs')) {
+            $collection_tabs = $request->session()->get('collection_tabs');
+        } else {
+            $collection_tabs = [];
+        }      
+
+        if($id == -1){
+            $collection = new Collection;
+            $collection->id = -1;
+            $collection->name = 'New Collection';
+        } 
+        else {
+            $collection = Collection::find($id);
+        }
+
+        if (!in_array($id, array_column($collection_tabs, 'id'))) {
+            $collection_tabs[] = $collection;
+        }  
+
+        $data = $request->session()->all();
+        $data['workspaces'] = Workspace::get()->all();
+        $data['selectedWorkspace'] = $workspace;
+        $data['selectedCollection'] = $collection;
+        $request->session()->put('collection_tabs', $collection_tabs);
+
+        return view('collection_template', $data);
+    }
 
     public function saveToWorkspace(Request $request, $collectionId){
+        $collection = Workspace::find($workSpaceid);
 
     }
 }
