@@ -90,6 +90,7 @@ class WorkspaceController extends Controller
         $data = $request->session()->all();
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = $selectedWorkspace;
+    
         Session::flush();
         return view('trash', $data);
     }
@@ -170,5 +171,9 @@ class WorkspaceController extends Controller
         $data['selectedCollection'] = $collection;
 
         return view('collection_template', $data);
+    }
+
+    public function saveToWorkspace(Request $request, $collectionId){
+
     }
 }

@@ -1,9 +1,7 @@
-@extends('collection')
-
-@section('collection_template')
+<?php $__env->startSection('collection_template'); ?>
 <div class="container-fluid p-3">
     <div class="col d-flex flex-row justify-content-between align-items-center p-0 mb-2">
-        <h5>{{$selectedCollection->name}}</h5>
+        <h5><?php echo e($selectedCollection->name); ?></h5>
         <div class="d-flex justify-content-between">
             <button type="button" class="btn btn-secondary d-flex align-items-center me-2" style="width: 110px; height:30px; border-radius:5px 0px 0px 5px">
                 <i class="fa-regular fa-comment" style="color: #EF5B25;"></i><label for="" class="ms-1 cursor" style="font-size:14px font-weight:600; color: #EF5B25;">Comment</label>
@@ -63,4 +61,5 @@
 
 </div>      
 
-@endsection
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('collection', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/resources/views/collection_template.blade.php ENDPATH**/ ?>

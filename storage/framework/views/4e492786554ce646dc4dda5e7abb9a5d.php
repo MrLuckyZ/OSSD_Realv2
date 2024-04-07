@@ -65,25 +65,27 @@
     <!-- Main Content -->
     <div class="" style="width: 100%;">
         <!-- Nav Tabs -->
-        <ul class="nav nav-tabs flex-row" style="height: 55px;">
+        <ul class="nav nav-tabs flex-row" role="tablist" style="height: 55px;">
             <?php
                 $collection_tabs = session('collection_tabs', []);
             ?>     
             <?php $__currentLoopData = array_reverse($collection_tabs); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $collection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                    <li class="nav-items">
-                        <a class="nav-link fst-italic" id="tab_<?php echo e($collection->id); ?>" data-bs-toggle="tab" href="#tab_<?php echo e($collection->id); ?>" aria-controls="tab_<?php echo e($collection->id); ?>"><?php echo e($collection->name); ?>
+                <li class="nav-items">
+                    <button class="nav-link fst-italic" onclick="window.location='<?php echo e(route('workspace.viewCollection',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])); ?>'" role="tab" id="view_<?php echo e($collection->id); ?>" data-bs-toggle="tab">
+                        <?php echo e($collection->name); ?>
 
-                            <a class="btn d-flex justify-content-center align-items-center p-1" href="<?php echo e(route('delete.collection.tabs', ['collection' => $collection->id])); ?>">
-                                <span class="material-symbols-outlined">close</span>
-                            </a>
-                        </a>
-                    </li>
+                        <a class="btn material-symbols-outlined" onclick="window.location='<?php echo e(route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])); ?>'">close</a>
+                    </button>
+                </li>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
             <a style="text-decoration: none" href="<?php echo e(route('add.new.tabs')); ?>" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
                 <span class="material-symbols-outlined">add</span>
             </a>
         </ul>
-        
+        <!-- Tabs Content -->
+        <div class="tab-content">
+          <?php echo $__env->yieldContent('collection_template'); ?>
+        </div>
     </div>
 </section>
 <?php $__env->stopSection(); ?>

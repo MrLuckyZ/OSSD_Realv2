@@ -72,14 +72,12 @@
                 $collection_tabs = session('collection_tabs', []);
             @endphp     
             @foreach(array_reverse($collection_tabs) as $collection)
-                    <li class="nav-items">
-                        <button class="nav-link fst-italic" role="tab" id="view_{{$collection->id}}" data-bs-toggle="tab">
-                            {{$collection->name}}
-                            <a class="btn d-flex justify-content-center align-items-center p-1" href="{{ route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}">
-                                <span class="material-symbols-outlined">close</span>
-                            </a>
-                        </button>
-                    </li>
+                <li class="nav-items">
+                    <button class="nav-link fst-italic" onclick="window.location='{{ route('workspace.viewCollection',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'" role="tab" id="view_{{$collection->id}}" data-bs-toggle="tab">
+                        {{$collection->name}}
+                        <a class="btn material-symbols-outlined" onclick="window.location='{{ route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'">close</a>
+                    </button>
+                </li>
             @endforeach
             <a style="text-decoration: none" href="{{route('add.new.tabs')}}" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
                 <span class="material-symbols-outlined">add</span>
