@@ -145,7 +145,7 @@ class WorkspaceController extends Controller
                     break;
                 }
             }
-\            $request->session()->put('collection_tabs', $collection_tabs);
+            $request->session()->put('collection_tabs', $collection_tabs);
         }
         return redirect()->back();
     }

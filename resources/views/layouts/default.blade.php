@@ -151,6 +151,13 @@
             border-radius: 5px;
             box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
         }
+        .table{
+            border-left: 2px solid #F2F2F2;
+            border-right: 2px solid #F2F2F2;
+        }
+        .custom-textfield{
+            border: none;
+        }
         .textfield {
             width: auto;
             height: 45px;
