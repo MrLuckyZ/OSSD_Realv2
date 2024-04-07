@@ -183,6 +183,5 @@ class WorkspaceController extends Controller
             $selectedCollection->delete();
             return redirect()->back();
         }
-
     }
 }
