@@ -48,7 +48,7 @@ class AuthController extends Controller
             'password'=>$request->password,
         ];
         if(Auth::attempt($credentials)) {
-            return redirect('home');
+            return redirect('/');
         }
 
         return redirect()->route('signin')->with('error','Email or password invalid.');

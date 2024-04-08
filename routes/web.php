@@ -21,7 +21,7 @@ Route::group(['middleware' => 'guest'],function(){
 
 Route::group(['middleware' => 'auth'],function(){
     Route::get('/', [MainController::class, 'index'])->name('home.index');
-    Route::get('/home', [MainController::class, 'index'])->name('home.index');
+    // Route::get('/home', [MainController::class, 'index'])->name('home.index');
 
     Route::get('/workspace/create', [WorkspaceController::class, 'create'])->name('workspace.create');
     Route::post('/workspace/create', [WorkspaceController::class, 'store'])->name('workspace.store');
