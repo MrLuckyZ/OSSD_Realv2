@@ -43,15 +43,15 @@
             <?php $__currentLoopData = $selectedWorkspace->collections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $collection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
             <div class="row">
                 <div class="col p-0">
-                    <button class="btn-collapse dropdown hover-black d-flex align-items-center" style="height: 30px; width: 100%; text-decoration:none;" type="button" data-bs-toggle="collapse" data-bs-target="#collection_<?php echo e($collection->id); ?>" aria-expanded="false" aria-controls="collection_<?php echo e($collection->id); ?>">
-                        <span class="material-symbols-outlined ms-1 me-2" name="expand" id="<?php echo e($collection->id); ?>">chevron_right</span>
+                    <button class="btn-collapse dropdown hover-black d-flex align-items-center" style="height: 30px; width: 100%; text-decoration:none;" href="" type="button" data-bs-toggle="collapse" data-bs-target="#collection_<?php echo e($collection->id); ?>" aria-expanded="false" aria-controls="collection_<?php echo e($collection->id); ?>">
+                        <span class="material-symbols-outlined ms-1 me-2">chevron_right</span>
                         <span class="fs-6" style="font-weight: 500"><?php echo e($collection->name); ?></span>
                     </button>
-                    <div class="collapse" id="collection_<?php echo e($collection->id); ?>" <?php if(session()->has('collection_'.$collection->id.'_collapse') && session('collection_'.$collection->id.'_collapse')): ?> aria-expanded="true" <?php endif; ?>>
+                    <div class="collapse" id="collection_<?php echo e($collection->id); ?>">
                         
                         <?php $__currentLoopData = $collection->methods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $method): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                         <ul class="navbar-nav">
-                            <li><a href="<?php echo e(route('workspace.editCollection',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])); ?>"><label class="me-2" style="font-size: 14px;  font-weight: 500;" for=""><?php echo e($method->type); ?></label><label for="" style="font-size: 14px; color: #000;"><?php echo e($method->path); ?></label></a></li>
+                            <li><a href="<?php echo e(route('add.collection.tabs',['collection' => $collection->id])); ?>"><label class="me-2" style="font-size: 14px;  font-weight: 500;" for=""><?php echo e($method->type); ?></label><label for="" style="font-size: 14px; color: #000;"><?php echo e($method->path); ?></label></a></li>
                         </ul>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </div>
@@ -65,60 +65,47 @@
     <!-- Main Content -->
     <div class="" style="width: 100%;">
         <!-- Nav Tabs -->
-        <ul class="nav nav-tabs flex-row" role="tablist" style="height: 55px;">
+        <ul class="nav nav-tabs flex-row" style="height: 55px;">
             <?php
                 $collection_tabs = session('collection_tabs', []);
-            ?>     
-            <?php $__currentLoopData = array_reverse($collection_tabs); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $collection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <li class="nav-items">
-                <button class="nav-link fst-italic <?php if(request()->routeIs('workspace.editCollection') && request('collection') == $collection->id): ?> active <?php endif; ?>" onclick="window.location='<?php echo e(route('workspace.editCollection',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])); ?>'" role="tab" id="view_<?php echo e($collection->id); ?>" data-bs-toggle="tab">
-                <?php echo e($collection->name); ?>
+            ?>
+            <?php if(is_array($collection_tabs) && count($collection_tabs) > 0): ?>
+                <?php $__currentLoopData = $collection_tabs; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $collection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                    <li class="nav-items">
+                        <button class="nav-link fst-italic" data-bs-toggle="tab" href="#collection_<?php echo e($collection->id); ?>"><?php echo e($collection->name); ?>
 
-                    <a class="btn fs-5 p-0 material-symbols-outlined" href='<?php echo e(route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])); ?>'">close</a>
-                </button>
-                </li>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            <a style="text-decoration: none" href="<?php echo e(route('workspace.editCollection',['workspace' => $selectedWorkspace->id, 'collection' => -1])); ?>" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
+                            <a class="btn d-flex justify-content-center align-items-center p-1" href="<?php echo e(route('delete.collection.tabs', ['collection' => $collection->id])); ?>">
+                                <span class="material-symbols-outlined">close</span>
+                            </a>
+                        </button>
+                    </li>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            <?php endif; ?>
+            <a style="text-decoration: none" href="" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
                 <span class="material-symbols-outlined">add</span>
             </a>
         </ul>
-        <!-- Tabs Content -->
-        <div class="tab-content">
-          <?php echo $__env->yieldContent('collection_template'); ?>
-        </div>
+        
     </div>
 </section>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
-    const collapseList = document.querySelectorAll('.collapse');
+       document.addEventListener('DOMContentLoaded', function() {
+        const btnCollapse = document.querySelectorAll('.btn-collapse');
 
-    collapseList.forEach(function(collapse) {
-        const chevron = collapse.previousElementSibling.querySelector('.material-symbols-outlined[name="expand"]');
-        const id = collapse.getAttribute('id');
-        const isExpanded = sessionStorage.getItem(id);
-
-        if (isExpanded === 'true') {
-            collapse.classList.add('show');
-            chevron.textContent = 'expand_more';
-        }
-
-        collapse.addEventListener('show.bs.collapse', function() {
-            sessionStorage.setItem(id, 'true');
-            chevron.textContent = 'expand_more';
+        btnCollapse.forEach(function(btn) {
+            btn.addEventListener('click', function() {
+                const chevron = this.querySelector('.material-symbols-outlined');
+                    if (chevron.textContent.trim() === 'chevron_right') {
+                        chevron.textContent = 'expand_more';
+                    } else {
+                        chevron.textContent = 'chevron_right';
+                    }
+                });
+            });
         });
-
-        collapse.addEventListener('hide.bs.collapse', function() {
-            sessionStorage.setItem(id, 'false');
-            chevron.textContent = 'chevron_right';
-        });
-    });
-});
-
-
-
         document.addEventListener('DOMContentLoaded', function() {
             const labels = document.querySelectorAll('.navbar-nav li label:first-child');
 
