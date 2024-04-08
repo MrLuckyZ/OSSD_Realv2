@@ -28,7 +28,7 @@
                 </button>
                 <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
                   <li><a class="dropdown-item " href="<?php echo e(route('workspace.setting',['workspace' => $selectedWorkspace->id])); ?>">Setting</a></li>
-                  <li><a class="dropdown-item" href="#">Delete</a></li>
+                  <li><a class="dropdown-item" href="<?php echo e(route('workspace.deleteWorkspace',['workspace' => $selectedWorkspace->id])); ?>">Delete</a></li>
                 </ul>
             </div>
         </div>
