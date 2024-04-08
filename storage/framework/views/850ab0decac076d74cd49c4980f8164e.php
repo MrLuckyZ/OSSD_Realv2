@@ -96,4 +96,4 @@
     </script>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.auth_default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\MrLucky\Downloads\clicknext_project-main\api-doc-app\resources\views/auth/signin.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.auth_default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH /Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/resources/views/Auth/signin.blade.php ENDPATH**/ ?>

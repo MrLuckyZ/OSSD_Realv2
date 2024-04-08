@@ -27,7 +27,7 @@
                     <span class="material-icons mt-2">more_horiz</span>
                 </button>
                 <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
-                  <li><a class="dropdown-item" href="#">Setting</a></li>
+                  <li><a class="dropdown-item " href="<?php echo e(route('workspace.setting',['workspace' => $selectedWorkspace->id])); ?>">Setting</a></li>
                   <li><a class="dropdown-item" href="#">Delete</a></li>
                 </ul>
             </div>
@@ -74,14 +74,11 @@
                 <button class="nav-link fst-italic <?php if(request()->routeIs('workspace.editCollection') && request('collection') == $collection->id): ?> active <?php endif; ?>" onclick="window.location='<?php echo e(route('workspace.editCollection',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])); ?>'" role="tab" id="view_<?php echo e($collection->id); ?>" data-bs-toggle="tab">
                 <?php echo e($collection->name); ?>
 
-                <?php echo e($collection->id); ?>
-
-
-                <a class="btn fs-5 p-0 material-symbols-outlined" onclick="window.location='<?php echo e(route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])); ?>'">close</a>
-            </button>
+                    <a class="btn fs-5 p-0 material-symbols-outlined" href='<?php echo e(route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])); ?>'">close</a>
+                </button>
                 </li>
             <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            <a style="text-decoration: none" href="<?php echo e(route('add.new.tabs')); ?>" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
+            <a style="text-decoration: none" href="<?php echo e(route('workspace.editCollection',['workspace' => $selectedWorkspace->id, 'collection' => -1])); ?>" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
                 <span class="material-symbols-outlined">add</span>
             </a>
         </ul>
