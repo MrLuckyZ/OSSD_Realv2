@@ -12,7 +12,7 @@
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
     'cipher' => 'AES-256-CBC',
-    'key' => 'base64:BfQIAyNScY/r/aubxnKVD8rLduCrhdrmxXxplnGy+GQ=',
+    'key' => 'base64:DZpJB9sQPBtKEibmlq9WEmKTn2XT2KdbYdx4+oD+zl0=',
     'previous_keys' => 
     array (
     ),
@@ -149,8 +149,8 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/storage/framework/cache/data',
-        'lock_path' => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/storage/framework/cache/data',
+        'path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\framework/cache/data',
+        'lock_path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -319,13 +319,13 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/storage/app',
+        'root' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\app',
         'throw' => false,
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/storage/app/public',
+        'root' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
         'throw' => false,
@@ -345,7 +345,7 @@
     ),
     'links' => 
     array (
-      '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/public/storage' => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/storage/app/public',
+      'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\public\\storage' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\app/public',
     ),
   ),
   'logging' => 
@@ -370,14 +370,14 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/storage/logs/laravel.log',
+        'path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\logs/laravel.log',
         'level' => 'debug',
         'replace_placeholders' => true,
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/storage/logs/laravel.log',
+        'path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
         'replace_placeholders' => true,
@@ -442,7 +442,7 @@
       ),
       'emergency' => 
       array (
-        'path' => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/storage/logs/laravel.log',
+        'path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -505,7 +505,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/resources/views/vendor/mail',
+        0 => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -596,7 +596,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/storage/framework/sessions',
+    'files' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -612,23 +612,6 @@
     'http_only' => true,
     'same_site' => 'lax',
     'partitioned' => false,
-  ),
-  'hashing' => 
-  array (
-    'driver' => 'bcrypt',
-    'bcrypt' => 
-    array (
-      'rounds' => '12',
-      'verify' => true,
-    ),
-    'argon' => 
-    array (
-      'memory' => 65536,
-      'threads' => 1,
-      'time' => 4,
-      'verify' => true,
-    ),
-    'rehash_on_login' => true,
   ),
   'broadcasting' => 
   array (
@@ -686,14 +669,6 @@
       ),
     ),
   ),
-  'view' => 
-  array (
-    'paths' => 
-    array (
-      0 => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/resources/views',
-    ),
-    'compiled' => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2/storage/framework/views',
-  ),
   'cors' => 
   array (
     'paths' => 
@@ -721,6 +696,31 @@
     ),
     'max_age' => 0,
     'supports_credentials' => false,
+  ),
+  'hashing' => 
+  array (
+    'driver' => 'bcrypt',
+    'bcrypt' => 
+    array (
+      'rounds' => '12',
+      'verify' => true,
+    ),
+    'argon' => 
+    array (
+      'memory' => 65536,
+      'threads' => 1,
+      'time' => 4,
+      'verify' => true,
+    ),
+    'rehash_on_login' => true,
+  ),
+  'view' => 
+  array (
+    'paths' => 
+    array (
+      0 => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\resources\\views',
+    ),
+    'compiled' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\framework\\views',
   ),
   'flare' => 
   array (
@@ -805,7 +805,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => '/Applications/XAMPP/xamppfiles/htdocs/OSSD_Realv2',
+    'remote_sites_path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',

@@ -50,14 +50,12 @@ class AuthController extends Controller
         if(Auth::attempt($credentials)) {
             return redirect('/');
         }
-
         return redirect()->route('signin')->with('error','Email or password invalid.');
     }
 
     public function logout()
     {
         Auth::logout();
-
         return redirect()->route('login');
     }
 
