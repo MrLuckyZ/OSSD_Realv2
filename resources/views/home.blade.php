@@ -10,7 +10,7 @@
                 @if ($index < 5)
                     <li class="d-flex align-items-center custom-table" style="height: 50px">
                         <a class="link-black" style="width: 100%; height:100%"
-                            href="{{ route('workspace.collections', ['workspace' => $workspace->id]) }}">
+                            href={{ route('workspace.index', ['workspace' => $workspace->id]) }}>
                             <div class="col-9 d-flex align-items-center ps-4" style="height:100%">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="me-2"
                                     viewBox="0 0 16 16" width="18" height="18">
@@ -39,7 +39,7 @@
                 @if ($index < 5)
                     <li class="d-flex align-items-center custom-table" style="height: 50px">
                         <a class="link-black" style="width: 100%; height:100%"
-                            href="{{ route('workspace.collections', ['workspace' => $workspace->id]) }}">
+                            href="{{ route('workspace.index', ['workspace' => $workspace->id]) }}">
                             <div class="col-9 d-flex align-items-center ps-4" style="height:100%">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="me-2"
                                     viewBox="0 0 16 16" width="18" height="18">
