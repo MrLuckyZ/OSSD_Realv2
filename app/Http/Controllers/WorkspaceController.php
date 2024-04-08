@@ -28,6 +28,7 @@ class WorkspaceController extends Controller
     {
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = Workspace::find($id);
+        
         return view('setting_work', $data);
     }
     public function create()
@@ -171,6 +172,14 @@ class WorkspaceController extends Controller
 
     }
     
+    public function view_profile(Request $request,$id){
+        $data = $request->session()->all();
+        $data['workspaces'] = Workspace::get()->all();
+        $user = User::find($id);
+        $data['user'] = $user;
+        return view('view_profile', $data);
+    }
+
     public function delete_workspace(Request $request,$id){
         $selectedWorkspace = Workspace::find($id);
         
