@@ -7,7 +7,8 @@ use App\Models\Workspace;
 
 class MainController extends Controller
 {
-    public function index() {
+    public function index()
+    {
         $data['workspaces'] = Workspace::get()->all();
         return view('home', $data);
     }

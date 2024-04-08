@@ -71,7 +71,7 @@ app('router')->setCompiledRoutes(
         array (
           0 => 
           array (
-            '_route' => 'generated::MpJdnLXiFTiW7Ndl',
+            '_route' => 'generated::4Ie5wbhZxOJ5Ycix',
           ),
           1 => NULL,
           2 => 
@@ -614,7 +614,7 @@ app('router')->setCompiledRoutes(
       'waitSeconds' => NULL,
       'withTrashed' => false,
     ),
-    'generated::MpJdnLXiFTiW7Ndl' => 
+    'generated::4Ie5wbhZxOJ5Ycix' => 
     array (
       'methods' => 
       array (
@@ -633,7 +633,7 @@ app('router')->setCompiledRoutes(
 
                     return \\Illuminate\\Support\\Facades\\View::file(\'C:\\\\Users\\\\MrLucky\\\\Desktop\\\\Try\\\\OSSDProject\\\\OSSD_Realv2\\\\vendor\\\\laravel\\\\framework\\\\src\\\\Illuminate\\\\Foundation\\\\Configuration\'.\'/../resources/health-up.blade.php\');
                 }";s:5:"scope";s:54:"Illuminate\\Foundation\\Configuration\\ApplicationBuilder";s:4:"this";N;s:4:"self";s:32:"00000000000005320000000000000000";}}',
-        'as' => 'generated::MpJdnLXiFTiW7Ndl',
+        'as' => 'generated::4Ie5wbhZxOJ5Ycix',
       ),
       'fallback' => false,
       'defaults' => 

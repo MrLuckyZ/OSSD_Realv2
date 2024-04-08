@@ -43,7 +43,7 @@
                     </div>
                 </div>
                 @foreach ($collections as $data_collection => $collection)
-                    @if ($data_collection ->status="deleted")
+                    @if ($data_collection->status = 'deleted')
                         <div class="d-flex align-items-center" style="height: 50px ; border-top:#f2f2f2 solid 1px">
                             <div class="col d-flex align-items-center">
                                 <label class="ms-4">Test name</label>
@@ -54,14 +54,18 @@
                             <div class="col d-flex align-items-center">
                                 <label class="ms-4">
                                     <div class="dropdown p-0 ms-4">
-                                        <button class="btn" type="button" id="trash_option"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn" type="button" id="trash_option" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
                                             <span class="material-icons mt-2">more_horiz</span>
                                         </button>
-                                        <ul class="dropdown-menu pane p-1 align-items-center" style="width:150px" aria-labelledby="workspace_option">
-                                            <li><a style="width: 100%" class="btn btn-danger mb-1" href="#">Delete</a></li>
-                                            <li><a style="width: 100%" class="btn btn-secondary mb-1" href="#">Cancel</a></li>
-                                            <li><a style="width: 100%" class="btn btn-success" href="#">Recover</a></li>
+                                        <ul class="dropdown-menu pane p-1 align-items-center" style="width:150px"
+                                            aria-labelledby="workspace_option">
+                                            <li><a style="width: 100%" class="btn btn-danger mb-1" href="#">Delete</a>
+                                            </li>
+                                            <li><a style="width: 100%" class="btn btn-secondary mb-1"
+                                                    href="#">Cancel</a></li>
+                                            <li><a style="width: 100%" class="btn btn-success" href="#">Recover</a>
+                                            </li>
                                         </ul>
                                     </div>
                                 </label>
