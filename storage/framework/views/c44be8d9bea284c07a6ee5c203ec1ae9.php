@@ -151,6 +151,20 @@
             border-radius: 5px;
             box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
         }
+        .table-form {
+            border: 2px solid #F2F2F2;
+            border-radius: 5px;
+        }
+
+        .custom-textfield{
+            border: none;
+            outline: none;
+        }
+        .custom-textfield:focus{
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
         .textfield {
             width: auto;
             height: 45px;
@@ -164,6 +178,10 @@
             border:dodgerblue solid 2px;
             box-shadow: 0px 0px 0px 3px rgba(30, 143, 255, 0.3);
             transition: all 0.3s;
+        }
+        .btn:focus{
+            border: none;
+            box-shadow: none;
         }
         .btn-dropdown{
             height: 100%;
@@ -411,7 +429,7 @@
      <aside class="d-flex flex-shrink-0 flex-column primary" style="width:5.625rem; min-height: 100vh; overflow-y: auto;">
         <div class="list-group flex-column mb-auto">
             <a href="<?php echo e(route('home.index')); ?>" style="height: 65px" class="text-decoration-none d-flex justify-content-center align-items-center">
-                <img width="50px" src="https://media.discordapp.net/attachments/994685233087643719/1215261876972429323/circle_logo.png?ex=65fc1bd1&is=65e9a6d1&hm=2ca5c2f0daef63d683772b7d936e3398948ccc82dff64fe57dcca0eedd499900&=&format=webp&quality=lossless" alt="clicknext-logo">
+                <img width="50px" src="<?php echo e(url('/assets/icon/clicknext_logo.webp')); ?>" alt="clicknext-logo">
             </a>
             <?php echo $__env->yieldContent('sidebar'); ?>
         </div>

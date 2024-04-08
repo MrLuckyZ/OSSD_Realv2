@@ -27,18 +27,13 @@ Route::group(['middleware' => 'auth'],function(){
     Route::post('/workspace/create', [WorkspaceController::class, 'store'])->name('workspace.store');
 
     Route::get('/workspace/{workspace}', [WorkspaceController::class, 'index'])->name('workspace.index');
-    Route::get('/workspace/{workspace}/collections', [WorkspaceController::class, 'collections'])->name('workspace.collections');
+    Route::get('/workspace/{workspace}/collection', [WorkspaceController::class, 'collections'])->name('workspace.collections');
+    Route::get('/workspace/{workspace}/collection/edit_{collection}', [WorkspaceController::class, 'editCollection'])->name('workspace.editCollection');
     Route::get('/workspace/{workspace}/history', [WorkspaceController::class, 'history'])->name('workspace.history');
     Route::get('/workspace/{workspace}/trash', [WorkspaceController::class, 'trash'])->name('workspace.trash');
-    Route::get('/add-collections-tabs/{collection}', [WorkspaceController::class, 'addToCollectionTabs'])->name('add.collection.tabs');
     Route::get('/delete-collections-tabs/{collection}', [WorkspaceController::class, 'deleteFromCollectionTabs'])->name('delete.collection.tabs');
-    Route::get('/workspace/{workspace}/collections/{collection}', [WorkspaceController::class, 'viewCollection'])->name('workspace.viewCollection');
 
-    Route::get('/workspace/{workspace}/delete-collection', [WorkspaceController::class, 'deleteCollection'])->name('workspace.deleteCollection');
-
-    Route::get('/all-workspace', [WorkspaceController::class, 'view_allworkspace'])->name('workspace.all_workspace');
-
-    Route::get('/workspace/{workspace}/add-file', [WorkspaceController::class, 'add_file'])->name('workspace.add_file');
+    Route::get('/workspace/{workspace}/setting', [WorkspaceController::class,'setting'])->name('workspace.setting');
 
     Route::delete('/logout',[AuthController::class,'logout'])->name('logout');
 });

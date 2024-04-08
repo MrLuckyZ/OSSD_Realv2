@@ -291,7 +291,7 @@
                     <p class="mb-5" style="font-size: 32px; font-weight: 300">API Documentation & Design Tools</p>
                 </div>
                 <div>
-                    <img style="border-radius: 100%;" src="https://cdn.discordapp.com/attachments/994685233087643719/1217123237176152244/4579502.jpg?ex=6602e158&is=65f06c58&hm=a943c0da042e95d7de8aa002260be016ea51314ab6b9d9d524419c5ec8a17095&" alt="" width="460px" height="460px">
+                    <img src="{{ url('/assets/icon/singin_logo.webp') }}" alt="" width="460px" height="460px">
                 </div>
             </div>
             <div class="col">

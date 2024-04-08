@@ -151,6 +151,20 @@
             border-radius: 5px;
             box-shadow: 0px 0px 10px 1px rgba(0, 0, 0, 0.1);
         }
+        .table-form {
+            border: 2px solid #F2F2F2;
+            border-radius: 5px;
+        }
+
+        .custom-textfield{
+            border: none;
+            outline: none;
+        }
+        .custom-textfield:focus{
+            border: none;
+            outline: none;
+            box-shadow: none;
+        }
         .textfield {
             width: auto;
             height: 45px;
@@ -164,6 +178,10 @@
             border:dodgerblue solid 2px;
             box-shadow: 0px 0px 0px 3px rgba(30, 143, 255, 0.3);
             transition: all 0.3s;
+        }
+        .btn:focus{
+            border: none;
+            box-shadow: none;
         }
         .btn-dropdown{
             height: 100%;
@@ -461,7 +479,7 @@
                     </ul>
                 </div>
                 <div class="row align-items-end mt-auto" style="border-top: #F2F2F2 solid 2px;">
-                    <a href="<?php echo e(route('workspace.all_workspace')); ?>" class="link-grey">View all workspaces <i style="font-size: 12px;" class="ps-2 fa-solid fa-arrow-right"></i></a>
+                    <a href="" class="link-grey">View all workspaces <i style="font-size: 12px;" class="ps-2 fa-solid fa-arrow-right"></i></a>
                 </div>
             </div>
 
