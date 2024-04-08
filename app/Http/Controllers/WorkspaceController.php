@@ -101,7 +101,6 @@ class WorkspaceController extends Controller
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = $selectedWorkspace;
 
-        
         $collection = $selectedWorkspace->collections();
         $data['collections'] = $collection;
 
