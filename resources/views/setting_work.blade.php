@@ -72,8 +72,8 @@
         </div>
         {{-- ปุ่ม OK กับ BACK --}}
         <div class="ps-4 mt-5">
-            <button class="btn btn-primary me-4" type="button" style="width: 69px; height: 35px;">OK</button>
-            <button class="btn btn-secondary" type="button" style="width: 69px; height: 35px;">Back</button>
+            <a href="" class="btn btn-primary me-4" type="button" style="width: 69px; height: 35px;">Ok</a>
+            <a href="{{route('workspace.collections',['workspace' => $selectedWorkspace->id])}}" class="btn btn-secondary" type="button" style="width: 69px; height: 35px;">Back</a>
         </div>
     </div>
 @endsection
