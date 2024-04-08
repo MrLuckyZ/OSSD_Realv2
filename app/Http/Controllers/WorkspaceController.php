@@ -98,47 +98,6 @@ class WorkspaceController extends Controller
         return view('trash', $data);
     }
 
-
-
-    public function addToCollectionTabs(Request $request, $id) {
-        $collection = Collection::find($id);
-        if ($request->session()->has('collection_tabs')) {
-            $collection_tabs = $request->session()->get('collection_tabs');
-
-            if (!in_array($id, array_column($collection_tabs, 'id'))) {
-                $collection_tabs[] = $collection;
-            }  
-        } else {
-            $collection_tabs = [];
-            $collection_tabs[] = $collection;
-        }      
-    
-        $request->session()->put('collection_tabs', $collection_tabs);
-
-        return redirect()->back();
-    }
-
-    public function addNewTabs(Request $request) {
-        $collection = new Collection;
-        $collection->name = 'New Collection';
-        $collection->user_create = auth()->user()->user_id;
-        $collection->id = -1;
-        if ($request->session()->has('collection_tabs')) {
-            $collection_tabs = $request->session()->get('collection_tabs');
-
-            if (!in_array(-1, array_column($collection_tabs, 'id'))) {
-                $collection_tabs[] = $collection;
-            }  
-        } else {
-            $collection_tabs = [];
-            $collection_tabs[] = $collection;
-        }      
-    
-        $request->session()->put('collection_tabs', $collection_tabs);
-
-        return redirect()->back();
-    }
-
     public function deleteFromCollectionTabs(Request $request,$id) {
         $selectedWorkspaceId = $request->session()->get('selected_workspace_id');
         $workspace = Workspace::find($selectedWorkspaceId);
@@ -160,30 +119,6 @@ class WorkspaceController extends Controller
                 return redirect()->route('workspace.collections',['workspace'=>$workspace->id]);
             }
         }
-    }
-    
-
-    public function viewCollection(Request $request,$workSpaceid,$id) {
-        $selectedWorkspaceId = $request->session()->get('selected_workspace_id');
-        $selectedWorkspace = Workspace::find($selectedWorkspaceId);
-
-        if (!$selectedWorkspace) {
-            return redirect()->route('home.index')->with('error', 'Workspace not found');
-        }
-        if($id == -1){
-            $collection = new Collection;
-            $collection->id = -1;
-            $collection->name = 'New Collection';
-        } 
-        else {
-            $collection = Collection::find($id);
-        }
-        $data = $request->session()->all();
-        $data['workspaces'] = Workspace::get()->all();
-        $data['selectedWorkspace'] = $selectedWorkspace;
-        $data['selectedCollection'] = $collection;
-
-        return view('collection_template', $data);
     }
     
     public function editCollection(Request $request,$workSpaceid,$id) {
