@@ -62,8 +62,9 @@
                 </div>
                 <!-- Collections List -->
                 @foreach ($selectedWorkspace->collections as $collection)
+            @if ($collection->status != 0)
                     <div class="row">
-                        <div class="col p-0">
+                        <div class="col p-0 d-flex">
                             <button class="btn-collapse dropdown hover-black d-flex align-items-center"
                                 style="height: 30px; width: 100%; text-decoration:none;" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#collection_{{ $collection->id }}"
@@ -71,59 +72,66 @@
                                 <span class="material-symbols-outlined ms-1 me-2" name="expand"
                                     id="{{ $collection->id }}">chevron_right</span>
                                 <span class="fs-6" style="font-weight: 500">{{ $collection->name }}</span>
+                        {{-- ปุ่ม Rename กับ Delete Collection --}}
+                        <button class="btn d-flex justify-content-center align-items-center mt-1" style="height: 25px;" type="button" id="workspace_option" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="material-icons">more_horiz</span>
+                        </button>
+                        <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
+                            <li><a class="dropdown-item" href="#">Rename</a></li>
+                            <li><a class="dropdown-item" href="{{Route('move.trash.collection',['collection' => $collection->id])}}">Delete</a></li>
+                        </ul>
                             </button>
-                            <div class="collapse" id="collection_{{ $collection->id }}"
+                </div>
+                        <div class="collapse" id="collection_{{ $collection->id }}"
                                 @if (session()->has('collection_' . $collection->id . '_collapse') &&
                                         session('collection_' . $collection->id . '_collapse')) aria-expanded="true" @endif>
-                                {{-- Method List --}}
-                                @foreach ($collection->methods as $method)
-                                    <ul class="navbar-nav">
-                                        <li><a
+                            {{-- Method List --}}
+                            @foreach ($collection->methods as $method)
+                                <ul class="navbar-nav">
+                                    <li><a
                                                 href="{{ route('workspace.editCollection', ['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}"><label
                                                     class="me-2" style="font-size: 14px;  font-weight: 500;"
                                                     for="">{{ $method->type }}</label><label for=""
                                                     style="font-size: 14px; color: #000;">{{ $method->path }}</label></a>
                                         </li>
-                                    </ul>
-                                @endforeach
-                            </div>
+                                </ul>
+                            @endforeach
                         </div>
+                    
                     </div>
+            @endif
                 @endforeach
 
             </div>
         </div>
 
-        <!-- Main Content -->
-        <div class="" style="width: 100%;">
-            <!-- Nav Tabs -->
-            <ul class="nav nav-tabs flex-row" role="tablist" style="height: 55px;">
-                @php
-                    $collection_tabs = session('collection_tabs', []);
-                @endphp
-                @foreach (array_reverse($collection_tabs) as $collection)
+    <!-- Main Content -->
+    <div class="" style="width: 100%;">
+        <!-- Nav Tabs -->
+        <ul class="nav nav-tabs flex-row" role="tablist" style="height: 55px;">
+            @php
+                $collection_tabs = session('collection_tabs', []);
+            @endphp     
+            @foreach(array_reverse($collection_tabs) as $collection)
                     <li class="nav-items">
-                        <button class="nav-link fst-italic @if (request()->routeIs('workspace.editCollection') && request('collection') == $collection->id) active @endif"
-                            onclick="window.location='{{ route('workspace.editCollection', ['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'"
-                            role="tab" id="view_{{ $collection->id }}" data-bs-toggle="tab">
-                            {{ $collection->name }}
-                            <a class="btn fs-5 p-0 material-symbols-outlined"
-                                href='{{ route('delete.collection.tabs', ['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'">close</a>
+                        <button class="nav-link fst-italic" role="tab" id="view_{{$collection->id}}" data-bs-toggle="tab">
+                            {{$collection->name}}
+                            <a class="btn d-flex justify-content-center align-items-center p-1" href="{{ route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}">
+                                <span class="material-symbols-outlined">close</span>
+                            </a>
                         </button>
                     </li>
-                @endforeach
-                <a style="text-decoration: none"
-                    href="{{ route('workspace.editCollection', ['workspace' => $selectedWorkspace->id, 'collection' => -1]) }}"
-                    class="d-flex justify-content-center align-items-center p-2 add-nav-items">
-                    <span class="material-symbols-outlined">add</span>
-                </a>
-            </ul>
-            <!-- Tabs Content -->
-            <div class="tab-content">
-                @yield('collection_template')
-            </div>
+            @endforeach
+            <a style="text-decoration: none" href="{{route('add.new.tabs')}}" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
+                <span class="material-symbols-outlined">add</span>
+            </a>
+        </ul>
+        <!-- Tabs Content -->
+        <div class="tab-content">
+          @yield('collection_template')
         </div>
-    </section>
+    </div>
+</section>
 @endsection
 
 @section('js')
