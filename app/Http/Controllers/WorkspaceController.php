@@ -106,7 +106,6 @@ class WorkspaceController extends Controller
         $collection = $selectedWorkspace->collections();
         $data['collections'] = $collection;
 
-        Session::flush();
         return view('trash', $data);
     }
 
