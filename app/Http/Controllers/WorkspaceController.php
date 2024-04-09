@@ -311,8 +311,7 @@ class WorkspaceController extends Controller
         if (!$id) {
             return redirect()->route('home.index')->with('error', 'Collection not found');
         }
-        if($selectedCollection->methods() != null){
-            $selectedCollection->methods()->delete();
+        else{
             $selectedCollection->delete();
             return redirect()->back();
         }
@@ -333,7 +332,7 @@ class WorkspaceController extends Controller
     Carbon::setLocale('th'); 
     if ($selectedCollection) {
         $selectedCollection->deleted_at =Carbon::now('Asia/Bangkok');
-        $selectedCollection->status = '0'; // Update status to '0' to mark as trashed
+        $selectedCollection->status = 'deleted'; // Update status to '0' to mark as trashed
         $selectedCollection->save(); // Persist changes to the database
 
         return redirect()->back()->with('success', 'Collection successfully moved to trash.'); // Display success message
@@ -354,7 +353,7 @@ public function recovery_trash(Request $request, $id){
     $selectedCollection = Collection::find($id);
      
     if ($selectedCollection) {
-        $selectedCollection->status = '1'; 
+        $selectedCollection->status = 'active'; 
         $selectedCollection->save(); // Persist changes to the database
 
         return redirect()->back()->with('success', 'Collection successfully recovered.'); // Display success message

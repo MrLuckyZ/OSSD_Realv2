@@ -60,77 +60,75 @@
                 </div>
                 <!-- Collections List -->
                 <?php $__currentLoopData = $selectedWorkspace->collections; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $collection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-            <?php if($collection->status != 0): ?>
-                    <div class="row">
-                        <div class="col p-0 d-flex">
-                            <button class="btn-collapse dropdown hover-black d-flex align-items-center"
-                                style="height: 30px; width: 100%; text-decoration:none;" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#collection_<?php echo e($collection->id); ?>"
-                                aria-expanded="false" aria-controls="collection_<?php echo e($collection->id); ?>">
-                                <span class="material-symbols-outlined ms-1 me-2" name="expand"
-                                    id="<?php echo e($collection->id); ?>">chevron_right</span>
-                                <span class="fs-6" style="font-weight: 500"><?php echo e($collection->name); ?></span>
-                        
-                        <button class="btn d-flex justify-content-center align-items-center mt-1" style="height: 25px;" type="button" id="workspace_option" data-bs-toggle="dropdown" aria-expanded="false">
-                            <span class="material-icons">more_horiz</span>
-                        </button>
-                        <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
-                            <li><a class="dropdown-item" href="#">Rename</a></li>
-                            <li><a class="dropdown-item" href="<?php echo e(Route('move.trash.collection',['collection' => $collection->id])); ?>">Delete</a></li>
-                        </ul>
-                            </button>
-                </div>
-                        <div class="collapse" id="collection_<?php echo e($collection->id); ?>"
+                    <?php if($collection->status != 0): ?>
+                        <div class="row">
+                            <div class="col p-0 d-flex">
+                                <button class="btn-collapse dropdown hover-black d-flex align-items-center"
+                                    style="height: 30px; width: 100%; text-decoration:none;" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#collection_<?php echo e($collection->id); ?>"
+                                    aria-expanded="false" aria-controls="collection_<?php echo e($collection->id); ?>">
+                                    <span class="material-symbols-outlined ms-1 me-2" name="expand"
+                                        id="<?php echo e($collection->id); ?>">chevron_right</span>
+                                    <span class="fs-6" style="font-weight: 500"><?php echo e($collection->name); ?></span>
+                                    
+                                    <button class="btn d-flex justify-content-center align-items-center mt-1"
+                                        style="height: 25px;" type="button" id="workspace_option" data-bs-toggle="dropdown"
+                                        aria-expanded="false">
+                                        <span class="material-icons">more_horiz</span>
+                                    </button>
+                                    <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
+                                        <li><a class="dropdown-item" href="#">Rename</a></li>
+                                        <li><a class="dropdown-item"
+                                                href="<?php echo e(Route('move.trash.collection', ['collection' => $collection->id])); ?>">Delete</a>
+                                        </li>
+                                    </ul>
+                                </button>
+                            </div>
+                            <div class="collapse" id="collection_<?php echo e($collection->id); ?>"
                                 <?php if(session()->has('collection_' . $collection->id . '_collapse') &&
                                         session('collection_' . $collection->id . '_collapse')): ?> aria-expanded="true" <?php endif; ?>>
-                            
-                            <?php $__currentLoopData = $collection->methods; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $method): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <ul class="navbar-nav">
-                                    <li><a
-                                                href="<?php echo e(route('workspace.editCollection', ['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])); ?>"><label
-                                                    class="me-2" style="font-size: 14px;  font-weight: 500;"
-                                                    for=""><?php echo e($method->type); ?></label><label for=""
-                                                    style="font-size: 14px; color: #000;"><?php echo e($method->path); ?></label></a>
-                                        </li>
-                                </ul>
-                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                
+                                
+                            </div>
+
                         </div>
-                    
-                    </div>
-            <?php endif; ?>
+                    <?php endif; ?>
                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
 
             </div>
         </div>
 
-    <!-- Main Content -->
-    <div class="" style="width: 100%;">
-        <!-- Nav Tabs -->
-        <ul class="nav nav-tabs flex-row" role="tablist" style="height: 55px;">
-            <?php
-                $collection_tabs = session('collection_tabs', []);
-            ?>     
-            <?php $__currentLoopData = array_reverse($collection_tabs); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $collection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+        <!-- Main Content -->
+        <div class="" style="width: 100%;">
+            <!-- Nav Tabs -->
+            <ul class="nav nav-tabs flex-row" role="tablist" style="height: 55px;">
+                <?php
+                    $collection_tabs = session('collection_tabs', []);
+                ?>
+                <?php $__currentLoopData = array_reverse($collection_tabs); $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $collection): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <li class="nav-items">
-                        <button class="nav-link fst-italic" role="tab" id="view_<?php echo e($collection->id); ?>" data-bs-toggle="tab">
+                        <button class="nav-link fst-italic" role="tab" id="view_<?php echo e($collection->id); ?>"
+                            data-bs-toggle="tab">
                             <?php echo e($collection->name); ?>
 
-                            <a class="btn d-flex justify-content-center align-items-center p-1" href="<?php echo e(route('delete.collection.tabs',['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])); ?>">
+                            <a class="btn d-flex justify-content-center align-items-center p-1"
+                                href="<?php echo e(route('delete.collection.tabs', ['workspace' => $selectedWorkspace->id, 'collection' => $collection->id])); ?>">
                                 <span class="material-symbols-outlined">close</span>
                             </a>
                         </button>
                     </li>
-            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-            <a style="text-decoration: none" href="<?php echo e(route('add.new.tabs')); ?>" class="d-flex justify-content-center align-items-center p-2 add-nav-items">
-                <span class="material-symbols-outlined">add</span>
-            </a>
-        </ul>
-        <!-- Tabs Content -->
-        <div class="tab-content">
-          <?php echo $__env->yieldContent('collection_template'); ?>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                <a style="text-decoration: none" href="<?php echo e(route('add.new.tabs')); ?>"
+                    class="d-flex justify-content-center align-items-center p-2 add-nav-items">
+                    <span class="material-symbols-outlined">add</span>
+                </a>
+            </ul>
+            <!-- Tabs Content -->
+            <div class="tab-content">
+                <?php echo $__env->yieldContent('collection_template'); ?>
+            </div>
         </div>
-    </div>
-</section>
+    </section>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
