@@ -24,7 +24,7 @@
 @endsection
 
 @section('content')
-    Main
+
 @endsection
 
 @section('js')
