@@ -197,7 +197,6 @@ class WorkspaceController extends Controller
 
         if ($selectedWorkspace->collections() != null) {
             foreach ($selectedWorkspace->collections as $collection) {
-                $collection->methods()->delete();
                 $collection->delete();
             }
             $selectedWorkspace->delete();
