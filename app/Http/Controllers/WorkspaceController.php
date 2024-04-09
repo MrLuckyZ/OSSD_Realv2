@@ -363,7 +363,26 @@ public function recovery_trash(Request $request, $id){
 
     }
 
-    
+    public function view_profile(Request $request,$id){
+        $data = $request->session()->all();
+        $data['workspaces'] = Workspace::get()->all();
+        $user = User::find($id);
+        $data['user'] = $user;
+        return view('view_profile', $data);
+    }
+
+    public function edit_profile(Request $request,$id){
+
+        $user = User::find($id);
+
+        if($request -> has('name')){
+            $user -> name = $request->input('name');
+        }
+
+        $user->save();
+
+        return redirect()->back();
+    }
     
 
 }
