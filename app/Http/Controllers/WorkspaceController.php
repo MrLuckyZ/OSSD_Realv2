@@ -183,9 +183,9 @@ class WorkspaceController extends Controller
     public function edit_profile(Request $request,$id){
 
         $user = User::find($id);
-        
+
         if($request -> has('name')){
-            $user -> name = $request;
+            $user -> name = $request->input('name');
         }
 
         $user->save();
@@ -209,4 +209,6 @@ class WorkspaceController extends Controller
             return redirect()->back();
         }
     }
+
+    
 }

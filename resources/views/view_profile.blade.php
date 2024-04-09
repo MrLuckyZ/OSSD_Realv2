@@ -14,14 +14,17 @@
             </svg>
         </button>    
     </div>
-    <div class="d-flex align-items-center justify-content-center mt-5">
-        <label for="" class="me-3 " style="font-size: 20px">Name</label>
-        <input type="text" class="form-control" placeholder="{{$user->name ?? ''}}" style="width: 251px; height: 45px;" name = "name";>    
-    </div>
-    <div class="mt-5">
-        <a href="{{route('edit_profile', ['user' => $user])}}" class="btn btn-primary me-4" type="submit" style="width: 69px; height: 35px;">SAVE</a>
-        <button onclick="history.back()" class="btn btn-secondary" type="btn" style="width: 69px; height: 35px;">BACK</button>
-    </div>
+    <form action="{{route('edit_profile', ['user' => $user])}}" method="post" enctype="multipart/form-data">
+        @csrf
+        <div class="d-flex align-items-center justify-content-center mt-5">
+            <label for="" class="me-3 " style="font-size: 20px">Name</label>
+            <input type="text" class="form-control" name="name" placeholder="{{$user->name}}" style="width: 251px; height: 45px;" name>    
+        </div>
+        <div class="mt-5">
+            <button class="btn btn-primary me-4" type="submit" style="width: 69px; height: 35px;">SAVE</button>
+            <button onclick="history.back()" class="btn btn-secondary" type="btn" style="width: 69px; height: 35px;">BACK</button>
+        </div>
+    </form>
 </div>
 @endsection
 
