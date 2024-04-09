@@ -45,9 +45,11 @@
                         <li><a class="dropdown-item "
                                 href="{{ route('workspace.setting', ['workspace' => $selectedWorkspace->id]) }}">Setting</a>
                         </li>
-                        <li><a class="dropdown-item"
-                                href="{{ route('workspace.deleteWorkspace', ['workspace' => $selectedWorkspace->id]) }}">Delete</a>
-                        </li>
+                        <li>
+                            <a class="dropdown-item delete-workspace-btn"
+                               href="{{ route('workspace.deleteWorkspace', ['workspace' => $selectedWorkspace->id]) }}">Delete</a>
+                        </li>                        
+                        
                     </ul>
                 </div>
             </div>
@@ -78,7 +80,9 @@
                         </button>
                         <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
                             <li><a class="dropdown-item" href="#">Rename</a></li>
-                            <li><a class="dropdown-item" href="{{Route('move.trash.collection',['collection' => $collection->id])}}">Delete</a></li>
+
+                            <li><a class="dropdown-item delete-collection-btn" 
+                                href="{{Route('move.trash.collection',['collection' => $collection->id])}}">Delete</a></li>
                         </ul>
                             </button>
                 </div>
@@ -131,8 +135,64 @@
           @yield('collection_template')
         </div>
     </div>
+    <script>
+        // Select the delete button
+        const deleteBtn2 = document.querySelector('.delete-collection-btn');
+    
+        // Add a click event listener to the delete button
+        deleteBtn2.addEventListener('click', function(event2) {
+            event2.preventDefault(); // Prevent the default behavior of the link
+    
+            // Show the SweetAlert2 confirmation dialog
+            Swal.fire({
+                title: "Are you sure?,To Move this Collection to Trash",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, Move it!"
+            }).then((result2) => {
+                // If the user confirms the deletion
+                if (result2.isConfirmed) {
+                    // Redirect to the delete workspace route
+                    window.location.href = deleteBtn2.getAttribute('href');
+                }
+            });
+        });
+
+        // Select the delete button
+        const deleteBtn = document.querySelector('.delete-workspace-btn');
+    
+        // Add a click event listener to the delete button
+        deleteBtn.addEventListener('click', function(event) {
+            event.preventDefault(); // Prevent the default behavior of the link
+    
+            // Show the SweetAlert2 confirmation dialog
+            Swal.fire({
+                title: "Are you sure?,To delete this Workspace",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+            }).then((result) => {
+                // If the user confirms the deletion
+                if (result.isConfirmed) {
+                    // Redirect to the delete workspace route
+                    window.location.href = deleteBtn.getAttribute('href');
+                }
+            });
+        });
+    </script>
 </section>
+
 @endsection
+
+                
+
+
 
 @section('js')
     <script>

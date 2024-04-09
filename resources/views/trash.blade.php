@@ -59,7 +59,9 @@
                                             <span class="material-icons mt-2">more_horiz</span>
                                         </button>
                                         <ul class="dropdown-menu pane p-1 align-items-center" style="width:150px" aria-labelledby="workspace_option">
-                                            <li><a style="width: 100%" class="btn btn-danger mb-1" href="{{Route('delete.collection',['collection' => $collection->id])}}">Delete</a></li>
+                                            <li><a style="width: 100%" class="btn btn-danger mb-1 delete-collection-FR-btn
+                                                
+                                                " href="{{Route('delete.collection',['collection' => $collection->id])}}">Delete</a></li>
                                             <li><a style="width: 100%" class="btn btn-success" href="{{Route('recovery.trash',['collection' => $collection->id])}}">Recover</a></li>
                                             <li><a style="width: 100%" class="btn btn-secondary mb-1" href="#">Cancel</a></li>
                     
@@ -73,6 +75,32 @@
             </div>
         </ul>
     </div>
+    <script>
+         // Select the delete button
+         const deleteBtn = document.querySelector('.delete-collection-FR-btn');
+    
+    // Add a click event listener to the delete button
+    deleteBtn.addEventListener('click', function(event) {
+        event.preventDefault(); // Prevent the default behavior of the link
+
+        // Show the SweetAlert2 confirmation dialog
+        Swal.fire({
+            title: "Are you sure to delete this Collection Forever?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            // If the user confirms the deletion
+            if (result.isConfirmed) {
+                // Redirect to the delete workspace route
+                window.location.href = deleteBtn.getAttribute('href');
+            }
+        });
+    });
+    </script>
 @endsection
 
 @section('js')
