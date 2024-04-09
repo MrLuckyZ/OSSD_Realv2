@@ -76,16 +76,7 @@
                                 @if (session()->has('collection_' . $collection->id . '_collapse') &&
                                         session('collection_' . $collection->id . '_collapse')) aria-expanded="true" @endif>
                                 {{-- Method List --}}
-                                @foreach ($collection->methods as $method)
-                                    <ul class="navbar-nav">
-                                        <li><a
-                                                href="{{ route('workspace.editCollection', ['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}"><label
-                                                    class="me-2" style="font-size: 14px;  font-weight: 500;"
-                                                    for="">{{ $method->type }}</label><label for=""
-                                                    style="font-size: 14px; color: #000;">{{ $method->path }}</label></a>
-                                        </li>
-                                    </ul>
-                                @endforeach
+                                
                             </div>
                         </div>
                     </div>

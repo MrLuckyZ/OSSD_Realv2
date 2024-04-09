@@ -6,6 +6,12 @@ use Illuminate\Http\Request;
 use App\Models\Workspace;
 use App\Models\Collection;
 use App\Models\User;
+use App\Models\Method;
+use App\Models\Request_Header;
+use App\Models\Parameter;
+use App\Models\Response;
+use App\Models\Response_Body;
+
 use Session;
 
 
@@ -158,8 +164,6 @@ class WorkspaceController extends Controller
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = $workspace;
         $data['selectedCollection'] = $collection;
-        $methods = $collection->methods;
-        $data['methods'] = $methods;
         $request->session()->put('collection_tabs', $collection_tabs);
 
         return view('collection_template', $data);
@@ -188,4 +192,82 @@ class WorkspaceController extends Controller
             return redirect()->back();
         }
     }
+    public function import_file(Request $request, $workspaceId, $id)
+    {
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $extension = $file->getClientOriginalExtension();
+            if ($extension == 'json') {
+                $jsonContent = file_get_contents($file);
+                $data = json_decode($jsonContent, true);
+                
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    return response()->json(['message' => 'Invalid JSON format'], 400);
+                }
+            } else {
+                return response()->json(['message' => 'Invalid file type. Please upload a JSON file.'], 400);
+            }
+        } else {
+            return response()->json(['message' => 'No file uploaded. Please upload a file.'], 400);
+        }
+    
+        if ($request->session()->has('collection_tabs')) {
+            $collection_tabs = $request->session()->get('collection_tabs');
+            if ($request->session()->has('collection_tabs')) {
+                $collection_tabs = $request->session()->get('collection_tabs');
+                if (!is_null($collection_tabs)) {
+                    foreach ($collection_tabs as $collection) {
+                        if ($collection->id == $id) {
+                            if (!is_null($data)) {
+                                $json_request_header = $data['request-header'];
+                                $json_response = $data['data'];
+                                $json_status = $data['status'];
+
+                                if(!is_null($json_request_header)){
+                                    $method = new Method;
+                                    $method->type = $json_request_header['method'];
+                                    $method->route = $json_request_header['route'];
+                                    foreach($json_request_header as $key=>$value){
+                                        if($key != 'method' && $key != 'route'){
+                                            $request_header = new Request_Header;
+                                            $request_header->key = $key;
+                                            if($value['required'] == true){
+                                                $request_header->require = true;
+                                                $request_header_list[] = $request_header;
+
+                                            }                                          
+                                        }
+
+                                    }     
+                                }
+                                $method->request_header = $request_header_list;
+                                
+                                if(!is_null($json_response)){
+                                    foreach($json_response as $key => $value){
+                                        $response_body = new Response_body;
+                                        $response_body->key = $key;
+                                        $response_list[] = $response_body;
+                                    }
+                                    $response = new Response;
+                                    $response->response_body = $response_list;
+                                }
+                                $method->response = $response;
+                                $collection->method = $method;
+
+                            } else {
+                                return response()->json(['message' => 'Data is null'], 400);
+                            }
+                        }
+                    }
+                }
+            }
+            
+        }
+        $request->session()->put('collection_tabs', $collection_tabs);
+        $request->session()->put('selectedCollection', $collection);
+        dd($collection);
+
+        return redirect()->back();
+    }
+    
 }

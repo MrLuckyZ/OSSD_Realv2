@@ -8,8 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 class Method extends Model
 {
     use HasFactory;
-    public function collection()
-    {
-        return $this->belongsTo(collection::class);
-    }
+    private $type;
+    private $route;
+    private $request_header = [];
+    private $parameter = [];
+    private $body = [];
+    private $response = [];
+
+
 }

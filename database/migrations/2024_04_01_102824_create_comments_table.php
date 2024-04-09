@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->longText('detail');
             $table->string('user_comment');
-            $table->unsignedBigInteger('method_id')->nullable();
-            $table->foreign('method_id')->references('id')->on('methods');
+            $table->unsignedBigInteger('collection_id')->nullable();
+            $table->foreign('collection_id')->references('id')->on('collections');
             $table->timestamps();
         });
     }
