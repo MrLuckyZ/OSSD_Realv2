@@ -109,11 +109,14 @@
                                         </thead>
                                         {{-- ข้อมูลของ Request Headers --}}
                                         <tbody>
-                                        {{$method->request_header[0]}}
                                         @php
                                             $request_header[] = $method->request_header;
                                         @endphp
                                         @foreach ($request_header as $item)
+                                        @foreach ($item as $key)
+                                            {{$key->key}}
+                                        @endforeach
+                                        
                                             <tr>
                                                 <td class="col-1"
                                                     style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
