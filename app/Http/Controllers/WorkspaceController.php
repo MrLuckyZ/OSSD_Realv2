@@ -65,6 +65,8 @@ class WorkspaceController extends Controller
         $workspace_user = new Workspace_User;
         $workspace_user->user_id = $user->id;
         $workspace_user->workspace_id = $workspace->id;
+        $workspace_user->status = "1";
+
         $workspace_user->save();
         return redirect()->route('home.index')->with('success', 'Workspace has been created succesfully');
     }

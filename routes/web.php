@@ -18,11 +18,14 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/forgot-password', [AuthController::class, 'forgot'])->name('forgot');
 });
 
+    Route::post('/send-invitation/{workspace}', [TeamController::class, 'invitaion_post'])->name('invitation.post');
+    Route::post('/confirm-team-invite', [TeamController::class, 'confirm_post'])->name('invitation.confirm.post');
 
 
 
-Route::group(['middleware' => 'auth'], function () {
-    
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/viewteam-invite/{token}', [TeamController::class, 'viewteam_invite'])->name('view.invitationteam');
+
     Route::get('/', [MainController::class, 'index'])->name('home.index');
     // Route::get('/home', [MainController::class, 'index'])->name('home.index');
 
@@ -45,6 +48,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
 
-    Route::post('/send-invitation/{workspace}', [TeamController::class, 'invitaion_post'])->name('invitation.post');
+   
+
 
 });
