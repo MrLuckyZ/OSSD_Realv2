@@ -22,7 +22,7 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    <div class="p-0 mt-4 " style="height:300px;">
+    <div class="p-0 mt-4 " style="height:300px; margin-left:92px;">
         <h2 class="ps-4">Trash</h2>
         <p class="ms-4">
             Collections you delete will show up here. You can restore or permanently delete them.
@@ -52,11 +52,11 @@
                             <div class="col d-flex align-items-center">
                                 <label class="ms-4">
                                     <div class="dropdown p-0 ms-4">
-                                        <button class="btn" type="button" id="trash_option"
-                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        <button class="btn" type="button" id="trash_option" data-bs-toggle="dropdown"
+                                            aria-expanded="false">
                                             <span class="material-icons mt-2">more_horiz</span>
                                         </button>
-                                        <ul class="dropdown-menu pane p-1 align-items-center" style="width:150px" aria-labelledby="workspace_option">
+                                        <ul class="dropdown-menu pane p-1 align-items-center" style="width:150px;" aria-labelledby="workspace_option">
                                             <li><a style="width: 100%" class="btn btn-danger mb-1" href="<?php echo e(Route('delete.collection',['collection' => $collection->id])); ?>">Delete</a></li>
                                             <li><a style="width: 100%" class="btn btn-success" href="<?php echo e(Route('recovery.trash',['collection' => $collection->id])); ?>">Recover</a></li>
                                             <li><a style="width: 100%" class="btn btn-secondary mb-1" href="#">Cancel</a></li>

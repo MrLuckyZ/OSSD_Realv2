@@ -1,13 +1,10 @@
-@extends('layouts.default')
+<?php $__env->startSection('title', 'Home'); ?>
 
-@section('title', 'Home')
-
-@section('content')
-<div style="margin-left:90px;">
+<?php $__env->startSection('content'); ?>
     <div class="p-0 mt-4 " style="height:390px; width:404px">
         <h2 class="ps-4">Workspace settings</h2>
         <p class="text ps-4 mt-4" style="font-size: 20px;">Who can acess your workspace</p>
-        {{-- กล่องเลือก Team --}}
+        
         <div class="ps-4">
             <div class="d-flex">
                 <select style="height:60px" name="test" id="mySelect" onchange="changeRole()">
@@ -64,7 +61,7 @@
             </div>
 
         </div>
-        {{-- กล่องเชิญเข้า Team --}}
+        
         <div class="ps-4 mt-5 ">
             <p class="text mt-4" style="font-size: 20px;">People in this workspace</p>
             <div class="d-flex align-items-center">
@@ -73,15 +70,16 @@
                 <button style="height: 35px; width:69px; " class="btn btn-secondary" type="button">Invite</button>
             </div>
         </div>
-        {{-- ปุ่ม OK กับ BACK --}}
+        
         <div class="ps-4 mt-5">
             <a href="" class="btn btn-primary me-4" type="button" style="width: 69px; height: 35px;">Ok</a>
-            <a href="{{ route('workspace.collections', ['workspace' => $selectedWorkspace->id]) }}" class="btn btn-secondary"
+            <a href="<?php echo e(route('workspace.collections', ['workspace' => $selectedWorkspace->id])); ?>" class="btn btn-secondary"
                 type="button" style="width: 69px; height: 35px;">Back</a>
         </div>
     </div>
-</div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-@endsection
+<?php $__env->startSection('js'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\OSSD_Realv2\resources\views\setting_work.blade.php ENDPATH**/ ?>

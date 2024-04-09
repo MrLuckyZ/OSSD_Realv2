@@ -1,11 +1,9 @@
-@extends('layouts.default')
+<?php $__env->startSection('title', 'Create your workspace'); ?>
 
-@section('title', 'Create your workspace')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
     <div class="row" style="height: 100%; margin-left:90px;">
-        <form class="col-4 ps-4 pt-4" style=" action="{{ route('workspace.store') }}" method="POST" enctype="multipart/form-data">
-            @csrf
+        <form class="col-4 ps-4 pt-4" style=" action="<?php echo e(route('workspace.store')); ?>" method="POST" enctype="multipart/form-data">
+            <?php echo csrf_field(); ?>
             <h2>Create your workspaces</h2>
             <label label class="fs-6 fw-normal" for="">Name</label>
             <input class="textfield mt-2"
@@ -74,9 +72,9 @@
             <p>Customize this space to organize and share your API resources with your team.</p>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
     <script>
         const checkboxes = document.querySelectorAll('input[type="radio"]');
         checkboxes.forEach(checkbox => {
@@ -97,4 +95,6 @@
             });
         });
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\OSSD_Realv2\resources\views/create.blade.php ENDPATH**/ ?>

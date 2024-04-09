@@ -17,7 +17,7 @@
         integrity="sha384-4LISF5TTJX/fLmGSxO53rV4miRxdg84mZsxmO8Rx5jGtp/LbrixFETvWa5a6sESd" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <title>@yield('title')</title>
+    <title><?php echo $__env->yieldContent('title'); ?></title>
     <style>
         * {
             font-family: "Roboto", sans-serif;
@@ -494,21 +494,21 @@
 
 <body class="d-flex flex-row">
     <!-- Start Sidebar -->
-    <aside class="d-flex flex-shrink-0 flex-column primary" 
-        style="width:5.625rem; min-height: 100vh; overflow-y: auto; position:fixed;">
+    <aside class="d-flex flex-shrink-0 flex-column primary"
+        style="width:5.625rem; min-height: 100vh; overflow-y: auto;">
         <div class="list-group flex-column mb-auto">
-            <a href="{{ route('home.index') }}" style="height: 65px"
+            <a href="<?php echo e(route('home.index')); ?>" style="height: 65px"
                 class="text-decoration-none d-flex justify-content-center align-items-center">
-                <img width="50px" src="{{ url('/assets/icon/clicknext_logo.webp') }}" alt="clicknext-logo">
+                <img width="50px" src="<?php echo e(url('/assets/icon/clicknext_logo.webp')); ?>" alt="clicknext-logo">
             </a>
-            @yield('sidebar')
+            <?php echo $__env->yieldContent('sidebar'); ?>
         </div>
     </aside>
     <!-- End Sidebar -->
     <!-- Start Main -->
     <div class="d-flex flex-column container-fluid main p-0">
         <!-- Start Navbar -->
-        <nav class="ps-2 d-flex navbar navbar-light bg-white sticky-top" style="margin-left:92px;">
+        <nav class="ps-2 d-flex navbar navbar-light bg-white sticky-top">
             <div class="dropdown">
                 <input type="checkbox" id="dropdown-nav-toggle" class="dropdown-nav-toggle visually-hidden">
                 <button class="btn btn-dropdown btn-white dropdown d-flex align-items-center" style="height: 50px;"
@@ -530,19 +530,19 @@
                         </div>
                         <div class="col-5 d-flex align-items-center p-1" style="height: 40px;">
                             <a class="m-auto rounded-1 w-100 btn btn-secondary pt-1"
-                                href="{{ route('workspace.create') }}">Create Workspace</a>
+                                href="<?php echo e(route('workspace.create')); ?>">Create Workspace</a>
                         </div>
                     </div>
                     <div class="row">
                         <label style="color: #808080; font-size: 14px; font-weight: 500;">Recently visited</label>
                         <ul style="list-style-type:none;">
-                            @foreach ($workspaces as $index => $workspace)
-                                @if ($index < 3)
+                            <?php $__currentLoopData = $workspaces; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $workspace): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <?php if($index < 3): ?>
                                     <div class="row custom-table" style="border: none">
                                         <div class="col">
                                             <li class="d-flex align-items-center mt-1 link-black" style="height: 30px">
                                                 <a class="link-black" style="width: 100%; height:100%"
-                                                    href="{{ route('workspace.index', ['workspace' => $workspace->id]) }}">
+                                                    href="<?php echo e(route('workspace.index', ['workspace' => $workspace->id])); ?>">
                                                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                                         class="me-2" viewBox="0 0 16 16" width="18"
                                                         height="18">
@@ -551,13 +551,13 @@
                                                         </path>
                                                     </svg>
                                                     <label label class="fs-6 fw-normal cursor"
-                                                        for="">{{ $workspace->name }}</label>
+                                                        for=""><?php echo e($workspace->name); ?></label>
                                                 </a>
                                             </li>
                                         </div>
                                     </div>
-                                @endif
-                            @endforeach
+                                <?php endif; ?>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </ul>
                     </div>
                     <div class="row align-items-end mt-auto" style="border-top: #F2F2F2 solid 2px;">
@@ -573,30 +573,30 @@
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <img src="https://media.discordapp.net/attachments/994685233087643719/1215271120127791114/77ed449a829d201a7940b0f98d49ca5a3cf43dd9.jpg?ex=65fc246d&is=65e9af6d&hm=cc53b20e7bac20faa1f57f479c85b3a5c19f166a5ece6b0da943736fc79cb017&=&format=webp"
                         alt="" width="40" height="40" class="rounded-circle me-2">
-                    <span class="fs-5 fw-normal">{{ Auth::user()->name }}</span>
+                    <span class="fs-5 fw-normal"><?php echo e(Auth::user()->name); ?></span>
                     <span id="dropdown-profile-icon" class="material-icons">expand_more</span>
                 </button>
                 <ul class="dropdown-menu pane" aria-labelledby="dropdownMenuButton1">
                     <li><a class="dropdown-item" href="#">View Profile</a></li>
                     <li>
-                        <form action="{{ route('logout') }}" method="POST">
-                            @csrf
-                            @method('DELETE')
+                        <form action="<?php echo e(route('logout')); ?>" method="POST">
+                            <?php echo csrf_field(); ?>
+                            <?php echo method_field('DELETE'); ?>
                             <button class="dropdown-item" type="submit">Sign Out</button>
                         </form>
                     </li>
                 </ul>
             </div>
         </nav>
-        @if ($message = Session::get('success'))
-            <div class="alert alert-success" style="margin-left: 90px;">{{ $message }}</div>
-        @endif
+        <?php if($message = Session::get('success')): ?>
+            <div class="alert alert-success"><?php echo e($message); ?></div>
+        <?php endif; ?>
         <!-- Start Content -->
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
         <!-- End Content -->
     </div>
     <!-- End Main -->
-    @yield('js')
+    <?php echo $__env->yieldContent('js'); ?>
     <script>
         (() => {
             'use strict'
@@ -644,3 +644,4 @@
 </body>
 
 </html>
+<?php /**PATH C:\xampp\htdocs\OSSD_Realv2\resources\views\layouts\default.blade.php ENDPATH**/ ?>

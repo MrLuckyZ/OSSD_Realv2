@@ -1,4 +1,4 @@
-<?php $__env->startSection('title', 'History'); ?>
+<?php $__env->startSection('title', 'Workspace'); ?>
 
 <?php $__env->startSection('sidebar'); ?>
     <a href="<?php echo e(route('workspace.collections', ['workspace' => $selectedWorkspace->id])); ?>"
@@ -22,10 +22,10 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    History
+    Main
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\OSSD_Realv2\resources\views/history.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\OSSD_Realv2\resources\views\workspace.blade.php ENDPATH**/ ?>

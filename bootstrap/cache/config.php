@@ -12,7 +12,7 @@
     'fallback_locale' => 'en',
     'faker_locale' => 'en_US',
     'cipher' => 'AES-256-CBC',
-    'key' => 'base64:DZpJB9sQPBtKEibmlq9WEmKTn2XT2KdbYdx4+oD+zl0=',
+    'key' => 'base64:qJe2XogtJMmvwKPd9P/dMZC7yxYNuuQT2tU1bJGRMu4=',
     'previous_keys' => 
     array (
     ),
@@ -149,8 +149,8 @@
       'file' => 
       array (
         'driver' => 'file',
-        'path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\framework/cache/data',
-        'lock_path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\framework/cache/data',
+        'path' => 'C:\\xampp\\htdocs\\OSSD_Realv2\\storage\\framework/cache/data',
+        'lock_path' => 'C:\\xampp\\htdocs\\OSSD_Realv2\\storage\\framework/cache/data',
       ),
       'memcached' => 
       array (
@@ -319,13 +319,13 @@
       'local' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\app',
+        'root' => 'C:\\xampp\\htdocs\\OSSD_Realv2\\storage\\app',
         'throw' => false,
       ),
       'public' => 
       array (
         'driver' => 'local',
-        'root' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\app/public',
+        'root' => 'C:\\xampp\\htdocs\\OSSD_Realv2\\storage\\app/public',
         'url' => 'http://localhost/storage',
         'visibility' => 'public',
         'throw' => false,
@@ -345,7 +345,7 @@
     ),
     'links' => 
     array (
-      'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\public\\storage' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\app/public',
+      'C:\\xampp\\htdocs\\OSSD_Realv2\\public\\storage' => 'C:\\xampp\\htdocs\\OSSD_Realv2\\storage\\app/public',
     ),
   ),
   'logging' => 
@@ -370,14 +370,14 @@
       'single' => 
       array (
         'driver' => 'single',
-        'path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\OSSD_Realv2\\storage\\logs/laravel.log',
         'level' => 'debug',
         'replace_placeholders' => true,
       ),
       'daily' => 
       array (
         'driver' => 'daily',
-        'path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\OSSD_Realv2\\storage\\logs/laravel.log',
         'level' => 'debug',
         'days' => 14,
         'replace_placeholders' => true,
@@ -442,7 +442,7 @@
       ),
       'emergency' => 
       array (
-        'path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\logs/laravel.log',
+        'path' => 'C:\\xampp\\htdocs\\OSSD_Realv2\\storage\\logs/laravel.log',
       ),
     ),
   ),
@@ -505,7 +505,7 @@
       'theme' => 'default',
       'paths' => 
       array (
-        0 => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\resources\\views/vendor/mail',
+        0 => 'C:\\xampp\\htdocs\\OSSD_Realv2\\resources\\views/vendor/mail',
       ),
     ),
   ),
@@ -596,7 +596,7 @@
     'lifetime' => '120',
     'expire_on_close' => false,
     'encrypt' => false,
-    'files' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\framework/sessions',
+    'files' => 'C:\\xampp\\htdocs\\OSSD_Realv2\\storage\\framework/sessions',
     'connection' => NULL,
     'table' => 'sessions',
     'store' => NULL,
@@ -718,9 +718,9 @@
   array (
     'paths' => 
     array (
-      0 => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\resources\\views',
+      0 => 'C:\\xampp\\htdocs\\OSSD_Realv2\\resources\\views',
     ),
-    'compiled' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2\\storage\\framework\\views',
+    'compiled' => 'C:\\xampp\\htdocs\\OSSD_Realv2\\storage\\framework\\views',
   ),
   'flare' => 
   array (
@@ -805,7 +805,7 @@
     array (
     ),
     'enable_runnable_solutions' => NULL,
-    'remote_sites_path' => 'C:\\Users\\MrLucky\\Desktop\\Try\\OSSDProject\\OSSD_Realv2',
+    'remote_sites_path' => 'C:\\xampp\\htdocs\\OSSD_Realv2',
     'local_sites_path' => '',
     'housekeeping_endpoint_prefix' => '_ignition',
     'settings_file_path' => '',
