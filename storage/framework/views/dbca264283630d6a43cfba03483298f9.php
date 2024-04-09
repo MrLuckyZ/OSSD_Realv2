@@ -1,20 +1,18 @@
-@extends('layouts.auth_default')
-
-@section('title', 'Create your account')
-@section('content')
+<?php $__env->startSection('title', 'Create your account'); ?>
+<?php $__env->startSection('content'); ?>
     <div class="header mt-2 ms-2">
         <img src="https://cdn.discordapp.com/attachments/994685233087643719/1217121151285985350/clicknext_logo.png?ex=6602df67&is=65f06a67&hm=9b903fcb7daa77f74eb6166e5ecf0b998078316cf21d431e1dad8a376caa6082&"
             alt="" width="155px">
     </div>
     <div class="col d-flex flex-column align-items-center">
-        @if ($message = Session::get('success'))
-        <div class="alert alert-success">{{ $message }}</div>
-        @endif
+        <?php if($message = Session::get('success')): ?>
+        <div class="alert alert-success"><?php echo e($message); ?></div>
+        <?php endif; ?>
         <div class="body d-flex flex-column justify-center align-items-center" style="width: 310px; margin-top: 20%;">
             <label for="" class="mb-4" style="font-size: 32px;">Forgot your password</label>
            
-            <form action="{{route('ForgetPassword.post')}}" method="POST" >
-                @csrf
+            <form action="<?php echo e(route('ForgetPassword.post')); ?>" method="POST" >
+                <?php echo csrf_field(); ?>
             <div class="input-group mb-4">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="icon me-2 mt-2" viewBox="0 0 16 16"
                     width="18" height="18">
@@ -54,12 +52,12 @@
                     Google</label>
             </a>
             <p class="mb-4" style="font-size: 14px; font-weight:400; color: #808080;">Don't have an account yet?</p>
-            <a class="link-primary" href="{{ route('signup') }}">Create an account</a>
+            <a class="link-primary" href="<?php echo e(route('signup')); ?>">Create an account</a>
         </div>
     </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
     <script>
         function togglePasswordVisibility(inputId, iconId) {
             var checkbox = document.getElementById(inputId);
@@ -75,4 +73,6 @@
             checkbox.checked = !checkbox.checked;
         }
     </script>
-@endsection
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.auth_default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\OSSD_Realv2\resources\views/auth/forgot_password.blade.php ENDPATH**/ ?>
