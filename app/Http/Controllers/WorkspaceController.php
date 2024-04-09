@@ -374,10 +374,12 @@ public function recovery_trash(Request $request, $id){
 
         $user = User::find($id);
 
-        if($request -> has('name')){
-            $user -> name = $request->input('name');
+        if($request->has('name') && $request->input('name') !== null){
+            $user->name = $request->input('name');
+        } else {
+            return redirect()->back()->with('error', 'Name cannot be empty');
         }
-        
+    
         if($request->has('image')){
             $file = $request->file('avatar');
             $extend = $file->getClientOriginalExtension();
@@ -387,9 +389,8 @@ public function recovery_trash(Request $request, $id){
 
         $user->save();
 
-        return redirect()->back();
-
-
+        return redirect()->back()->with('success', 'Profile updated successfully');
+        
     }
     
 

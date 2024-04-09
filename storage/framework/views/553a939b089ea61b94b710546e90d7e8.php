@@ -1,14 +1,12 @@
-@extends('layouts.default')
+<?php $__env->startSection('title', 'Home'); ?>
 
-@section('title', 'Home')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 <div class="mt-5 text-center">
     <h2 class="text-center">View Profile</h2>
-    <form action="{{route('edit_profile', ['user' => $user])}}" method="post" enctype="multipart/form-data">
-        @csrf
+    <form action="<?php echo e(route('edit_profile', ['user' => $user])); ?>" method="post" enctype="multipart/form-data">
+        <?php echo csrf_field(); ?>
         <div class="container mb-3" style="position: relative;">
-            <img class="mt-4" style="width: 280px; height: 280px; border-radius: 50%;" src="{{url('/assets/icon/cat.png')}}" alt="" class="rounded-circle me-2">
+            <img class="mt-4" style="width: 280px; height: 280px; border-radius: 50%;" src="<?php echo e(url('/assets/icon/cat.png')); ?>" alt="" class="rounded-circle me-2">
             <button class="btn p-0" style="border:none; top: 85%; left: 56%; position:absolute;">
                 <svg style="" width="45" height="45" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="27" cy="27" r="27" fill="#EF5B25"/>
@@ -18,7 +16,7 @@
         </div>
         <div class="d-flex align-items-center justify-content-center mt-5">
             <label for="" class="me-3 " style="font-size: 20px">Name</label>
-            <input type="text" class="form-control" name="name" placeholder="{{$user->name}}" style="width: 251px; height: 45px;" name>    
+            <input type="text" class="form-control" name="name" placeholder="<?php echo e($user->name); ?>" style="width: 251px; height: 45px;" name>    
         </div>
         <div class="mt-5">
             <button class="btn btn-primary me-4" type="submit" style="width: 69px; height: 35px;">SAVE</button>
@@ -26,7 +24,9 @@
         </div>
     </form>
 </div>
-@endsection
+<?php $__env->stopSection(); ?>
 
-@section('js')
-@endsection
+<?php $__env->startSection('js'); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\OSSD_Realv2\resources\views/view_profile.blade.php ENDPATH**/ ?>
