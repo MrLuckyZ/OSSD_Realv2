@@ -326,4 +326,4 @@
     </div>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('collection', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\MrLucky\Desktop\Try\OSSDProject\OSSD_Realv2\resources\views/collection_template.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('collection', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\Users\MrLucky\Desktop\Try\OSSDProject\OSSD_Realv2\resources\views\collection_template.blade.php ENDPATH**/ ?>
