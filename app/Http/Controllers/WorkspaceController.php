@@ -55,6 +55,11 @@ class WorkspaceController extends Controller
         return view('create', $data);
     }
 
+    public function view_allworkspace(){
+        $data['workspaces'] = Workspace::get()->all();
+        return view('view_allworkspace', $data);
+    }
+
     public function store(Request $request)
     {
         $request->validate([
