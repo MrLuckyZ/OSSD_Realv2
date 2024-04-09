@@ -64,7 +64,7 @@
             </label><br>
             <div class="d-flex mt-2 justify-content-end">
                 <div class="py-1">
-                    <button class="btn btn-secondary me-2" type="button">Cancel</button>
+                    <button onclick="history.back()" class="btn btn-secondary me-2" type="button">Cancel</button>
                     <button class="btn btn-primary" type="submit">Create</button>
                 </div>
             </div>
