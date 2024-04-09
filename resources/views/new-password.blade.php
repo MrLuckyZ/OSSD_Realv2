@@ -298,7 +298,7 @@
                     <p class="mb-5" style="font-size: 32px; font-weight: 300">API Documentation & Design Tools</p>
                 </div>
                 <div>
-                    <img style="border-radius: 100%;" src="https://cdn.discordapp.com/attachments/994685233087643719/1217123237176152244/4579502.jpg?ex=6602e158&is=65f06c58&hm=a943c0da042e95d7de8aa002260be016ea51314ab6b9d9d524419c5ec8a17095&" alt="" width="460px" height="460px">
+                    <img style="border-radius: 100%;" src="/assets/icon/singin_logo.webp" alt="" width="460px" height="460px">
                 </div>
             </div>
             <div class="col">
@@ -321,17 +321,20 @@
 
                       
 
-                        <label for="" class="mb-4" style="font-size: 32px;">Reset account password</label>
+                        <label for="" class="mb-4" style="font-size: 38px;">Reset account password</label>
                         <div class="input-group mb-4">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="icon me-2 mt-2" viewBox="0 0 16 16" width="16" height="16"><path d="M4 4a4 4 0 0 1 8 0v2h.25c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 12.25 15h-8.5A1.75 1.75 0 0 1 2 13.25v-5.5C2 6.784 2.784 6 3.75 6H4Zm8.25 3.5h-8.5a.25.25 0 0 0-.25.25v5.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25ZM10.5 6V4a2.5 2.5 0 1 0-5 0v2Z"></path></svg>
                             <input class="textfield form-control" style="padding-left: 40px; height: 45px; width: 100%; border-radius: 5px;" type="password" name="password" id="password"  placeholder="Enter your new password" required>
+                            <i class="bi bi-eye-slash icon" style="margin-left: 85%; margin-top: 6px;" id="password-icon" onclick="togglePasswordVisibility('password', 'password-icon')">
+                                <input type="checkbox" name="" id="password-visibility" class="visually-hidden">
+                            </i>
                             <div class="invalid-feedback">Please fill your new password.</div>
                         </div>
 
                         <div class="input-group mb-3">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="icon me-2 mt-2" viewBox="0 0 16 16" width="16" height="16"><path d="M4 4a4 4 0 0 1 8 0v2h.25c.966 0 1.75.784 1.75 1.75v5.5A1.75 1.75 0 0 1 12.25 15h-8.5A1.75 1.75 0 0 1 2 13.25v-5.5C2 6.784 2.784 6 3.75 6H4Zm8.25 3.5h-8.5a.25.25 0 0 0-.25.25v5.5c0 .138.112.25.25.25h8.5a.25.25 0 0 0 .25-.25v-5.5a.25.25 0 0 0-.25-.25ZM10.5 6V4a2.5 2.5 0 1 0-5 0v2Z"></path></svg>
-                            <input class="textfield form-control" style="padding-left: 40px; height: 45px; width: 100%; border-radius: 5px;" type="password_confirmation" name="password_confirmation" id="password_confirmation"  placeholder="Confirm your password" required>
-                            <i class="bi bi-eye-slash icon" style="margin-left: 85%; margin-top: 6px;" id="password-icon" onclick="togglePasswordVisibility('password', 'password-icon')">
+                            <input class="textfield form-control" style="padding-left: 40px; height: 45px; width: 100%; border-radius: 5px;" type="password" name="password_confirmation" id="password_confirmation"  placeholder="Confirm your password" required>
+                            <i class="bi bi-eye-slash icon" style="margin-left: 85%; margin-top: 6px;" id="password-icon-1" onclick="togglePasswordVisibility('password_confirmation', 'password-icon-1')">
                                 <input type="checkbox" name="" id="password-visibility" class="visually-hidden">
                             </i>
                             <div class="invalid-feedback">Please fill your confirm password.</div>
