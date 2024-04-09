@@ -180,6 +180,19 @@ class WorkspaceController extends Controller
         return view('view_profile', $data);
     }
 
+    public function edit_profile(Request $request,$id){
+
+        $user = User::find($id);
+        
+        if($request -> has('name')){
+            $user -> name = $request;
+        }
+
+        $user->save();
+
+        return redirect()->back();
+    }
+
     public function delete_workspace(Request $request,$id){
         $selectedWorkspace = Workspace::find($id);
         

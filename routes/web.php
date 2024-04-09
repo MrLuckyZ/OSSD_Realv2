@@ -38,6 +38,7 @@ Route::group(['middleware' => 'auth'],function(){
     Route::get('/delete-workspace/{workspace}', [WorkspaceController::class, 'delete_workspace'])->name('workspace.deleteWorkspace');
 
     Route::get('/view-profile/{user}', [WorkspaceController::class,'view_profile'])->name('viewprofile');
+    Route::get('/edit-profile/{user}', [WorkspaceController::class,'edit_profile'])->name('edit_profile');
 
     Route::get('/workspace/{workspace}/add-file', [WorkspaceController::class, 'add_file'])->name('workspace.add_file');
 

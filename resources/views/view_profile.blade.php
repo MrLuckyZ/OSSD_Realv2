@@ -5,7 +5,7 @@
 @section('content')
 <div class="mt-5 text-center">
     <h2 class="text-center">View Profile</h2>
-    <div class="container" style="position: relative;">
+    <div class="container mb-3" style="position: relative;">
         <img class="mt-4" style="width: 280px; height: 280px; border-radius: 50%;" src="{{url('/assets/icon/cat.png')}}" alt="" class="rounded-circle me-2">
         <button class="btn p-0" style="border:none; top: 85%; left: 56%; position:absolute;">
             <svg style="" width="45" height="45" viewBox="0 0 54 54" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -14,13 +14,13 @@
             </svg>
         </button>    
     </div>
-    <div class="d-flex align-items-center justify-content-center mt-4">
+    <div class="d-flex align-items-center justify-content-center mt-5">
         <label for="" class="me-3 " style="font-size: 20px">Name</label>
-        <input type="text" class="form-control" placeholder="{{$user->name}}" style="width: 251px; height: 45px;">    
+        <input type="text" class="form-control" placeholder="{{$user->name ?? ''}}" style="width: 251px; height: 45px;" name = "name";>    
     </div>
     <div class="mt-5">
-        <button class="btn btn-primary me-4" type="button" style="width: 69px; height: 35px;">SAVE</button>
-        <button onclick="history.back()" class="btn btn-secondary" type="button" style="width: 69px; height: 35px;">BACK</button>
+        <a href="{{route('edit_profile', ['user' => $user])}}" class="btn btn-primary me-4" type="submit" style="width: 69px; height: 35px;">SAVE</a>
+        <button onclick="history.back()" class="btn btn-secondary" type="btn" style="width: 69px; height: 35px;">BACK</button>
     </div>
 </div>
 @endsection
