@@ -44,7 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/add-new-tab', [WorkspaceController::class, 'addNewTabs'])->name('add.new.tabs');
 
-    Route::get('/view-profile/{user}', [WorkspaceController::class,'view_profile'])->name('viewprofile');
+    Route::get('/view-profile/{user}', [WorkspaceController::class,'view_profile'])->name('view_profile');
     Route::post('/edit-profile/{user}', [WorkspaceController::class,'edit_profile'])->name('edit_profile');
 
     Route::post('/export', [WorkspaceController::class, 'wordExport'])->name('home.exportfile');

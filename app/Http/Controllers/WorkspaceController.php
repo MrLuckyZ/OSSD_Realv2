@@ -377,10 +377,19 @@ public function recovery_trash(Request $request, $id){
         if($request -> has('name')){
             $user -> name = $request->input('name');
         }
+        
+        if($request->has('image')){
+            $file = $request->file('avatar');
+            $extend = $file->getClientOriginalExtension();
+            $file->move('uploads/user',$filename);
+            $user->image = $filename;
+        }
 
         $user->save();
 
         return redirect()->back();
+
+
     }
     
 
