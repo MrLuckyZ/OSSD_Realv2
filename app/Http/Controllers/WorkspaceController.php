@@ -8,9 +8,11 @@ use App\Models\Collection;
 use App\Models\User;
 use App\Models\Method;
 use App\Models\Request_Header;
-use App\Models\Parameter;
+use App\Models\Request_Parameter;
 use App\Models\Response;
 use App\Models\Response_Body;
+use App\Models\Request_Body;
+
 
 use Session;
 
@@ -192,7 +194,7 @@ class WorkspaceController extends Controller
             return redirect()->back();
         }
     }
-    public function import_file(Request $request, $workspaceId, $id)
+     public function import_file(Request $request, $workspaceId, $id)
     {
         if ($request->hasFile('file')) {
             $file = $request->file('file');
@@ -220,36 +222,69 @@ class WorkspaceController extends Controller
                         if ($collection->id == $id) {
                             if (!is_null($data)) {
                                 $json_request_header = $data['request-header'];
+                                $json_request_body = $data['request-body'];
                                 $json_response = $data['data'];
                                 $json_status = $data['status'];
+                                $method = new Method;
 
                                 if(!is_null($json_request_header)){
-                                    $method = new Method;
                                     $method->type = $json_request_header['method'];
                                     $method->route = $json_request_header['route'];
+                                    $route = $json_request_header['route'];
                                     foreach($json_request_header as $key=>$value){
                                         if($key != 'method' && $key != 'route'){
                                             $request_header = new Request_Header;
                                             $request_header->key = $key;
                                             if($value['required'] == true){
                                                 $request_header->require = true;
-                                                $request_header_list[] = $request_header;
-
-                                            }                                          
+                                            }             
+                                            $request_header_list[] = $request_header;                             
                                         }
 
                                     }     
                                 }
-                                $method->request_header = $request_header_list;
+                                $method->request_header = $request_header_list; 
+
+                                $params = [];
+                                if (strpos($route, '?') !== false) {
+                                    $queryString = explode('?', $route)[1];
+                                    $parameters = explode('&', $queryString);
+                                    foreach ($parameters as $parameter) {
+                                        $request_parameter = new Request_Parameter;
+                                        $request_parameter->key = $parameter;
+                                        $request_parameter->type = 'Q';
+                                        $params[] = $request_parameter;
+                                    }
+                                }
+                                $method->parameter = $params;
+
                                 
+                                if(!is_null($json_request_body)){
+                                    foreach($json_request_body as $key=>$value){
+                                        $request_body = new Request_Body;
+                                        $request_body->key = $key;
+                                        if($value['required'] == true){
+                                            $request_body->require = true;
+                                        }        
+                                        $request_body_list[] = $request_body;
+
+                                    }     
+                                }
+                                $method->request_body = $request_body_list; 
+
                                 if(!is_null($json_response)){
                                     foreach($json_response as $key => $value){
                                         $response_body = new Response_body;
                                         $response_body->key = $key;
+                                        $response_body->type = 'Q';
                                         $response_list[] = $response_body;
                                     }
                                     $response = new Response;
                                     $response->response_body = $response_list;
+                                    if(!is_null($json_status)){
+                                        $response->status = $json_status['text'];
+                                        $response ->code= $json_status['code'];
+                                    }
                                 }
                                 $method->response = $response;
                                 $collection->method = $method;
@@ -263,6 +298,8 @@ class WorkspaceController extends Controller
             }
             
         }
+       
+        
         $request->session()->put('collection_tabs', $collection_tabs);
         return redirect()->back();
     }

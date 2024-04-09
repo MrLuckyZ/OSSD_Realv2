@@ -38,7 +38,12 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/workspace/{workspace}/delete-collection', [WorkspaceController::class, 'deleteCollection'])->name('workspace.deleteCollection');
 
     Route::get('/delete-workspace/{workspace}', [WorkspaceController::class, 'delete_workspace'])->name('workspace.deleteWorkspace');
+ 
 
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+});
+
+Route::get('/team', function () {
+    return view('team_submit');
 });

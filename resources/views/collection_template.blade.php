@@ -81,7 +81,7 @@
                                     </td>
                                     <td class="col-2 " style="border-top: 2px solid #F2F2F2; border-radius:5px;">
                                         <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text"
-                                            name="" id="" placeholder="{{$method->route}}">
+                                            name="" id="" placeholder="" value="{{$method->route}}">
                                     </td>
                                 </tr>
                             </tbody>
@@ -114,25 +114,23 @@
                                         @endphp
                                         @foreach ($request_header as $item)
                                         @foreach ($item as $key)
-                                            {{$key->key}}
-                                        @endforeach
-                                        
+                                            
                                             <tr>
-                                                <td class="col-1"
+                                                <td class="col-1 text-center"
                                                     style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
-
+                                                    {{ $loop->iteration }}
                                                 </td>
                                                 <td class="col-4"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="" value="">
+                                                        type="text" name="" id="" value="{{$key->key}}">
+                                     
                                                 </td>
                                                 <td class="col-1"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <div class="form-check d-flex justify-content-center align-items-center mt-1">
-                                                        <input class="form-check-input" type="checkbox"
-                                                            style="height: 20px; width:20px;" value=""
-                                                            id="flexCheckDefault">
+                                                        <input class="form-check-input" type="checkbox" style="height: 20px; width:20px;" value="true" id="flexCheckDefault" @if($key->require) checked @endif>
+
                                                     </div>
                                                 </td>
                                                 <td class="col-6" style="border-top: 2px solid #F2F2F2;">
@@ -140,16 +138,12 @@
                                                         type="text" name="" id="">
                                                 </td>
                                             </tr>
-                                            @endforeach
+                                        @endforeach
+                                        @endforeach
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="d-flex justify-content-end">
-                                    <a href="">
-                                        <span class="material-symbols-outlined"
-                                            style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
-                                    </a>
-                                </div>
+                              
 
                                 {{-- ตาราง Request Parameters --}}
                                 <label class="mb-1" for="">Request Parameters</label>
@@ -168,22 +162,27 @@
                                         {{-- ข้อมูลของ Request Parameters --}}
                                         <tbody>
                                             <tr>
-                                                <td class="col-1"
+                                                @php
+                                                $parameter[] = $method->parameter;
+                                                @endphp
+                                                @foreach ($parameter as $item)
+                                                @foreach ($item as $key)
+                                                <td class="col-1 text-center"
                                                     style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
-
+                                                    {{ $loop->iteration }}
                                                 </td>
                                                 <td class="col-3"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="">
+                                                        type="text" name="" id="" value="{{ $key->key }}">
                                                 </td>
                                                 <td class="col-2"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <div class="d-flex justify-content-center">
                                                         <select class="form-select custom-textfield"
                                                             aria-label="Default select example">
-                                                            <option value="Q" selected>Q</option>
-                                                            <option value="P">P</option>
+                                                            <option value="Q" @if ($key->type == 'Q') selected @endif >Q</option>
+                                                            <option value="R">R</option>
                                                         </select>
                                                     </div>
                                                 </td>
@@ -214,11 +213,13 @@
                                                         type="text" name="" id="">
                                                 </td>
                                             </tr>
+                                            @endforeach
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <a href="">
+                                    <a href="" class="mt-2">
                                         <span class="material-symbols-outlined"
                                             style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
                                     </a>
@@ -239,15 +240,20 @@
                                         </thead>
                                         {{-- ข้อมูลของ Request Body --}}
                                         <tbody>
+                                            @php
+                                            $request_body[] = $method->request_body;
+                                            @endphp
+                                            @foreach ($request_body as $item)
+                                            @foreach ($item as $key)
                                             <tr>
-                                                <td class="col-1"
+                                                <td class="col-1 text-center"
                                                     style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
-
+                                                    {{ $loop->iteration }}
                                                 </td>
                                                 <td class="col-3"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="">
+                                                        type="text" name="" id="" value="{{$key->key}}">
                                                 </td>
                                                 <td class="col-2"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
@@ -276,29 +282,36 @@
                                                         type="text" name="" id="">
                                                 </td>
                                             </tr>
+                                            @endforeach
+                                            @endforeach
                                         </tbody>
                                     </table>
                                 </div>
                                 <div class="d-flex justify-content-end">
-                                    <a href="">
+                                    <a href="" class="mt-2">
                                         <span class="material-symbols-outlined"
                                             style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
                                     </a>
                                 </div>
-                                {{-- ตาราง Response Body --}}
+                                @php
+                                    $response[] = $method->response;
+                                @endphp
+                                @if(is_array($response))
+                                @foreach ($response as $response_body)
+                                @php
+                                    $status[] = $response_body->status;
+                                @endphp
+                                      {{-- ตาราง Response Body --}}
                                 <div class="d-flex justify-content-between align-items-center mt-2">
                                     <label class="mb-1" for="">Response Body</label>
                                     <div class="d-flex align-items-center p-0">
                                         <label class="me-2" for="">Status</label>
                                         <div class="d-flex justify-content-between">
-                                            <input class="textfield text-center" type="text" name="" id=""
-                                                placeholder="status">
                                             <input class="textfield text-center" type="number" name="" id=""
-                                                placeholder="code">
+                                                placeholder="code" value="{{$response_body['code']}}">
+                                            <input class="textfield text-center" type="text" name="" id=""
+                                                placeholder="status" value="{{$response_body['status']}}">
                                         </div>
-                                        <button class="btn" style="border: 2px solid #F2F2F2;">
-                                            <span class="material-symbols-outlined mt-1 fs-6" style="">expand_more</span>
-                                        </button>
                                     </div>
                                 </div>
                                 <div class="table-form">
@@ -311,18 +324,21 @@
                                                 <td class="col-6 text-center">Description</td>
                                             </tr>
                                         </thead>
-                                        {{-- ข้อมูลของ Response Body --}}
+                                        @php
+                                            $response_body_list = $response_body['response_body']
+                                        @endphp
+                                        @foreach ($response_body_list as $item)
+                                            {{-- ข้อมูลของ Response Body --}}
                                         <tbody>
-                                           
                                             <tr>
-                                                <td class="col-1"
+                                                <td class="col-1 text-center"
                                                     style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2;">
-
+                                                    {{ $loop->iteration }}
                                                 </td>
                                                 <td class="col-3"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="">
+                                                        type="text" name="" id="" value="{{$item['key']}}">
                                                 </td>
                                                 <td class="col-2"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
@@ -345,15 +361,22 @@
                                             </tr>
                                           
                                         </tbody>
+                                        @endforeach
+                                        
                                     </table>
                                 </div>
 
                                 <div class="d-flex justify-content-end">
-                                    <a href="">
+                                    <a href="" class="mt-2">
                                         <span class="material-symbols-outlined"
                                             style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
                                     </a>
                                 </div>
+                                @endforeach
+                                @endif
+                           
+
+                              
                             </div>
                         </div>
                     </div>
@@ -363,3 +386,43 @@
             @endforeach
     </div>
 @endsection
+<script>
+    $(document).ready(function() {
+        $('.add-table-link').click(function(event) {
+            event.preventDefault();
+
+            // เพิ่มโค้ดสร้างตารางของคุณที่นี่
+            var newTable = `
+                <!-- ตารางใหม่ -->
+                <div class="table-form">
+                    <table style="width: 100%">
+                        <!-- ส่วนหัวตาราง -->
+                        <thead class="" style="background-color: #F2F2F2;">
+                            <tr>
+                                <td class="col-1 text-center">Header</td>
+                                <!-- เพิ่มหัวคอลัมน์ตามต้องการ -->
+                            </tr>
+                        </thead>
+                        <!-- ส่วนเนื้อหารตาราง -->
+                        <tbody>
+                            <tr>
+                                <td class="col-1 text-center">Data</td>
+                                <!-- เพิ่มเนื้อหาของคอลัมน์ตามต้องการ -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- ปุ่ม add ตาราง -->
+                <div class="d-flex justify-content-end">
+                    <a href="#" class="mt-2 add-table-link">
+                        <span class="material-symbols-outlined"
+                            style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
+                    </a>
+                </div>
+            `;
+
+            // เพิ่มตารางใหม่ไปยังส่วนที่ต้องการแสดงผล
+            $('.container-fluid.p-3').append(newTable);
+        });
+    });
+</script>
