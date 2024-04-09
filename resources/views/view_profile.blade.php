@@ -20,7 +20,7 @@
     </div>
     <div class="mt-5">
         <button class="btn btn-primary me-4" type="button" style="width: 69px; height: 35px;">SAVE</button>
-        <button class="btn btn-secondary" type="button" style="width: 69px; height: 35px;">BACK</button>
+        <button onclick="history.back()" class="btn btn-secondary" type="button" style="width: 69px; height: 35px;">BACK</button>
     </div>
 </div>
 @endsection

@@ -63,10 +63,13 @@ class AuthController extends Controller
         return view('auth/forgot_password');
     }
 
-    public function edit_profile(Request $request, $id){
-        $selectedUser = User::find($id);
+    public function edit_profile(Request $request,$id){
+
+        $user = User::find($id);
         
+        $user -> name = $request -> name;
+        $user->save();
 
+        return view('view_profile');
     }
-
 }
