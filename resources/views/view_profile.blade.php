@@ -27,11 +27,11 @@
         </div>
         <div class="mt-5">
             <button class="btn btn-primary me-4" type="submit" style="width: 69px; height: 35px;">SAVE</button>
+            <a onclick="history.back()" class="btn btn-secondary" type="cancel" style="width: 69px; height: 35px;">BACK</a>
+
         </div>
     </form>
-    <div class="mt-5">
-        <button onclick="history.back()" class="btn btn-secondary" type="cancel" style="width: 69px; height: 35px;">BACK</button>
-    </div>
+    
 </div>
 @endsection
 
