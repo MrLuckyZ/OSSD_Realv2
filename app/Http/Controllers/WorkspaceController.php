@@ -9,10 +9,22 @@ use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
-
+use PhpOffice\PhpWord\TemplateProcessor;
 
 class WorkspaceController extends Controller
 {
+    public function wordExport(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('word-template/user.docx');
+        $templateProcessor->setValue('id', $request->id);
+        $templateProcessor->setValue('name', $request->name);
+        $templateProcessor->setValue('email', $request->email);
+        $templateProcessor->setValue('address', $request->address);
+        $fileName = 'api-apec';
+        $templateProcessor->saveAs($fileName . '.docx');
+        return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
+    }
+
     public function index($id)
     {
         $data['workspaces'] = Workspace::get()->all();

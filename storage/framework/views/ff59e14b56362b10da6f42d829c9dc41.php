@@ -22,7 +22,23 @@
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('content'); ?>
-    Main
+    <div class="p-0 mt-4 " style="height:300px;">
+        <h2 class="ps-4">Test Export Section</h2>
+        <form action="<?php echo e(route('home.exportfile')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
+            <input type="file" name="json_file" id="json_file">
+            <button type="submit">Export to Word</button>
+        </form>
+
+        <form action="<?php echo e(route('home.exportfile')); ?>" method="POST">
+            <?php echo csrf_field(); ?>
+            <input class="mt-2" type="text" name="id" id="id"><br>
+            <input class="mt-2" type="text" name="name" id="name"><br>
+            <input class="mt-2" type="text" name="email" id="email"><br>
+            <input class="mt-2" type="text" name="address" id="address"><br>
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 <?php $__env->stopSection(); ?>
 
 <?php $__env->startSection('js'); ?>
