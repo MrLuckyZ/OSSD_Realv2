@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\WorkspaceController;
+use App\Http\Controllers\TeamController;
 
 
 Route::group(['middleware' => 'guest'], function () {
@@ -19,7 +20,9 @@ Route::group(['middleware' => 'guest'], function () {
 
 
 
+
 Route::group(['middleware' => 'auth'], function () {
+    
     Route::get('/', [MainController::class, 'index'])->name('home.index');
     // Route::get('/home', [MainController::class, 'index'])->name('home.index');
 
@@ -41,4 +44,7 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::post('/send-invitation/{workspace}', [TeamController::class, 'invitaion_post'])->name('invitation.post');
+
 });

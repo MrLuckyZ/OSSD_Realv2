@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Workspace;
+use App\Models\Workspace_User;
 use App\Models\Collection;
 use App\Models\User;
 use App\Models\Method;
@@ -54,11 +55,17 @@ class WorkspaceController extends Controller
         $workspace->name = $request->input('workspace-input-name');
         $workspace->access = $request->input('access');
 
+        
+
         if ($user) {
             $workspace->user_create = $user->id;
         }
-
+       
         $workspace->save();
+        $workspace_user = new Workspace_User;
+        $workspace_user->user_id = $user->id;
+        $workspace_user->workspace_id = $workspace->id;
+        $workspace_user->save();
         return redirect()->route('home.index')->with('success', 'Workspace has been created succesfully');
     }
 
