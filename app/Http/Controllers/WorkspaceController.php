@@ -2,34 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use Session;
-use App\Models\User;
+use Illuminate\Http\Request;
 use App\Models\Workspace;
 use App\Models\Collection;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 use App\Models\Method;
 use App\Models\Request_Header;
 use App\Models\Parameter;
 use App\Models\Response;
 use App\Models\Response_Body;
-use PhpOffice\PhpWord\TemplateProcessor;
+
+use Session;
+
 
 class WorkspaceController extends Controller
 {
-    public function wordExport(Request $request)
-    {
-        $templateProcessor = new TemplateProcessor('word-template/user.docx');
-        $templateProcessor->setValue('id', $request->id);
-        $templateProcessor->setValue('name', $request->name);
-        $templateProcessor->setValue('email', $request->email);
-        $templateProcessor->setValue('address', $request->address);
-        $fileName = 'api-apec';
-        $templateProcessor->saveAs($fileName . '.docx');
-        return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
-    }
-
     public function index($id)
     {
         $data['workspaces'] = Workspace::get()->all();
@@ -123,6 +110,7 @@ class WorkspaceController extends Controller
         $collection = $selectedWorkspace->collections();
         $data['collections'] = $collection;
 
+        Session::flush();
         return view('trash', $data);
     }
 
@@ -177,7 +165,7 @@ class WorkspaceController extends Controller
         $data['selectedWorkspace'] = $workspace;
         $data['selectedCollection'] = $collection;
         $request->session()->put('collection_tabs', $collection_tabs);
-
+        
         return view('collection_template', $data);
     }
 
@@ -276,92 +264,6 @@ class WorkspaceController extends Controller
             
         }
         $request->session()->put('collection_tabs', $collection_tabs);
-        $request->session()->put('selectedCollection', $collection);
-        dd($collection);
-
         return redirect()->back();
     }
-    
-
-    public function addNewTabs(Request $request) {
-        $collection = new Collection;
-        $collection->name = 'New Collection';
-        $collection->user_create = auth()->user()->user_id;
-        $collection->id = -1;
-        if ($request->session()->has('collection_tabs')) {
-            $collection_tabs = $request->session()->get('collection_tabs');
-
-            if (!in_array(-1, array_column($collection_tabs, 'id'))) {
-                $collection_tabs[] = $collection;
-            }
-        } else {
-            $collection_tabs = [];
-            $collection_tabs[] = $collection;
-        }
-
-        $request->session()->put('collection_tabs', $collection_tabs);
-
-        return redirect()->back();
-    }
-
-    public function delete_collection(Request $request,$id){
-        $selectedCollection = Collection::find($id);
-
-        if (!$id) {
-            return redirect()->route('home.index')->with('error', 'Collection not found');
-        }
-        else{
-            $selectedCollection->delete();
-            return redirect()->back();
-        }
-    }
-
-    public function moveToTrash(Request $request, $id) // Use PascalCase for function names
-{
-    // Validate input for safety (consider using validation rules)
-    $validator = Validator::make(['id' => $id], [
-        'id' => 'required|integer|exists:collections,id', // Ensure ID exists in 'collections' table
-    ]);
-
-    if ($validator->fails()) {
-        return redirect()->back();
-    }
-
-    $selectedCollection = Collection::find($id);
-    Carbon::setLocale('th'); 
-    if ($selectedCollection) {
-        $selectedCollection->deleted_at =Carbon::now('Asia/Bangkok');
-        $selectedCollection->status = 'deleted'; // Update status to '0' to mark as trashed
-        $selectedCollection->save(); // Persist changes to the database
-
-        return redirect()->back()->with('success', 'Collection successfully moved to trash.'); // Display success message
-    } else {
-        return redirect()->back()->with('error', 'Collection not found.'); // Inform user if collection wasn't found
-    }
-}
-public function recovery_trash(Request $request, $id){
-    // Validate input for safety (consider using validation rules)
-    $validator = Validator::make(['id' => $id], [
-        'id' => 'required|integer|exists:collections,id', // Ensure ID exists in 'collections' table
-    ]);
-
-    if ($validator->fails()) {
-        return redirect()->back();
-    }
-
-    $selectedCollection = Collection::find($id);
-     
-    if ($selectedCollection) {
-        $selectedCollection->status = 'active'; 
-        $selectedCollection->save(); // Persist changes to the database
-
-        return redirect()->back()->with('success', 'Collection successfully recovered.'); // Display success message
-    } else {
-        return redirect()->back()->with('error', 'Collection not found.'); // Inform user if collection wasn't found
-    }
-    
-
-}
-    
-
 }

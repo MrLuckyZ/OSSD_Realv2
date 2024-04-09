@@ -37,14 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/workspace/{workspace}/setting', [WorkspaceController::class, 'setting'])->name('workspace.setting');
     Route::get('/workspace/{workspace}/delete-collection', [WorkspaceController::class, 'deleteCollection'])->name('workspace.deleteCollection');
 
-    Route::get('/delete-collection/{collection}', [WorkspaceController::class, 'delete_collection'])->name('delete.collection');
-    Route::get('/move-to-trash-collection/{collection}', [WorkspaceController::class, 'moveToTrash'])->name('move.trash.collection');
-    Route::get('/recover-collection/{collection}', [WorkspaceController::class, 'recovery_trash'])->name('recovery.trash');
     Route::get('/delete-workspace/{workspace}', [WorkspaceController::class, 'delete_workspace'])->name('workspace.deleteWorkspace');
 
-    Route::get('/add-new-tab', [WorkspaceController::class, 'addNewTabs'])->name('add.new.tabs');
-
-    Route::post('/export', [WorkspaceController::class, 'wordExport'])->name('home.exportfile');
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
 });

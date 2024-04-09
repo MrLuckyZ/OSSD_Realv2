@@ -12,7 +12,7 @@ class Method extends Model
     private $route;
     private $request_header = [];
     private $parameter = [];
-    private $body = [];
+    private $request_body = [];
     private $response = [];
 
 

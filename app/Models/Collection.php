@@ -30,7 +30,7 @@ class Collection extends Model
         $this->attributes['properties'] = json_encode($properties);
     }
 
-    public function Methods()
+    public function getMethods()
     {
         return $this->methods;
     }
