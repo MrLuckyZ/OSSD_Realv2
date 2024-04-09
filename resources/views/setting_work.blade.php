@@ -9,7 +9,7 @@
         {{-- กล่องเลือก Team --}}
         <div class="ps-4">
             <div class="d-flex">
-               <form action="{{ route('access.setting', ['workspace' => $selectedWorkspace->id]) }}" method="POST">
+               <form action="{{ route('access.setting', ['workspace' => $selectedWorkspace]) }}" method="POST">
                     @csrf
                     <select style="height:60px" name="access" id="mySelect" onchange="changeRole()">
                         <option value="personal">Only Me</option>
@@ -34,7 +34,7 @@
                     </label>
 
                     <div class="ps-4 mt-5">
-                        <button class="btn btn-primary me-4" type="submit" style="width: 69px; height: 35px;">Ok</button>
+                        <button class="btn btn-primary me-4" type="submit" style="width: 69px; height: 35px;">Save</button>
                     </div>
                 </form>
 
