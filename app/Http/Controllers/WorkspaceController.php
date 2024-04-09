@@ -266,4 +266,8 @@ class WorkspaceController extends Controller
         $request->session()->put('collection_tabs', $collection_tabs);
         return redirect()->back();
     }
+    public function comments(Request $request ,$id){
+        
+    }
+    
 }

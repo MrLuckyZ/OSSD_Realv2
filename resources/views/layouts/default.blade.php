@@ -489,6 +489,28 @@
             background-color: #086dd3;
             transition: all 0.3s;
         }
+        .comment_button {
+            width: 110px; 
+            height:30px; 
+            border-radius:5px 0px 0px 5px;
+        }
+
+        .comment_card {
+            z-index: 1; 
+            position: fixed; 
+            width: 300px; 
+            height: 100vh; 
+            right: 0;
+            top: 120.5px;
+        }
+
+        .comment_close_button {
+            position: fixed; 
+            right: 0;
+            border: none; 
+            background-color: white;
+        }
+
     </style>
 </head>
 
