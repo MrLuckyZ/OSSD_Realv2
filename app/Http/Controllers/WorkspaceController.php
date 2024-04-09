@@ -379,9 +379,10 @@ public function recovery_trash(Request $request, $id){
         } else {
             return redirect()->back()->with('error', 'Name cannot be empty');
         }
+        dd($request -> image);
     
         if($request->has('image')){
-            $file = $request->file('avatar');
+            $file = $request->file('image');
             $extend = $file->getClientOriginalExtension();
             $file->move('uploads/user',$filename);
             $user->image = $filename;
