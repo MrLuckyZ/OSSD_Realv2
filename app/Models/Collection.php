@@ -9,12 +9,35 @@ class Collection extends Model
 {
     use HasFactory;
 
+    private $methods = [];
+    
+    protected $casts = [
+        'properties' => 'array'
+    ];
+
     public function workspace()
     {
         return $this->belongsTo(Workspace::class);
     }
-    public function methods()
+
+    public function setPropertiesAttribute($value)
     {
-        return $this->hasMany(Method::class);
+    $properties = [];
+    foreach ($value as $key => $item) {
+        $properties[] = $item; 
+    }
+
+        $this->attributes['properties'] = json_encode($properties);
+    }
+
+    public function getMethods()
+    {
+        return $this->methods;
+    }
+
+    public function setMethods(array $methods)
+    {
+        $this->methods = $methods;
     }
 }
+
