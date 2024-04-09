@@ -12,7 +12,7 @@
                 <select style="height:60px" name="test" id="mySelect" onchange="changeRole()">
                     <option value="onlyme">Only Me</option>
                     <option value="team">Everyone from your team</option>
-                    <option value="all">Anyone on the internet</option>
+                    <!-- <option value="all">Anyone on the internet</option> -->
                 </select>
 
                 <label id="roles" class="btn btn-outline d-flex p-0 cursor" for="public"
@@ -26,7 +26,7 @@
                         </svg>
                     </div>
                     <div class="col-10 d-flex flex-column justify-content-center" style="width:250px">
-                        <label id="desc" for="public" class="cursor text-center">Anyone on the internet</label>
+                        <label id="desc" for="public" class="cursor text-center">Only me</label>
                         <label id="type" for="public" class="cursor text-center"
                             style="color:#808080; font-size:12px;">Public</label>
                     </div>
@@ -59,6 +59,7 @@
                             )
                         }
                     }
+                
                 </script>
             </div>
 
