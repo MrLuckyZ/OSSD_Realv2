@@ -577,7 +577,7 @@
                     <span id="dropdown-profile-icon" class="material-icons">expand_more</span>
                 </button>
                 <ul class="dropdown-menu pane" aria-labelledby="dropdownMenuButton1">
-                    <li><a class="dropdown-item" href="#">View Profile</a></li>
+                    <li><a class="dropdown-item" href="{{route('viewprofile', ['user' => Auth::user()->id])}}">View Profile</a></li>
                     <li>
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
