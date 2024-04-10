@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Session;
 use App\Models\User;
 use App\Models\Workspace;
+use App\Models\recentlyLog;
 use App\Models\Collection;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -15,6 +16,9 @@ use App\Models\Parameter;
 use App\Models\Response;
 use App\Models\Response_Body;
 use PhpOffice\PhpWord\TemplateProcessor;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use App\Models\RecentlyLogg;
 
 class WorkspaceController extends Controller
 {
@@ -31,28 +35,87 @@ class WorkspaceController extends Controller
     }
 
     public function index($id)
-    {
+    {   
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = Workspace::find($id);
 
         if (!$data['selectedWorkspace']) {
             return redirect()->route('home.index')->with('error', 'Workspace not found');
         }
+        $dt = Carbon::now();
+        $todayDate = $dt->toDayDateTimeString();
+        $work = Workspace::find($id);
+        $id_user = $work->userCreate->id;
+        $access = $work->access;
+        $workspace_name = $work->name;
+        $user_name = $work->userCreate->name;
+        $recentlylogs = [
+            'id_user' => $id_user,
+            'workspace_name' => $workspace_name,
+            'id_workspace' => $id,
+            'access' => $access,
+            'user_name' => $user_name,
+            'date_time' => $todayDate
+        ];
+        $recentlyLog = recentlyLog::get();
+        $arrRecently = collect($recentlyLog);
+        $reverseLog = $arrRecently->reverse();
+        $uniqueData = $reverseLog->unique('id_workspace');
+        $datarecently['work_recently'] = $uniqueData->values()->all();
+
+        $recentlyLogArray = $recentlyLog->toArray();
+
+        $count = count($recentlyLogArray);
+        if ($count > 50) {
+        $oldest_records = array_slice($recentlyLogArray, 0, $count - 50);
+        $oldest_ids = array_column($oldest_records, 'id');
+        recentlyLog::whereIn('id', $oldest_ids)->delete();
+        }
+        DB::table('recently_logs')->insert($recentlylogs);
         session(['selected_workspace_id' => $id]);
 
-        return view('workspace', $data);
+        return redirect()->route('workspace.collections', ['workspace' => $id])->with($data,$datarecently);
     }
 
     public function setting($id)
     {
+        $recentlyLog = recentlyLog::get();
+        $arrRecently = collect($recentlyLog);
+        $reverseLog = $arrRecently->reverse();
+        $uniqueData = $reverseLog->unique('id_workspace');
+        $datarecently['work_recently'] = $uniqueData->values()->all();
+
+        $recentlyLogArray = $recentlyLog->toArray();
+
+        $count = count($recentlyLogArray);
+        if ($count > 50) {
+        $oldest_records = array_slice($recentlyLogArray, 0, $count - 50);
+        $oldest_ids = array_column($oldest_records, 'id');
+        recentlyLog::whereIn('id', $oldest_ids)->delete();
+        }
+
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = Workspace::find($id);
-        return view('setting_work', $data);
+        return view('setting_work', $data,$datarecently);
     }
     public function create()
     {
         $data['workspaces'] = Workspace::orderBy('id', 'desc')->paginate(5);
-        return view('create', $data);
+        $recentlyLog = recentlyLog::get();
+        $arrRecently = collect($recentlyLog);
+        $reverseLog = $arrRecently->reverse();
+        $uniqueData = $reverseLog->unique('id_workspace');
+        $datarecently['work_recently'] = $uniqueData->values()->all();
+
+        $recentlyLogArray = $recentlyLog->toArray();
+
+        $count = count($recentlyLogArray);
+        if ($count > 50) {
+        $oldest_records = array_slice($recentlyLogArray, 0, $count - 50);
+        $oldest_ids = array_column($oldest_records, 'id');
+        recentlyLog::whereIn('id', $oldest_ids)->delete();
+        }
+        return view('create', $data,$datarecently);
     }
 
     public function store(Request $request)
@@ -72,6 +135,23 @@ class WorkspaceController extends Controller
         }
 
         $workspace->save();
+
+        $dt = Carbon::now();
+        $todayDate = $dt->toDayDateTimeString();
+        $work = Workspace::find($workspace->id);
+        $id_user = $work->userCreate->id;
+        $access = $work->access;
+        $workspace_name = $work->name;
+        $user_name = $work->userCreate->name;
+        $recentlylogs = [
+            'id_user' => $id_user,
+            'workspace_name' => $workspace_name,
+            'id_workspace' => $workspace->id,
+            'access' => $access,
+            'user_name' => $user_name,
+            'date_time' => $todayDate
+        ];
+        DB::table('recently_logs')->insert($recentlylogs);
         return redirect()->route('home.index')->with('success', 'Workspace has been created succesfully');
     }
 
@@ -83,12 +163,26 @@ class WorkspaceController extends Controller
         if (!$selectedWorkspace) {
             return redirect()->route('home.index')->with('error', 'Workspace not found');
         }
+        $recentlyLog = recentlyLog::get();
+        $arrRecently = collect($recentlyLog);
+        $reverseLog = $arrRecently->reverse();
+        $uniqueData = $reverseLog->unique('id_workspace');
+        $datarecently['work_recently'] = $uniqueData->values()->all();
+
+        $recentlyLogArray = $recentlyLog->toArray();
+
+        $count = count($recentlyLogArray);
+        if ($count > 50) {
+        $oldest_records = array_slice($recentlyLogArray, 0, $count - 50);
+        $oldest_ids = array_column($oldest_records, 'id');
+        recentlyLog::whereIn('id', $oldest_ids)->delete();
+        }
 
         $data = $request->session()->all();
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = $selectedWorkspace;
 
-        return view('collection', $data);
+        return view('collection', $data,$datarecently);
     }
 
     public function history(Request $request)
@@ -99,12 +193,26 @@ class WorkspaceController extends Controller
         if (!$selectedWorkspace) {
             return redirect()->route('home.index')->with('error', 'Workspace not found');
         }
+        $recentlyLog = recentlyLog::get();
+        $arrRecently = collect($recentlyLog);
+        $reverseLog = $arrRecently->reverse();
+        $uniqueData = $reverseLog->unique('id_workspace');
+        $datarecently['work_recently'] = $uniqueData->values()->all();
+
+        $recentlyLogArray = $recentlyLog->toArray();
+
+        $count = count($recentlyLogArray);
+        if ($count > 50) {
+        $oldest_records = array_slice($recentlyLogArray, 0, $count - 50);
+        $oldest_ids = array_column($oldest_records, 'id');
+        recentlyLog::whereIn('id', $oldest_ids)->delete();
+        }
 
         $data = $request->session()->all();
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = $selectedWorkspace;
 
-        return view('history', $data);
+        return view('history', $data,$datarecently);
     }
 
     public function trash(Request $request)
@@ -115,6 +223,20 @@ class WorkspaceController extends Controller
         if (!$selectedWorkspace) {
             return redirect()->route('home.index')->with('error', 'Workspace not found');
         }
+        $recentlyLog = recentlyLog::get();
+        $arrRecently = collect($recentlyLog);
+        $reverseLog = $arrRecently->reverse();
+        $uniqueData = $reverseLog->unique('id_workspace');
+        $datarecently['work_recently'] = $uniqueData->values()->all();
+
+        $recentlyLogArray = $recentlyLog->toArray();
+
+        $count = count($recentlyLogArray);
+        if ($count > 50) {
+        $oldest_records = array_slice($recentlyLogArray, 0, $count - 50);
+        $oldest_ids = array_column($oldest_records, 'id');
+        recentlyLog::whereIn('id', $oldest_ids)->delete();
+        }
 
         $data = $request->session()->all();
         $data['workspaces'] = Workspace::get()->all();
@@ -123,7 +245,7 @@ class WorkspaceController extends Controller
         $collection = $selectedWorkspace->collections();
         $data['collections'] = $collection;
 
-        return view('trash', $data);
+        return view('trash', $data,$datarecently);
     }
 
     public function deleteFromCollectionTabs(Request $request, $id)
@@ -172,19 +294,34 @@ class WorkspaceController extends Controller
             $collection_tabs[] = $collection;
         }
 
+        $recentlyLog = recentlyLog::get();
+        $arrRecently = collect($recentlyLog);
+        $reverseLog = $arrRecently->reverse();
+        $uniqueData = $reverseLog->unique('id_workspace');
+        $datarecently['work_recently'] = $uniqueData->values()->all();
+
+        $recentlyLogArray = $recentlyLog->toArray();
+
+        $count = count($recentlyLogArray);
+        if ($count > 50) {
+        $oldest_records = array_slice($recentlyLogArray, 0, $count - 50);
+        $oldest_ids = array_column($oldest_records, 'id');
+        recentlyLog::whereIn('id', $oldest_ids)->delete();
+        }
+
         $data = $request->session()->all();
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = $workspace;
         $data['selectedCollection'] = $collection;
         $request->session()->put('collection_tabs', $collection_tabs);
 
-        return view('collection_template', $data);
+        return view('collection_template', $data, $datarecently);
     }
 
-    public function saveToWorkspace(Request $request, $collectionId)
+    public function Collection(Request $request, $workSpaceid, $id)
     {
-        $collection = Workspace::find($workSpaceid);
-
+        $workspace = Workspace::find($workSpaceid);
+        // โค้ดอื่น ๆ ที่เหลือของฟังก์ชั่น
     }
 
     public function delete_workspace(Request $request, $id)

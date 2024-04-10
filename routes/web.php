@@ -47,4 +47,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/export', [WorkspaceController::class, 'wordExport'])->name('home.exportfile');
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('users/{id}/active/login/logout',[MainController::class, 'activityLogInLogOut'])->name('active/login/logout');
 });
