@@ -561,7 +561,7 @@
                         </ul>
                     </div>
                     <div class="row align-items-end mt-auto" style="border-top: #F2F2F2 solid 2px;">
-                        <a href="<?php echo e(route('workspace.all_workspace')); ?>" class="link-grey">View all workspaces <i style="font-size: 12px;"
+                        <a href="" class="link-grey">View all workspaces <i style="font-size: 12px;"
                                 class="ps-2 fa-solid fa-arrow-right"></i></a>
                     </div>
                 </div>

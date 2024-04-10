@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\WorkspaceController;
+use App\Http\Controllers\ForgetPasswordController;
 
 
 Route::group(['middleware' => 'guest'], function () {
@@ -16,6 +17,16 @@ Route::group(['middleware' => 'guest'], function () {
 
     Route::get('/forgot-password', [AuthController::class, 'forgot'])->name('forgot');
 });
+
+//Route For Reset Password
+Route::get('/reset-password/{token}',[ForgetPasswordController::class,'ResetPassword'])
+->name('reset.password');
+Route::get('/forget-password',[ForgetPasswordController::class,'ForgetPassword'])
+->name('ForgetPassword');
+Route::post('/forget-password',[ForgetPasswordController::class,'ForgetPasswordPost'])
+->name('ForgetPassword.post');
+Route::post("/reset-password",[ForgetPasswordController::class,'resetPasswordPost'])
+->name('reset.password.post');
 
 
 
