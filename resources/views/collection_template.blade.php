@@ -26,7 +26,10 @@
                         <li>
                             <hr class="dropdown-divider">
                         </li>
-                        <li><a class="dropdown-item" href="#">Save to Workspace</a></li>
+                        <li>
+                            <form action="{{route('workspace.toJson', ['workspace' => $selectedWorkspace->id , 'collection' => $selectedCollection->id])}}" method="post">
+                                <button class="dropdown-item" type="submit">Save to Workspace</button></li>
+                            </form>
                     </ul>
                 </div>
             </div>
