@@ -303,4 +303,27 @@ class WorkspaceController extends Controller
         $request->session()->put('collection_tabs', $collection_tabs);
         return redirect()->back();
     }
+
+    public function setting_access(Request $request,$id){
+        $selectedWorkspace = Workspace::find($id);
+        $user = auth()->user();
+        
+        if($selectedWorkspace -> user_create == $user -> id){
+            if($request->has('access')){
+            $access = $request->input('access');
+            if($access == "personal"){
+                $selectedWorkspace -> access = "persoanal";
+            }else if($access == "team"){
+                $selectedWorkspace -> access = "team";
+            }
+        }
+        
+        $selectedWorkspace -> save();
+        }else{
+            return redirect()->back()->with('error', 'You not owner');
+        }
+        
+        return view('setting_work')->with('success', 'You have change access');
+
+    }
 }
