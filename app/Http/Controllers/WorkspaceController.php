@@ -331,4 +331,176 @@ class WorkspaceController extends Controller
         return redirect()->back()->with('success', 'You have change access');
 
     }
+
+    public function save_json_data(Request $request, $workspace) {
+        dd($request->all());
+        $method_type = $request->input('method_type');
+        $req_header_key = $request->input('request_header_key');
+        $req_header_require = $request->input('request-header-required');
+        $req_header_desc = $request->input('request_header_desc');
+        $method_route = $request->input('method_route');
+        $req_param_key = $request->input('request_param_key');
+        $request_param_type = $request->input('request_param_type');
+        $req_param_data_type  = $request->input('request_param_data_type');
+        $req_param_require = $request->input('request_param_required');
+        $req_param_desc = $request->input('request_param_desc');
+        $req_body_key = $request->input('request_body_key');
+        $req_body_data_type = $request->input('request_body_data_type');
+        $req_body_require = $request->input('request_body_required');
+        $req_body_desc = $request->input('request_body_desc');
+        $res_body_code = $request->input('response_body_code');
+        $res_body_status = $request->input('response_body_status');
+        $res_body_key = $request->input('response_body_key');
+        $res_body_data_type = $request->input('response_body_data_type');
+        $res_body_desc = $request->input('response_body_desc');
+
+        $method = [
+            "type" => $method_type,
+            "route" => $method_route,
+            "request_header" => array(),
+            "parameter" => array(),
+            "request_body" => array(),
+            "response" => [
+                "code" =>  $res_body_code,
+                "status" => $res_body_status,
+                "response_body" => []
+            ]
+        ];
+        dd($method);
+        foreach ($req_header_key as $index => $value) {
+            $req_header = [
+                "key" => $value,
+                "require" => $req_header_require[$index],
+                "description" => $req_header_desc[$index]
+            ];
+
+            array_push($method['request_header'], $req_header);
+        }
+
+        foreach ($req_param_key as $index => $value) {
+            $req_param = [
+                "key" => $value,
+                "type" => $request_param_type[$index],
+                "data_type" => $req_param_data_type[$index],
+                "require" => $req_param_require[$index],
+                "description" => $req_param_desc[$index]
+            ];
+            array_push($method['parameter'], $req_param);
+        }
+
+        foreach ($req_body_key as $index => $value) {
+            $req_body = [
+                "key" => $value,
+                "data_type" => $req_body_data_type[$index],
+                "require" => $req_body_require[$index],
+                "description" => $req_body_desc[$index]
+            ];
+            array_push($method['request_body'], $req_body);
+        }
+
+        foreach ($res_body_key as $key => $value) {
+            $res_body = [
+                "key" => $value,
+                "data_type" => $res_body_data_type,
+                "description" => $res_body_desc,
+            ];
+
+            array_push($method['response']['response_body'], $res_body);
+        }
+
+        $json = json_encode($method);
+        $col = new Collection;
+        $col->name = 'untitle';
+        $col->properties = $json;
+        $col->user_create = Auth::user()->id;
+        $col->workspace_id = $workspace;
+        $col->status = '1';
+        
+        $col->save();
+
+        return redirect()->back();
+    }
+
+    public function save_as_json(Request $request, $workspace){
+        $method_type = $request->input('method_type');
+        $req_header_key = $request->input('request-header-key');
+        $req_header_require = $request->input('request-header-required');
+        $req_header_desc = $request->input('request-header-desc');
+        $method_route = $request->input('method-route');
+        $req_param_key = $request->input('request-param-key');
+        $request_param_type = $request->input('request-param-type');
+        $req_param_data_type  = $request->input('request-param-data-type');
+        $req_param_require = $request->input('request-param-required');
+        $req_param_desc = $request->input('request-param-desc');
+        $req_body_key = $request->input('request-body-key');
+        $req_body_data_type = $request->input('request-body-data-type');
+        $req_body_require = $request->input('request-body-required');
+        $req_body_desc = $request->input('request-body-desc');
+        $res_body_code = $request->input('response-body-code');
+        $res_body_status = $request->input('response-body-status');
+        $res_body_key = $request->input('response-body-key');
+        $res_body_data_type = $request->input('response-body-data-type');
+        $res_body_desc = $request->input('response-body-desc');
+
+        $method = [
+            "type" => $method_type,
+            "route" => $method_route,
+            "request_header" => array(),
+            "parameter" => array(),
+            "request_body" => array(),
+            "response" => [
+                "code" =>  $res_body_code,
+                "status" => $res_body_status,
+                "response_body" => []
+            ]
+        ];
+        if ($req_header_key != null) {
+        foreach ($req_header_key as $index => $value) {
+            $req_header = [
+                "key" => $value,
+                "require" => $req_header_require[$index],
+                "description" => $req_header_desc[$index]
+            ];
+
+            array_push($method['request_header'], $req_header);
+        }
+    }
+
+        foreach ($req_param_key as $index => $value) {
+            $req_param = [
+                "key" => $value,
+                "type" => $request_param_type[$index],
+                "data_type" => $req_param_data_type[$index],
+                "require" => $req_param_require[$index],
+                "description" => $req_param_desc[$index]
+            ];
+            array_push($method['parameter'], $req_param);
+        }
+
+        foreach ($req_body_key as $index => $value) {
+            $req_body = [
+                "key" => $value,
+                "data_type" => $req_body_data_type[$index],
+                "require" => $req_body_require[$index],
+                "description" => $req_body_desc[$index]
+            ];
+            array_push($method['request_body'], $req_body);
+        }
+
+        foreach ($res_body_key as $key => $value) {
+            $res_body = [
+                "key" => $value,
+                "data_type" => $res_body_data_type,
+                "description" => $res_body_desc,
+            ];
+
+            array_push($method['response']['response_body'], $res_body);
+        }
+
+        $json = json_encode($method);
+        $filename = time() .'_datafile.json';
+        $filestorepath = public_path('/uploads/json/'.$filename);
+        File::put($filestorepath, $json);
+        return response('OK', 200)->download($filestorepath);
+    }
 }
