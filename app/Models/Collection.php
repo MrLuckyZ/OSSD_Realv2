@@ -20,7 +20,7 @@ class Collection extends Model
         return $this->belongsTo(Workspace::class);
     }
 
-    public function setPropertiesAttribute($value)
+    /* public function setPropertiesAttribute($value)
     {
         $properties = [];
         foreach ($value as $key => $item) {
@@ -28,7 +28,7 @@ class Collection extends Model
         }
 
         $this->attributes['properties'] = json_encode($properties);
-    }
+    } */
 
     public function getMethods()
     {

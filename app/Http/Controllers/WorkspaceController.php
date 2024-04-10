@@ -12,10 +12,9 @@ use App\Models\Request_Parameter;
 use App\Models\Response;
 use App\Models\Response_Body;
 use App\Models\Request_Body;
-
+use Illuminate\Support\Facades\Auth;
 
 use Session;
-
 
 class WorkspaceController extends Controller
 {
@@ -304,9 +303,9 @@ class WorkspaceController extends Controller
         return redirect()->back();
     }
 
-    public function save_json_data(Request $request, $selectedWorkspace) {
+    public function save_json_data(Request $request, $workspace) {
         $method_type = $request->input('method_type');
-        $req_header_key = $request->input('reqeuest-header-key');
+        $req_header_key = $request->input('request-header-key');
         $req_header_require = $request->input('request-header-required');
         $req_header_desc = $request->input('request-header-desc');
         $method_route = $request->input('method-route');
@@ -328,20 +327,66 @@ class WorkspaceController extends Controller
         $method = [
             "type" => $method_type,
             "route" => $method_route,
-            "request_header" => 'asd',
-            "parameter" => 'asd',
-            "request_body" => 'asd',
-            "response" => 'sad'
+            "request_header" => array(),
+            "parameter" => array(),
+            "request_body" => array(),
+            "response" => [
+                "code" =>  $res_body_code,
+                "status" => $res_body_status,
+                "response_body" => []
+            ]
         ];
 
-        dd($method);
+        foreach ($req_header_key as $index => $value) {
+            $req_header = [
+                "key" => $value,
+                "require" => $req_header_require[$index],
+                "description" => $req_header_desc[$index]
+            ];
 
+            array_push($method['request_header'], $req_header);
+        }
+
+        foreach ($req_param_key as $index => $value) {
+            $req_param = [
+                "key" => $value,
+                "type" => $request_param_type[$index],
+                "data_type" => $req_param_data_type[$index],
+                "require" => $req_param_require[$index],
+                "description" => $req_param_desc[$index]
+            ];
+            array_push($method['parameter'], $req_param);
+        }
+
+        foreach ($req_body_key as $index => $value) {
+            $req_body = [
+                "key" => $value,
+                "data_type" => $req_body_data_type[$index],
+                "require" => $req_body_require[$index],
+                "description" => $req_body_desc[$index]
+            ];
+            array_push($method['request_body'], $req_body);
+        }
+
+        foreach ($res_body_key as $key => $value) {
+            $res_body = [
+                "key" => $value,
+                "data_type" => $res_body_data_type,
+                "description" => $res_body_desc,
+            ];
+
+            array_push($method['response']['response_body'], $res_body);
+        }
+
+        $json = json_encode($method);
         $col = new Collection;
         $col->name = 'untitle';
-        $col.setPropertiesAttribute();
+        $col->properties = $json;
         $col->user_create = Auth::user()->id;
-        $col->workspace_id = $selectedWorkspace;
+        $col->workspace_id = $workspace;
         $col->status = '1';
+
+        $col->save();
 
         return redirect()->back();
     }
