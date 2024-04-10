@@ -1,5 +1,7 @@
 @extends('collection')
 @section('collection_template')
+<form id="form-data" action="" method="POST" enctype="multipart/form-data">           
+    @csrf
     <div class="container-fluid p-3">
         <div class="col d-flex flex-row justify-content-between align-items-center p-0 mb-2">
             <h5>{{ $selectedCollection->name }}</h5>
@@ -36,8 +38,6 @@
                 </div>
             </div>
         </div>
-        <form id="form-data" action="" method="POST" enctype="multipart/form-data">           
-             @csrf
             <div class="col d-flex">
                 <input class="form-control me-2" style="border: #F2F2F2 solid 2px; color:#808080;" type="file" id="file" name="file">
                 <button type="button" class="btn btn-blue d-flex align-items-center" style="width: 100px; height: 100%;" onclick="createData()">
@@ -46,11 +46,9 @@
                 </button>
         
             </div>
-        </form> 
 
     </div>
-    <form action="" name="form-data" id="form-data" method="POST" enctype="multipart/form-data">
-        @csrf
+ 
         <div class="container-fluid p-3">
             @php
                 $collection_tabs = session('collection_tabs', []);
@@ -393,7 +391,9 @@
                   
                 @endforeach
         </div>
-    </form>
+    </form> 
+
+ 
 @endsection
 <script>
     function createData() {
@@ -402,9 +402,6 @@
     }
     function saveToCollection() {
         document.getElementById('form-data').action = '{{route('workspace.toWorkspace', ['workspace' => $selectedWorkspace->id])}}';
-        if{
-            document.getElementById('method')
-        }
         document.getElementById('form-data').submit();
     }
     function saveAsDocx() {

@@ -22,12 +22,8 @@ class Collection extends Model
 
     public function setPropertiesAttribute($value)
     {
-    $properties = [];
-    foreach ($value as $key => $item) {
-        $properties[] = $item; 
-    }
-
-        $this->attributes['properties'] = json_encode($properties);
+    
+        $this->attributes['properties'] = $value;
     }
 
     public function getMethods()

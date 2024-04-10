@@ -333,7 +333,6 @@ class WorkspaceController extends Controller
     }
 
     public function save_json_data(Request $request, $workspace) {
-        dd($request->all());
         $method_type = $request->input('method_type');
         $req_header_key = $request->input('request_header_key');
         $req_header_require = $request->input('request-header-required');
@@ -366,53 +365,64 @@ class WorkspaceController extends Controller
                 "response_body" => []
             ]
         ];
-        dd($method);
-        foreach ($req_header_key as $index => $value) {
-            $req_header = [
-                "key" => $value,
-                "require" => $req_header_require[$index],
-                "description" => $req_header_desc[$index]
-            ];
-
-            array_push($method['request_header'], $req_header);
+        if (!empty($req_header_key) && !empty($req_header_require) && !empty($req_header_desc)) {
+            foreach ($req_header_key as $index => $value) {
+                // ตรวจสอบว่าอินเด็กซ์ของอาร์เรย์มีค่าหรือไม่ก่อนที่จะเข้าถึง
+                if (isset($req_header_require[$index]) && isset($req_header_desc[$index])) {
+                    $req_header = [
+                        "key" => $value,
+                        "require" => $req_header_require[$index],
+                        "description" => $req_header_desc[$index]
+                    ];
+        
+                    array_push($method['request_header'], $req_header);
+                }
+            }
         }
-
-        foreach ($req_param_key as $index => $value) {
-            $req_param = [
-                "key" => $value,
-                "type" => $request_param_type[$index],
-                "data_type" => $req_param_data_type[$index],
-                "require" => $req_param_require[$index],
-                "description" => $req_param_desc[$index]
-            ];
-            array_push($method['parameter'], $req_param);
+        
+        if (!empty($req_param_key) && !empty($value) && !empty($request_param_type) && !empty($req_param_data_type) && !empty($req_param_require) && !empty($req_param_desc)) {
+            foreach ($req_param_key as $index => $value) {
+                $req_param = [
+                    "key" => $value,
+                    "type" => $request_param_type[$index],
+                    "data_type" => $req_param_data_type[$index],
+                    "require" => $req_param_require[$index],
+                    "description" => $req_param_desc[$index]
+                ];
+                array_push($method['parameter'], $req_param);
+            }
         }
-
-        foreach ($req_body_key as $index => $value) {
-            $req_body = [
-                "key" => $value,
-                "data_type" => $req_body_data_type[$index],
-                "require" => $req_body_require[$index],
-                "description" => $req_body_desc[$index]
-            ];
-            array_push($method['request_body'], $req_body);
+        
+        if (!empty($req_body_key) && !empty($value) && !empty($req_body_data_type) && !empty($req_body_require) && !empty($req_body_desc)) {
+            foreach ($req_body_key as $index => $value) {
+                $req_body = [
+                    "key" => $value,
+                    "data_type" => $req_body_data_type[$index],
+                    "require" => $req_body_require[$index],
+                    "description" => $req_body_desc[$index]
+                ];
+                array_push($method['request_body'], $req_body);
+            }
         }
-
-        foreach ($res_body_key as $key => $value) {
-            $res_body = [
-                "key" => $value,
-                "data_type" => $res_body_data_type,
-                "description" => $res_body_desc,
-            ];
-
-            array_push($method['response']['response_body'], $res_body);
+        
+        if (!empty($res_body_key) && !empty($value) && !empty($res_body_data_type) && !empty($res_body_desc)) {
+            foreach ($res_body_key as $key => $value) {
+                $res_body = [
+                    "key" => $value,
+                    "data_type" => $res_body_data_type,
+                    "description" => $res_body_desc,
+                ];
+        
+                array_push($method['response']['response_body'], $res_body);
+            }
         }
 
         $json = json_encode($method);
+
         $col = new Collection;
         $col->name = 'untitle';
         $col->properties = $json;
-        $col->user_create = Auth::user()->id;
+        $col->user_create = auth()->user()->id;
         $col->workspace_id = $workspace;
         $col->status = '1';
         
@@ -503,4 +513,19 @@ class WorkspaceController extends Controller
         File::put($filestorepath, $json);
         return response('OK', 200)->download($filestorepath);
     }
+
+
+    public function wordExport(Request $request)
+    {
+        $templateProcessor = new TemplateProcessor('word-template/API_Spec-template.docx');
+        $templateProcessor->setValue('id', $request->id);
+        $templateProcessor->setValue('name', $request->name);
+        $templateProcessor->setValue('email', $request->email);
+        $templateProcessor->setValue('address', $request->address);
+        $fileName = 'api-apec';
+        $templateProcessor->saveAs($fileName . '.docx');
+        return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
+    }
+
+
 }
