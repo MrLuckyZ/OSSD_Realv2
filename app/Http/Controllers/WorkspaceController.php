@@ -12,6 +12,10 @@ use App\Models\Request_Parameter;
 use App\Models\Response;
 use App\Models\Response_Body;
 use App\Models\Request_Body;
+use PhpOffice\PhpWord\TemplateProcessor;
+use PhpOffice\PhpWord\Shared\ZipArchive;
+
+use Illuminate\Support\Facades\File;
 
 
 use Session;
@@ -543,4 +547,406 @@ class WorkspaceController extends Controller
 
 
 
+
+    public function save_json_data(Request $request, $workspace) {
+        $method_type = $request->input('method_type');
+        $req_header_key = $request->input('request_header_key');
+        $req_header_require = $request->input('request_header_required');
+        $req_header_desc = $request->input('request_header_desc');
+        $method_route = $request->input('method_route');
+        $req_param_key = $request->input('request_param_key');
+        $request_param_type = $request->input('request_param_type');
+        $req_param_data_type  = $request->input('request_param_data_type');
+        $req_param_require = $request->input('request_param_required');
+        $req_param_desc = $request->input('request_param_desc');
+        $req_body_key = $request->input('request_body_key');
+        $req_body_data_type = $request->input('request_body_data_type');
+        $req_body_require = $request->input('request_body_required');
+        $req_body_desc = $request->input('request_body_desc');
+        $res_body_code = $request->input('response_body_code');
+        $res_body_status = $request->input('response_body_status');
+        $res_body_key = $request->input('response_body_key');
+        $res_body_data_type = $request->input('response_body_data_type');
+        $res_body_desc = $request->input('response_body_desc');
+        $method = [
+            "request-header" => array(),
+            "request-parameter" => array(),
+            "request-body" => array(),
+            "data" => array(),
+            "status" => [
+                "code" => $res_body_code,
+                "text" => $res_body_status
+            ]
+        ];
+        array_push($method['request-header'],['method'=>$method_type ,'route'=>$method_route]);
+        foreach ($req_header_key as $index => $value) {
+            $requir = true;
+            if(empty($req_header_require[$index])){
+                $requir = false;
+            }
+            if (isset($req_header_require[$index])) {
+                if(is_null($req_header_desc)){
+                    $req_header = [
+                        "key" => $value,
+                        "require" => $requir,
+                        "description" => ""
+                    ];
+                }
+                else{
+                    $req_header = [
+                        "key" => $value,
+                        "require" => $requir,
+                        "description" => $req_header_desc[$index]
+                    ];
+                }
+                array_push($method['request-header'], $req_header);
+            }
+        }
+
+        if (!empty($req_param_key) && !empty($value) && !empty($request_param_type) && !empty($req_param_data_type)) {
+            foreach ($req_param_key as $index => $value) {
+                $requir = true;
+                if(empty($req_param_require[$index])){
+                    $requir = false;
+                }
+                if(is_null($req_param_desc)){
+                    $req_param = [
+                        "key" => $value,
+                        "type" => $request_param_type[$index],
+                        "data_type" => $req_param_data_type[$index],
+                        "require" => $requir,
+                        "description" => ""
+                    ];
+                }
+                else{
+                    $req_param = [
+                        "key" => $value,
+                        "type" => $request_param_type[$index],
+                        "data_type" => $req_param_data_type[$index],
+                        "require" => $requir,
+                        "description" => $req_param_desc[$index]
+                    ];
+                }
+                array_push($method['request-parameter'], $req_param);
+
+            }
+        }
+        
+        if (!empty($req_body_key) && !empty($value) && !empty($req_body_data_type) && !empty($req_body_require)) {
+            foreach ($req_body_key as $index => $value) {  
+                $requir = true;
+                if(empty($req_body_require[$index])){
+                    $requir = false;
+                } 
+                if(is_null($req_body_desc)){
+                    $req_body = [
+                        "key" => $value,
+                        "data_type" => $req_body_data_type[$index],
+                        "require" => $requir,
+                        "description" => ""
+                    ];
+                }
+                else {
+                    $req_body = [
+                        "key" => $value,
+                        "data_type" => $req_body_data_type[$index],
+                        "require" => $requir,
+                        "description" => $req_body_desc[$index]
+                    ];
+                }
+                array_push($method['request-body'], $req_body);
+
+            }
+        }
+
+        if (!empty($res_body_key) && !empty($value) && !empty($res_body_data_type) && !empty($res_body_desc)) {
+            foreach ($res_body_key as $key => $value) {
+                    if(is_null($res_body_desc)){
+                        $res_body = [
+                            "key" => $value,
+                            "data-type" => $res_body_data_type[$key],
+                            "description" => ""
+                        ];
+                    }
+                    else{
+                        $res_body = [
+                            "key" => $value,
+                            "data-type" => $res_body_data_type[$key],
+                            "description" => $res_body_desc[$key]
+                        ];
+                    }
+                }
+                array_push($method['data'], $res_body);
+            }
+
+
+
+        $json = json_encode($method);
+        $col = new Collection;
+        $col->name = 'Untitle';
+        $col->properties = $json;
+        $col->user_create = auth()->user()->id;
+        $col->workspace_id = $workspace;
+        $col->status = '1';
+        
+        $col->save();
+
+        return redirect()->back();
+    }
+
+    public function save_as_json(Request $request, $workspace){
+        $method_type = $request->input('method_type');
+        $req_header_key = $request->input('request_header_key');
+        $req_header_require = $request->input('request_header_required');
+        $req_header_desc = $request->input('request_header_desc');
+        $method_route = $request->input('method_route');
+        $req_param_key = $request->input('request_param_key');
+        $request_param_type = $request->input('request_param_type');
+        $req_param_data_type  = $request->input('request_param_data_type');
+        $req_param_require = $request->input('request_param_required');
+        $req_param_desc = $request->input('request_param_desc');
+        $req_body_key = $request->input('request_body_key');
+        $req_body_data_type = $request->input('request_body_data_type');
+        $req_body_require = $request->input('request_body_required');
+        $req_body_desc = $request->input('request_body_desc');
+        $res_body_code = $request->input('response_body_code');
+        $res_body_status = $request->input('response_body_status');
+        $res_body_key = $request->input('response_body_key');
+        $res_body_data_type = $request->input('response_body_data_type');
+        $res_body_desc = $request->input('response_body_desc');
+        $method = [
+            "request-header" => array(),
+            "request-parameter" => array(),
+            "request-body" => array(),
+            "data" => array(),
+            "status" => [
+                "code" => $res_body_code,
+                "text" => $res_body_status
+            ]
+        ];
+        array_push($method['request-header'],['method'=>$method_type ,'route'=>$method_route]);
+        foreach ($req_header_key as $index => $value) {
+            $requir = true;
+            if(empty($req_header_require[$index])){
+                $requir = false;
+            }
+            if (isset($req_header_require[$index])) {
+                if(is_null($req_header_desc)){
+                    $req_header = [
+                        "key" => $value,
+                        "require" => $requir,
+                        "description" => ""
+                    ];
+                }
+                else{
+                    $req_header = [
+                        "key" => $value,
+                        "require" => $requir,
+                        "description" => $req_header_desc[$index]
+                    ];
+                }
+                array_push($method['request-header'], $req_header);
+            }
+        }
+
+        if (!empty($req_param_key) && !empty($value) && !empty($request_param_type) && !empty($req_param_data_type)) {
+            foreach ($req_param_key as $index => $value) {
+                $requir = true;
+                if(empty($req_param_require[$index])){
+                    $requir = false;
+                }
+                if(is_null($req_param_desc)){
+                    $req_param = [
+                        "key" => $value,
+                        "type" => $request_param_type[$index],
+                        "data_type" => $req_param_data_type[$index],
+                        "require" => $requir,
+                        "description" => ""
+                    ];
+                }
+                else{
+                    $req_param = [
+                        "key" => $value,
+                        "type" => $request_param_type[$index],
+                        "data_type" => $req_param_data_type[$index],
+                        "require" => $requir,
+                        "description" => $req_param_desc[$index]
+                    ];
+                }
+                array_push($method['request-parameter'], $req_param);
+
+            }
+        }
+        
+        if (!empty($req_body_key) && !empty($value) && !empty($req_body_data_type) && !empty($req_body_require)) {
+            foreach ($req_body_key as $index => $value) {  
+                $requir = true;
+                if(empty($req_body_require[$index])){
+                    $requir = false;
+                } 
+                if(is_null($req_body_desc)){
+                    $req_body = [
+                        "key" => $value,
+                        "data_type" => $req_body_data_type[$index],
+                        "require" => $requir,
+                        "description" => ""
+                    ];
+                }
+                else {
+                    $req_body = [
+                        "key" => $value,
+                        "data_type" => $req_body_data_type[$index],
+                        "require" => $requir,
+                        "description" => $req_body_desc[$index]
+                    ];
+                }
+                array_push($method['request-body'], $req_body);
+
+            }
+        }
+
+        if (!empty($res_body_key) && !empty($value) && !empty($res_body_data_type) && !empty($res_body_desc)) {
+            foreach ($res_body_key as $key => $value) {
+                    if(is_null($res_body_desc)){
+                        $res_body = [
+                            "key" => $value,
+                            "data-type" => $res_body_data_type[$key],
+                            "description" => ""
+                        ];
+                    }
+                    else{
+                        $res_body = [
+                            "key" => $value,
+                            "data-type" => $res_body_data_type[$key],
+                            "description" => $res_body_desc[$key]
+                        ];
+                    }
+                }
+                array_push($method['data'], $res_body);
+            }
+
+        $json = json_encode($method,JSON_PRETTY_PRINT);
+        $filename = time() .'_datafile.json';
+        $filestorepath = public_path('/uploads/json/'.$filename);
+        File::put($filestorepath, $json);
+        return response()->download($filestorepath);
+    }
+
+
+    public function save_as_doc(Request $request)
+    {
+        $method_type = $request->input('method_type');
+        $req_header_key = $request->input('request_header_key');
+        $req_header_require = $request->input('request_header_required');
+        $req_header_desc = $request->input('request_header_desc');
+        $method_route = $request->input('method_route');
+        $req_param_key = $request->input('request_param_key');
+        $request_param_type = $request->input('request_param_type');
+        $req_param_data_type  = $request->input('request_param_data_type');
+        $req_param_require = $request->input('request_param_required');
+        $req_param_desc = $request->input('request_param_desc');
+        $req_body_key = $request->input('request_body_key');
+        $req_body_data_type = $request->input('request_body_data_type');
+        $req_body_require = $request->input('request_body_required');
+        $req_body_desc = $request->input('request_body_desc');
+        $res_body_code = $request->input('response_body_code');
+        $res_body_status = $request->input('response_body_status');
+        $res_body_key = $request->input('response_body_key');
+        $res_body_data_type = $request->input('response_body_data_type');
+        $res_body_desc = $request->input('response_body_desc');
+
+        $templateProcessor = new TemplateProcessor('word-template/API_Spec-template.docx');
+        $templateProcessor->setValue('method', $method_type);
+        $templateProcessor->setValue('route', $method_route);
+        $templateProcessor->setValue('required', $request->address);
+
+        foreach ($req_header_key as $index => $value) {
+            $requir = true;
+            if(empty($req_header_require[$index])){
+                $requir = false;
+            }
+            if (isset($req_header_require[$index])) {
+                if(is_null($req_header_desc)){
+                    $templateProcessor->setValue('no_header', $index);
+                    $templateProcessor->setValue('key_header', $value);
+                    $templateProcessor->setValue('require_header', $requir);
+                    $templateProcessor->setValue('description_header', "");
+
+                }
+                else{
+                    $templateProcessor->setValue('no_header', $index);
+                    $templateProcessor->setValue('key_header', $value);
+                    $templateProcessor->setValue('require_header', $requir);
+                    $templateProcessor->setValue('description_header', $req_header_desc[$index]);
+                }
+            }
+        }
+
+        if (!empty($req_param_key) && !empty($value) && !empty($request_param_type) && !empty($req_param_data_type)) {
+            foreach ($req_param_key as $index => $value) {
+                $requir = true;
+                if(empty($req_param_require[$index])){
+                    $requir = false;
+                }
+                if(is_null($req_param_desc)){
+                    $templateProcessor->setValue('no_param', $value);
+                    $templateProcessor->setValue('key_param', $request_param_type[$index]);
+                    $templateProcessor->setValue('paramtype_param', $req_param_data_type[$index]);
+                    $templateProcessor->setValue('datatype_param', $req_param_data_type[$index]);
+                    $templateProcessor->setValue('required_param', $requir);
+                    $templateProcessor->setValue('desc_param', "");
+                }
+                else{
+                    $templateProcessor->setValue('no_param', $value);
+                    $templateProcessor->setValue('key_param', $request_param_type[$index]);
+                    $templateProcessor->setValue('paramtype_param', $req_param_data_type[$index]);
+                    $templateProcessor->setValue('datatype_param', $req_param_data_type[$index]);
+                    $templateProcessor->setValue('required_param', $requir);
+                    $templateProcessor->setValue('desc_param', "");
+                }
+            }
+        }
+        
+        if (!empty($req_body_key) && !empty($value) && !empty($req_body_data_type) && !empty($req_body_require)) {
+            foreach ($req_body_key as $index => $value) {  
+                $requir = true;
+                if(empty($req_body_require[$index])){
+                    $requir = false;
+                } 
+                if(is_null($req_body_desc)){
+                    $templateProcessor->setValue('no_response', $index);
+                    $templateProcessor->setValue('key_response', $value);
+                    $templateProcessor->setValue('datatype_response', $req_body_data_type[$index]);
+                    $templateProcessor->setValue('desc_response', "");
+                }
+                else {
+                    $templateProcessor->setValue('no_response', $index);
+                    $templateProcessor->setValue('key_response', $value);
+                    $templateProcessor->setValue('datatype_response', $req_body_data_type[$index]);
+                    $templateProcessor->setValue('desc_response', $req_body_desc[$index]);
+                }
+        }
+
+        if (!empty($res_body_key) && !empty($value) && !empty($res_body_data_type) && !empty($res_body_desc)) {
+            foreach ($res_body_key as $key => $value) {
+                if(is_null($res_body_desc)){
+                    $templateProcessor->setValue('no_response', $index);
+                    $templateProcessor->setValue('key_response', $value);
+                    $templateProcessor->setValue('datatype_response', $res_body_data_type[$key]);
+                    $templateProcessor->setValue('desc_response', "");
+                }
+                else{
+                    $templateProcessor->setValue('no_response', $index);
+                    $templateProcessor->setValue('key_response', $value);
+                    $templateProcessor->setValue('datatype_response', $res_body_data_type[$key]);
+                    $templateProcessor->setValue('desc_response', $res_body_desc[$key]);
+                }
+            }
+        }
+
+        $fileName = 'api-spec';
+        $templateProcessor->saveAs($fileName . '.docx');
+        return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
+        }
+    }
 }

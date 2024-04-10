@@ -406,6 +406,7 @@
     }
     function saveAsDocx() {
         document.getElementById('form-data').action = '{{route('workspace.toJson', ['workspace' => $selectedWorkspace->id])}}';
+        document.getElementById('form-data').action = '{{route('workspace.toDocx', ['workspace' => $selectedWorkspace->id])}}';
         document.getElementById('form-data').submit();
     }
     function saveAsJson() {
