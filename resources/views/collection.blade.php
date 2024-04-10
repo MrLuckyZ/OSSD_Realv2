@@ -58,18 +58,17 @@
                         </ul>
                     </button>
                 </div>
-                <div class="collapse" id="collection_{{$collection->id}}">
-                    {{-- Method List --}}
+                {{-- <div class="collapse" id="collection_{{$collection->id}}">
+                    Method List
                     @foreach ($collection->methods as $method)
                     <ul class="navbar-nav">
                         <li><a href="{{route('add.collection.tabs',['collection' => $collection->id])}}"><label class="me-2" style="font-size: 14px;  font-weight: 500;" for="">{{$method->type}}</label><label for="" style="font-size: 14px; color: #000;">{{$method->path}}</label></a></li>
                     </ul>
                     @endforeach
-                </div>
+                </div> --}}
 
             </div>
             @endforeach
-
         </div>
     </div>
 

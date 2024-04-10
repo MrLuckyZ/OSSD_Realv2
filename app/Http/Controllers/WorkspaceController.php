@@ -179,7 +179,7 @@ class WorkspaceController extends Controller
             return redirect()->route('home.index')->with('error', 'Collection not found');
         }
         if($selectedCollection->methods() != null){
-            $selectedCollection->methods()->delete();
+            // $selectedCollection->methods()->delete();
             $selectedCollection->delete();
             return redirect()->back();
         }
