@@ -14,7 +14,6 @@
                     <select style="height:60px" name="access" id="mySelect" onchange="changeRole()">
                         <option value="personal">Only Me</option>
                         <option value="team">Everyone from your team</option>
-                        <option value="all">Anyone on the internet</option>
                     </select>
 
                     <label id="roles" class="btn btn-outline d-flex p-0 cursor" for="public"style="width:400px; height:60px;">
