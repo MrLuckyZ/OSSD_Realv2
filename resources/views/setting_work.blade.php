@@ -9,7 +9,7 @@
         {{-- กล่องเลือก Team --}}
         <div class="ps-1">
             <div class="ps-4  d-flex">
-                <form action="{{ route('access.setting') }}" method="POST">
+                <form action="{{ route('access.setting',['workspace'=>$selectedWorkspace]) }}" method="POST">
                     @csrf
                     <select style="height:60px" name="access" id="mySelect" onchange="changeRole()">
                         <option value="personal">Only Me</option>

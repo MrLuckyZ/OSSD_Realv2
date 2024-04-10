@@ -37,7 +37,6 @@ class WorkspaceController extends Controller
         $data['workspaces'] = Workspace::get()->all();
         $selectedWorkspace = Workspace::find($id);
         $data['selectedWorkspace'] = $selectedWorkspace;
-        $request->session()->put('collection_tabs', $selectedWorkspace);
         return view('setting_work', $data);
     }
     public function create()
@@ -308,7 +307,6 @@ class WorkspaceController extends Controller
 
     public function setting_access(Request $request){
         $selectedWorkspace = session('selectedWorkspace');
-        dd($selectedWorkspace);
         $user = auth()->user();
         
         if($selectedWorkspace -> user_create == $user -> id){
@@ -326,7 +324,7 @@ class WorkspaceController extends Controller
             return redirect()->back()->with('error', 'You not owner');
         }
         
-        return view('setting_work')->with('success', 'You have change access');
+        return redirect()->back()->with('success', 'You have change access');
 
     }
 }

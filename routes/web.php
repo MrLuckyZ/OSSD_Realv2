@@ -35,7 +35,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/workspace/{workspace}/collection/importfile/{collection}',[WorkspaceController::class,'import_file'])->name('importFile');
 
     Route::get('/workspace/{workspace}/setting', [WorkspaceController::class, 'setting'])->name('workspace.setting');
-    Route::post('/workspace/setting-access', [WorkspaceController::class, 'setting_access'])->name('access.setting');
+    Route::post('/workspace/{workspace}/setting-access', [WorkspaceController::class, 'setting_access'])->name('access.setting');
     Route::get('/workspace/{workspace}/delete-collection', [WorkspaceController::class, 'deleteCollection'])->name('workspace.deleteCollection');
 
     Route::get('/delete-workspace/{workspace}', [WorkspaceController::class, 'delete_workspace'])->name('workspace.deleteWorkspace');
