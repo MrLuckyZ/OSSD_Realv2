@@ -50,11 +50,12 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('/delete-workspace/{workspace}', [WorkspaceController::class, 'delete_workspace'])->name('workspace.deleteWorkspace');
     Route::get('/all-workspace', [WorkspaceController::class, 'view_allworkspace'])->name('workspace.all_workspace');
-    Route::post('/export', [WorkspaceController::class, 'wordExport'])->name('home.exportfile');
 
     Route::post('/workspace/{workspace}/collection/importfile/{collection}',[WorkspaceController::class,'import_file'])->name('importFile');
     Route::post('/workspace/{workspace}/collection/save',[WorkspaceController::class,'save_json_data'])->name('workspace.toWorkspace');
     Route::post('/workspace/{workspace}/collection/save-as-json',[WorkspaceController::class,'save_as_json'])->name('workspace.toJson');
+    Route::post('/workspace/{workspace}/collection/save-as-docx', [WorkspaceController::class, 'save_as_doc'])->name('workspace.toDocx');
+
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 

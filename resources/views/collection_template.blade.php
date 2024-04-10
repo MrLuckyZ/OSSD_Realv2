@@ -23,7 +23,7 @@
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
                         <li>
-                            <button type="submit" class="dropdown-item" onclick="saveAsJson()">Save As .Json</button>
+                            <button type="submit" class="dropdown-item" onclick="saveAsJson()">Save As .json</button>
                         </li>
                         <li>
                             <button type="submit" class="dropdown-item" onclick="saveAsDocx()">Save As .docx</button>
@@ -405,7 +405,7 @@
         document.getElementById('form-data').submit();
     }
     function saveAsDocx() {
-        document.getElementById('form-data').action = '{{route('workspace.toJson', ['workspace' => $selectedWorkspace->id])}}';
+        document.getElementById('form-data').action = '{{route('workspace.toDocx', ['workspace' => $selectedWorkspace->id])}}';
         document.getElementById('form-data').submit();
     }
     function saveAsJson() {
