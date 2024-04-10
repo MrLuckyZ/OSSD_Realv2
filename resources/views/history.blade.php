@@ -1,4 +1,4 @@
-@extends('layouts.default')
+<!-- @extends('layouts.default')
 
 @section('title', 'History')
 
@@ -28,4 +28,4 @@
 @endsection
 
 @section('js')
-@endsection
+@endsection -->
