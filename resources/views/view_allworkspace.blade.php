@@ -3,26 +3,16 @@
 @section('title','Home')
 
 @section('content')
-    <div class="p-4" style="height:100%; width:100%">
-        <h1>Your Workspaces</h1>
+    <div class="" style="height:100%; width:100%">
+        <h1 class="p-4">Your Workspaces</h1>
         {{-- ช่อง Search --}}
         <div class="d-flex  mt-4">
-            <div class="input-group" style="width: 220px; height:35px; ">
+            <!-- <div class="input-group" style="width: 220px; height:35px; ">
                 <i class="fa fa-search " style="font-size: 14px; margin-top: 4.5px;"></i>
                 <div>
                     <input type="search" class="form-control me-3 rounded-2" style="width: 211px; height:35px; " placeholder="Search workspaces">
                 </div>
-            </div>
-            {{-- ช่อง Select --}}
-            <select class="form-select me-3 link-grey" style="width: auto; height:35px;">
-                <option selected>Visibility</option>
-            </select>
-            <select class="form-select me-3 link-grey" style="width: auto; height:35px;">
-                <option selected>Created by</option>
-            </select>
-            <select class="form-select ms-auto link-grey" style="width: auto; height:35px;">
-                <option selected >Sort by A to Z</option>
-            </select> 
+            </div> -->
         </div>
         <div class="mt-3">
             <ul class="p-0" style="list-style-type:none;">
