@@ -445,10 +445,12 @@
                     <label style="color: #808080; font-size: 14px; font-weight: 500;">Recently visited</label>
                     <ul style="list-style-type:none;">
 
-                    <?php use Illuminate\Support\Facades\Auth; ?>
+                    <?php use Illuminate\Support\Facades\Auth; 
+                    $count = 0 ?>
 
                         @foreach ($work_recently as $index => $workspace)
-                            @if ($index < 3  && Auth::user()->id == $workspace->id_user)
+                            @if (Auth::user()->id == $workspace->id_user)
+                                @php $count++; @endphp
                                 @if ($workspace->access == 'personal')
                                     <div class="row custom-table" style="border: none">
                                         <div class="col">
@@ -473,6 +475,7 @@
                                     </div>
                                 @endif
                             @endif
+                            @if ($count == 3) @break @endif
                         @endforeach
                     </ul>
                 </div>

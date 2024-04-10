@@ -445,10 +445,12 @@
                     <label style="color: #808080; font-size: 14px; font-weight: 500;">Recently visited</label>
                     <ul style="list-style-type:none;">
 
-                    <?php use Illuminate\Support\Facades\Auth; ?>
+                    <?php use Illuminate\Support\Facades\Auth; 
+                    $count = 0 ?>
 
                         <?php $__currentLoopData = $work_recently; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $workspace): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                            <?php if($index < 3  && Auth::user()->id == $workspace->id_user): ?>
+                            <?php if(Auth::user()->id == $workspace->id_user): ?>
+                                <?php $count++; ?>
                                 <?php if($workspace->access == 'personal'): ?>
                                     <div class="row custom-table" style="border: none">
                                         <div class="col">
@@ -473,6 +475,7 @@
                                     </div>
                                 <?php endif; ?>
                             <?php endif; ?>
+                            <?php if($count == 3): ?> <?php break; ?> <?php endif; ?>
                         <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                     </ul>
                 </div>
