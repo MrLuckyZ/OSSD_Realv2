@@ -82,44 +82,44 @@
                     <th scope="col">kick</th>
                   </tr>
                 </thead>
-            <tbody>
-                <?php $counter = 0; ?>
-                <?php $__currentLoopData = $Worksapce_User; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $W_user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> <!-- Here was the issue -->
-                 <?php if($W_user->workspace_id === $selectedWorkspace->id && $W_user->status != '0'): ?>
-                    <?php $counter++; ?>
-                    <tr>
-                        <td><?php echo e($counter); ?></td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <p style="font-size: 20px;"><?php echo e($W_user->user_id); ?></p>
-                            </div>
-                        </td>
-                        <td>
-                            <?php 
-                                $user = App\Models\User::find($W_user->user_id); // Assuming User model is App\User
-                            ?>
-                            <?php if($user): ?>
-                                <p style="font-size: 20px;"><?php echo e($user->name); ?></p>
-                            <?php else: ?>
-                                <p style="font-size: 20px;">User Not Found</p>
-                            <?php endif; ?>
-                        </td>
-                        <td>
-                            <form method="POST" action="<?php echo e(route('remove.user.team', $W_user->id )); ?>">
-                                <?php echo csrf_field(); ?>
-                                <button  type="submit" type="button" class="btn-sm btn-danger">Kick</button>
-                            </form>
-                        </td>
-                    </tr>
-
-                  
-                <?php endif; ?>
-                </td>
-
-                </tr>
-                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
-
-              </tbody>
+                <tbody>
+                    <?php $counter = 0; ?>
+                    <?php $__currentLoopData = $Worksapce_User; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $W_user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                        <?php if($W_user->workspace_id === $selectedWorkspace->id && $W_user->status != '0'): ?>
+                            <?php $counter++; ?>
+                            <tr>
+                                <td><?php echo e($counter); ?></td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <p style="font-size: 20px;"><?php echo e($W_user->user_id); ?></p>
+                                    </div>
+                                </td>
+                                <td>
+                                    <?php 
+                                        $user = App\Models\User::find($W_user->user_id);
+                                    ?>
+                                    <?php if($user): ?>
+                                        <p style="font-size: 20px;"><?php echo e($user->name); ?></p>
+                                    <?php else: ?>
+                                        <p style="font-size: 20px;">User Not Found</p>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php 
+                                        $workspace = App\Models\Workspace::find($W_user->workspace_id);
+                                    ?>
+                                    <?php if($workspace && $workspace->user_create != $W_user->user_id): ?>             
+                                        <form method="POST" action="<?php echo e(route('remove.user.team', $W_user->id)); ?>">
+                                            <?php echo csrf_field(); ?>
+                                            <button type="submit" class="btn-sm btn-danger">Kick</button>
+                                        </form>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endif; ?>
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                </tbody>
+                
                
         </div>
     </table>

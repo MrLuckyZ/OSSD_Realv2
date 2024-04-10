@@ -113,7 +113,6 @@
                                     @if ($workspace && $workspace->user_create != $W_user->user_id)             
                                         <form method="POST" action="{{ route('remove.user.team', $W_user->id) }}">
                                             @csrf
-                                            @method('DELETE') <!-- You may need to adjust the method if it's not DELETE -->
                                             <button type="submit" class="btn-sm btn-danger">Kick</button>
                                         </form>
                                     @endif
