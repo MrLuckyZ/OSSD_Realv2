@@ -11,6 +11,7 @@ use App\Models\Request_Header;
 use App\Models\Parameter;
 use App\Models\Response;
 use App\Models\Response_Body;
+use App\Models\Comment;
 
 use Session;
 
@@ -266,8 +267,15 @@ class WorkspaceController extends Controller
         $request->session()->put('collection_tabs', $collection_tabs);
         return redirect()->back();
     }
-    public function comments(Request $request ,$id){
-        
+    public function commentCollection(Request $request, $workspaceId, $id){
+        $comment = new Comment();
+        $comment->user_comment = auth()->user()->id;
+        $comment->detail = $request->input('commentDetail');
+        $comment->collection_id = $id;
+
+        $comment->save();
+
+        return redirect()->back();
     }
     
 }

@@ -41,4 +41,5 @@ Route::group(['middleware' => 'auth'], function () {
 
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/workspace/{workspace}/collection/comment/{collection}', [WorkspaceController::class, 'commentCollection'])->name('workspace.commentCollection');  
 });

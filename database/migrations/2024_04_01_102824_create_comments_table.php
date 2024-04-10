@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->longText('detail');
-            $table->string('user_comment');
+            $table->unsignedBigInteger('user_comment')->nullable();
+            $table->foreign('user_comment')->references('id')->on('users');
             $table->unsignedBigInteger('collection_id')->nullable();
             $table->foreign('collection_id')->references('id')->on('collections');
             $table->timestamps();

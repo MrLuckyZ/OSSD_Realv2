@@ -26,13 +26,13 @@
                             </div>
                             <h5>GET</h5>
                             <h6>Comments</h6>
-                            <div style="height: 490px">
-
-                            </div>
+                            <div style="height: 490px"></div>
                             <div>
-                                <input style="width: 265px" type="text" placeholder=" Add a new comment">
-                                <button class="btn btn-primary btn-sm mt-2 me-3" style="right: 0; position: fixed;"
-                                    type="submit">Comment</button>
+                                <form action="{{ route('workspace.commentCollection', ['workspace' => $selectedWorkspace->id, 'collection' => $selectedCollection->id]) }}" enctype="multipart/form-data" method="POST">
+                                    @csrf
+                                    <input style="width: 265px" type="text" name="commentDetail" placeholder="Add a new comment">
+                                    <button class="btn btn-primary btn-sm mt-2 me-3" style="right: 0; position: fixed;" type="submit">Comment</button>
+                                </form>
                             </div>
                         </div>
                     </div>
