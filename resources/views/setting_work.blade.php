@@ -80,7 +80,76 @@
             </div>
 
         </div>
-       
+        {{-- กล่องเชิญเข้า Team --}}
+        <div class="ps-4 mt-5">
+            <form action="{{ route('invitation.post', ['workspace' => $selectedWorkspace->id]) }}" method="POST">
+                @csrf
+                <p class="text mt-4" style="font-size: 20px;">Invite People to this workspace</p>
+                <div class="d-flex align-items-center">
+                    <input type="email" class="form-control me-3" id="input02" name="email" placeholder="Search by name or email" style="width: 313px; height:45px;">
+                    <button style="height: 35px; width:69px; " class="btn btn-secondary" type="submit">Invite</button>
+                </div>
+            </form>
+
+            <p class="text mt-4" style="font-size: 20px;">All-Users</p>
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">name</th>
+                    <th scope="col">kick</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    @php $counter = 0; @endphp
+                    @foreach ($Worksapce_User as $W_user)
+                        @if ($W_user->workspace_id === $selectedWorkspace->id && $W_user->status != '0')
+                            @php $counter++; @endphp
+                            <tr>
+                                <td>{{ $counter }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <p style="font-size: 20px;">{{ $W_user->user_id }}</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    @php 
+                                        $user = App\Models\User::find($W_user->user_id);
+                                    @endphp
+                                    @if ($user)
+                                        <p style="font-size: 20px;">{{ $user->name }}</p>
+                                    @else
+                                        <p style="font-size: 20px;">User Not Found</p>
+                                    @endif
+                                </td>
+                                <td>
+                                    @php 
+                                        $workspace = App\Models\Workspace::find($W_user->workspace_id);
+                                    @endphp
+                                    @if ($workspace && $workspace->user_create != $W_user->user_id)             
+                                        <form method="POST" action="{{ route('remove.user.team', $W_user->id) }}">
+                                            @csrf
+                                            @method('DELETE') <!-- You may need to adjust the method if it's not DELETE -->
+                                            <button type="submit" class="btn-sm btn-danger">Kick</button>
+                                        </form>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+                
+               
+        </div>
+    </table>
+
+        {{-- ปุ่ม OK กับ BACK --}}
+        <div class="ps-4 mt-5">
+            <a href="" class="btn btn-primary me-4" type="button" style="width: 69px; height: 35px;">Ok</a>
+            <a href="{{ route('workspace.collections', ['workspace' => $selectedWorkspace->id]) }}" class="btn btn-secondary"
+                type="button" style="width: 69px; height: 35px;">Back</a>
+        </div>
     </div>
 @endsection
 

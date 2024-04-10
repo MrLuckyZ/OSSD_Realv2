@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\WorkspaceController;
+use App\Http\Controllers\TeamController;
 
 
 Route::group(['middleware' => 'guest'], function () {
@@ -17,9 +18,15 @@ Route::group(['middleware' => 'guest'], function () {
     Route::get('/forgot-password', [AuthController::class, 'forgot'])->name('forgot');
 });
 
+    Route::post('/send-invitation/{workspace}', [TeamController::class, 'invitaion_post'])->name('invitation.post');
+    Route::post('/confirm-team-invite', [TeamController::class, 'confirm_post'])->name('invitation.confirm.post');
+    Route::post('/remove-user/{id}', [TeamController::class, 'remove_user'])->name('remove.user.team');
 
 
-Route::group(['middleware' => 'auth'], function () {
+
+    Route::group(['middleware' => 'auth'], function () {
+        Route::get('/viewteam-invite/{token}', [TeamController::class, 'viewteam_invite'])->name('view.invitationteam');
+
     Route::get('/', [MainController::class, 'index'])->name('home.index');
     // Route::get('/home', [MainController::class, 'index'])->name('home.index');
 
@@ -43,6 +50,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/export', [WorkspaceController::class, 'wordExport'])->name('home.exportfile');
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+
+   
+
+
 });
 
 Route::get('/team', function () {
