@@ -61,10 +61,10 @@
                     </div>
                 </div>
                 <!-- Collections List -->
-                
                 @foreach ($selectedWorkspace->collections as $collection)
+                    @if($collection->status != "0")
                     <div class="row">
-                        <div class="col p-0">
+                        <div class="col p-0 d-flex">
                             <button class="btn-collapse dropdown hover-black d-flex align-items-center"
                                 style="height: 30px; width: 100%; text-decoration:none;" type="button"
                                 data-bs-toggle="collapse" data-bs-target="#collection_{{ $collection->id }}"
@@ -72,6 +72,13 @@
                                 <span class="material-symbols-outlined ms-1 me-2" name="expand"
                                     id="{{ $collection->id }}">chevron_right</span>
                                 <span class="fs-6" style="font-weight: 500">{{ $collection->name }}</span>
+                                <button class="btn d-flex justify-content-center align-items-center mt-1" style="height: 25px;" type="button" id="workspace_option" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <span class="material-icons">more_horiz</span>
+                                </button>
+                                <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
+                                    <li><a class="dropdown-item" href="#">Rename</a></li>
+                                    <li><a class="dropdown-item" href="{{Route('delete.collection',['collection' => $collection->id])}}">Delete</a></li>
+                                </ul>
                             </button>
                             <div class="collapse" id="collection_{{ $collection->id }}"
                                 @if (session()->has('collection_' . $collection->id . '_collapse') &&
@@ -79,6 +86,7 @@
                             </div>
                         </div>
                     </div>
+                    @endif
                 @endforeach
             </div>
         </div>

@@ -42,14 +42,14 @@
                         <label class="ms-5">Action</label>
                     </div>
                 </div>
-                @foreach ($collections as $data_collection => $collection)
-                    @if ($data_collection->status = 'deleted')
+                @foreach ($selectedWorkspace->collections as $collection)
+                    @if ($collection->status == "0")
                         <div class="d-flex align-items-center" style="height: 50px ; border-top:#f2f2f2 solid 1px">
                             <div class="col d-flex align-items-center">
-                                <label class="ms-4">Test name</label>
+                                <label class="ms-4">{{$collection->name}}</label>
                             </div>
                             <div class="col d-flex align-items-center">
-                                <label class="ms-6">Test delete time</label>
+                                <label class="ms-6">{{$collection->updated_at}}</label>
                             </div>
                             <div class="col d-flex align-items-center">
                                 <label class="ms-4">
@@ -58,13 +58,14 @@
                                             aria-expanded="false">
                                             <span class="material-icons mt-2">more_horiz</span>
                                         </button>
+                                       
                                         <ul class="dropdown-menu pane p-1 align-items-center" style="width:150px"
                                             aria-labelledby="workspace_option">
-                                            <li><a style="width: 100%" class="btn btn-danger mb-1" href="#">Delete</a>
+                                            <li><a style="width: 100%" class="btn btn-danger mb-1" id="" href="{{route('deletedreal.collection',['collection' => $collection->id])}}">Delete</a>
                                             </li>
                                             <li><a style="width: 100%" class="btn btn-secondary mb-1"
                                                     href="#">Cancel</a></li>
-                                            <li><a style="width: 100%" class="btn btn-success" href="#">Recover</a>
+                                            <li><a style="width: 100%" class="btn btn-success" href="{{route('recover.collection',['collection' => $collection->id])}}">Recover</a>
                                             </li>
                                         </ul>
                                     </div>

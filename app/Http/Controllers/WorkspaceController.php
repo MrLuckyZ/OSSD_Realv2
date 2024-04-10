@@ -102,26 +102,6 @@ class WorkspaceController extends Controller
         return view('history', $data);
     }
 
-    public function trash(Request $request)
-    {
-        $selectedWorkspaceId = $request->session()->get('selected_workspace_id');
-        $selectedWorkspace = Workspace::find($selectedWorkspaceId);
-
-        if (!$selectedWorkspace) {
-            return redirect()->route('home.index')->with('error', 'Workspace not found');
-        }
-
-        $data = $request->session()->all();
-        $data['workspaces'] = Workspace::get()->all();
-        $data['selectedWorkspace'] = $selectedWorkspace;
-
-        $collection = $selectedWorkspace->collections();
-        $data['collections'] = $collection;
-
-
-        return view('trash', $data);
-    }
-
     public function deleteFromCollectionTabs(Request $request, $id)
     {
         $selectedWorkspaceId = $request->session()->get('selected_workspace_id');
@@ -330,5 +310,66 @@ class WorkspaceController extends Controller
         
         return redirect()->back()->with('success', 'You have change access');
 
+    }
+    public function delete_collection(Request $request,$id){
+        $selectedCollection = Collection::find($id);  
+        if (!$id) {
+            return redirect()->route('home.index')->with('error', 'Collection not found');
+        }   
+        if($selectedCollection != null){
+            $selectedCollection->status = "0";
+            $selectedCollection->save();
+            
+            return redirect()->back();
+        }
+
+    }
+
+    public function recover_collection(Request $request,$id){
+        $selectedCollection = Collection::find($id);
+        if (!$id) {
+            return redirect()->route("home.index")->with("error", "Collection not found");
+        }
+        if($selectedCollection != null){
+            $selectedCollection->status = "1";
+            $selectedCollection->save();
+            return redirect()->back();
+        }
+    }
+
+    public function delete(Request $request,$id){
+        $selectedCollection = Collection::find($id);  
+        $selectedCollection->delete();
+        return  redirect()->back();
+    }
+            // if($selectedCollection != null){
+        //     $selectedCollection->status = "0";
+        //     $selectedCollection->delete();
+            
+        //     return redirect()->back();
+        // }
+    public function trash(Request $request)
+    {
+        $selectedWorkspaceId = $request->session()->get('selected_workspace_id');
+        $selectedWorkspace = Workspace::find($selectedWorkspaceId);
+
+        if (!$selectedWorkspace) {
+            return redirect()->route('home.index')->with('error', 'Workspace not found');
+        }
+        $collections = Collection::get()->all();
+        foreach ($collections as $collection) {
+            if($collection->workspace_id){
+                $list[] = $collection;
+            }
+        }
+
+        $data = $request->session()->all();
+        $data['workspaces'] = Workspace::get()->all();
+        $data['selectedWorkspace'] = $selectedWorkspace;
+
+        $collection = $selectedWorkspace->collections();
+        $data['collections'] = $list;
+        
+        return view('trash', $data);
     }
 }
