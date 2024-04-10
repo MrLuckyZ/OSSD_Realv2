@@ -61,6 +61,7 @@
                     </div>
                 </div>
                 <!-- Collections List -->
+                
                 @foreach ($selectedWorkspace->collections as $collection)
                     <div class="row">
                         <div class="col p-0">
@@ -75,13 +76,10 @@
                             <div class="collapse" id="collection_{{ $collection->id }}"
                                 @if (session()->has('collection_' . $collection->id . '_collapse') &&
                                         session('collection_' . $collection->id . '_collapse')) aria-expanded="true" @endif>
-                                {{-- Method List --}}
-                                
                             </div>
                         </div>
                     </div>
                 @endforeach
-
             </div>
         </div>
 
