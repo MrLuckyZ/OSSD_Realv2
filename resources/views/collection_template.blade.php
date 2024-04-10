@@ -143,6 +143,12 @@
                                         </tbody>
                                     </table>
                                 </div>
+                                <div class="d-flex justify-content-end">
+                                    <a href="" class="mt-2">
+                                        <span class="material-symbols-outlined"
+                                            style="background-color: #F2F2F2; color: #000000; border-radius: 5px;">add</span>
+                                    </a>
+                                </div>
                               
 
                                 {{-- ตาราง Request Parameters --}}
