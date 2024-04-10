@@ -68,7 +68,7 @@
                                     <td class="col-2"
                                         style="border-right: 2px solid #F2F2F2; border-top: 2px solid #F2F2F2; border-radius:5px;">
                                         <div class="d-flex justify-content-center">
-                                            <select class="form-select custom-textfield" aria-label="Default select example">
+                                            <select class="form-select custom-textfield" aria-label="Default select example" id="method-type" name="method-type[]">
                                                 <option value="GET" selected>GET</option>
                                                 <option value="POST">POST</option>
                                                 <option value="PUT">PUT</option>
@@ -81,7 +81,7 @@
                                     </td>
                                     <td class="col-2 " style="border-top: 2px solid #F2F2F2; border-radius:5px;">
                                         <input class="mt-1 custom-textfield" style="height: auto; width: 100%;" type="text"
-                                            name="" id="" placeholder="" value="{{$method->route}}">
+                                            name="method-route[]" id="method-route" placeholder="" value="{{$method->route}}">
                                     </td>
                                 </tr>
                             </tbody>
@@ -123,19 +123,19 @@
                                                 <td class="col-4"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="" value="{{$key->key}}">
+                                                        type="text" name="request-header-key[]" id="request-header-key" value="{{$key->key}}">
                                      
                                                 </td>
                                                 <td class="col-1"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <div class="form-check d-flex justify-content-center align-items-center mt-1">
-                                                        <input class="form-check-input" type="checkbox" style="height: 20px; width:20px;" value="true" id="flexCheckDefault" @if($key->require) checked @endif>
+                                                        <input class="form-check-input" type="checkbox" style="height: 20px; width:20px;" name="request-header-required[]" value="true" id="flexCheckDefault" @if($key->require) checked @endif>
 
                                                     </div>
                                                 </td>
                                                 <td class="col-6" style="border-top: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="">
+                                                        type="text" name="request-header-desc[]" id="request-header-desc">
                                                 </td>
                                             </tr>
                                         @endforeach
@@ -174,13 +174,13 @@
                                                 <td class="col-3"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="" value="{{ $key->key }}">
+                                                        type="text" name="request-param-key[]" id="request-param-key" value="{{ $key->key }}">
                                                 </td>
                                                 <td class="col-2"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <div class="d-flex justify-content-center">
                                                         <select class="form-select custom-textfield"
-                                                            aria-label="Default select example">
+                                                            aria-label="Default select example" name="request-param-type[]">
                                                             <option value="Q" @if ($key->type == 'Q') selected @endif >Q</option>
                                                             <option value="R">R</option>
                                                         </select>
@@ -190,7 +190,7 @@
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <div class="d-flex justify-content-center">
                                                         <select class="form-select custom-textfield"
-                                                            aria-label="Default select example">
+                                                            aria-label="Default select example" name="request-param-data-type[]">
                                                             <option value="String" selected>String</option>
                                                             <option value="Number">Number</option>
                                                             <option value="Number">Booleans</option>
@@ -205,12 +205,12 @@
                                                     <div class="form-check d-flex justify-content-center align-items-center mt-1">
                                                         <input class="form-check-input " type="checkbox"
                                                             style="height: 20px; width:20px;" value=""
-                                                            id="flexCheckDefault">
+                                                            id="flexCheckDefault" name="request-param-required[]">
                                                     </div>
                                                 </td>
                                                 <td class="col-3" style="border-top: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="">
+                                                        type="text" name="request-param-desc[]" id="">
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -253,13 +253,13 @@
                                                 <td class="col-3"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="" value="{{$key->key}}">
+                                                        type="text" name="request-body-key[]" id="request-body-key" value="{{$key->key}}">
                                                 </td>
                                                 <td class="col-2"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <div class="d-flex justify-content-center">
                                                         <select class="form-select custom-textfield"
-                                                            aria-label="Default select example">
+                                                            aria-label="Default select example" name="request-body-data-type[]">
                                                             <option value="String" selected>String</option>
                                                             <option value="Number">Number</option>
                                                             <option value="Number">Booleans</option>
@@ -274,12 +274,13 @@
                                                     <div class="form-check d-flex justify-content-center align-items-center mt-1">
                                                         <input class="form-check-input" type="checkbox"
                                                             style="height: 20px; width:20px;" value=""
-                                                            id="flexCheckDefault">
+                                                            id="flexCheckDefault"
+                                                            name="request-body-required[]">
                                                     </div>
                                                 </td>
                                                 <td class="col-3" style="border-top: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="">
+                                                        type="text" name="request-body-desc[]" id="">
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -307,9 +308,9 @@
                                     <div class="d-flex align-items-center p-0">
                                         <label class="me-2" for="">Status</label>
                                         <div class="d-flex justify-content-between">
-                                            <input class="textfield text-center" type="number" name="" id=""
+                                            <input class="textfield text-center" type="number" name="response-body-code[]" id=""
                                                 placeholder="code" value="{{$response_body['code']}}">
-                                            <input class="textfield text-center" type="text" name="" id=""
+                                            <input class="textfield text-center" type="text" name="response-body-status[]" id=""
                                                 placeholder="status" value="{{$response_body['status']}}">
                                         </div>
                                     </div>
@@ -338,13 +339,13 @@
                                                 <td class="col-3"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="" value="{{$item['key']}}">
+                                                        type="text" name="response-body-key[]" id="" value="{{$item['key']}}">
                                                 </td>
                                                 <td class="col-2"
                                                     style="border-top: 2px solid #F2F2F2; border-right: 2px solid #F2F2F2;">
                                                     <div class="d-flex justify-content-center">
                                                         <select class="form-select custom-textfield"
-                                                            aria-label="Default select example">
+                                                            aria-label="Default select example" name="response-body-data-type[]">
                                                             <option value="String" selected>String</option>
                                                             <option value="Number">Number</option>
                                                             <option value="Number">Booleans</option>
@@ -356,7 +357,7 @@
                                                 </td>
                                                 <td class="col-6" style="border-top: 2px solid #F2F2F2;">
                                                     <input class="mt-1 custom-textfield" style="height: auto; width: 100%;"
-                                                        type="text" name="" id="">
+                                                        type="text" name="response-body-desc[]" id="">
                                                 </td>
                                             </tr>
                                           
