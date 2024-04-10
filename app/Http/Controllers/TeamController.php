@@ -7,6 +7,7 @@ use App\Models\Workspace;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\Workspace_User;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
@@ -45,7 +46,10 @@ public function invitaion_post(Request $request, $id)
 }
 
 public function viewteam_invite($token) {
-    return view("TeamInviteComfirm", compact('token'));
+    
+    $data['token'] = $token;
+
+    return view("TeamInviteComfirm",$data);
 }
 
 public function confirm_post(Request $request)
@@ -56,7 +60,9 @@ public function confirm_post(Request $request)
     return redirect()->route('login')->with('success', 'You are in the team now!!!');
 }
 
+public function remove_user(Request $request,$id){
+    DB::table("workspace__users")->where('id',$id)->delete();
+    return redirect()->back()->with('success', 'You have kick your Friends Successfully.');
 
-
-
+  }
 }

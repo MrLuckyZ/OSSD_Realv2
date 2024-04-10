@@ -5,7 +5,7 @@
         <h2 class="ps-4">Recently visited workspaces</h2>
         <ul class="p-0" style="list-style-type:none;">
             <?php $__currentLoopData = $workspaces; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $workspace): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if($index < 5): ?>
+                <?php if($index < 5 && $User->id === $Worksapce_User[$index]->user_id && $Worksapce_User[$index]->status != '0'): ?>
                     <li class="d-flex align-items-center custom-table" style="height: 50px">
                         <a class="link-black" style="width: 100%; height:100%"
                             href=<?php echo e(route('workspace.index', ['workspace' => $workspace->id])); ?>>
@@ -34,7 +34,7 @@
         <h2 class="ps-4">Favorites workspaces</h2>
         <ul class="p-0" style="list-style-type:none;">
             <?php $__currentLoopData = $workspaces; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $workspace): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if($index < 5): ?>
+                <?php if($index < 5 && $User->id === $Worksapce_User[$index]->user_id && $Worksapce_User[$index]->status != '0'): ?>
                     <li class="d-flex align-items-center custom-table" style="height: 50px">
                         <a class="link-black" style="width: 100%; height:100%"
                             href="<?php echo e(route('workspace.index', ['workspace' => $workspace->id])); ?>">

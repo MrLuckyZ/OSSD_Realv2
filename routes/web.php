@@ -20,6 +20,7 @@ Route::group(['middleware' => 'guest'], function () {
 
     Route::post('/send-invitation/{workspace}', [TeamController::class, 'invitaion_post'])->name('invitation.post');
     Route::post('/confirm-team-invite', [TeamController::class, 'confirm_post'])->name('invitation.confirm.post');
+    Route::post('/remove-user/{id}', [TeamController::class, 'remove_user'])->name('remove.user.team');
 
 
 

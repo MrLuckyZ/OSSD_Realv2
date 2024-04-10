@@ -7,7 +7,7 @@
         <h2 class="ps-4">Recently visited workspaces</h2>
         <ul class="p-0" style="list-style-type:none;">
             @foreach ($workspaces as $index => $workspace)
-                @if ($index < 5)
+                @if ($index < 5 && $User->id === $Worksapce_User[$index]->user_id && $Worksapce_User[$index]->status != '0')
                     <li class="d-flex align-items-center custom-table" style="height: 50px">
                         <a class="link-black" style="width: 100%; height:100%"
                             href={{ route('workspace.index', ['workspace' => $workspace->id]) }}>
@@ -36,7 +36,7 @@
         <h2 class="ps-4">Favorites workspaces</h2>
         <ul class="p-0" style="list-style-type:none;">
             @foreach ($workspaces as $index => $workspace)
-                @if ($index < 5)
+                @if ($index < 5 && $User->id === $Worksapce_User[$index]->user_id && $Worksapce_User[$index]->status != '0')
                     <li class="d-flex align-items-center custom-table" style="height: 50px">
                         <a class="link-black" style="width: 100%; height:100%"
                             href="{{ route('workspace.index', ['workspace' => $workspace->id]) }}">

@@ -35,6 +35,8 @@ class WorkspaceController extends Controller
     {
         $data['workspaces'] = Workspace::get()->all();
         $data['selectedWorkspace'] = Workspace::find($id);
+        $data['Worksapce_User'] = Workspace_User::get()->all();
+        $data['User'] = User::get()->all();
         return view('setting_work', $data);
     }
     public function create()

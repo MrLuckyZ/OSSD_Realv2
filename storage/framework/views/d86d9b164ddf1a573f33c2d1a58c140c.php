@@ -12,15 +12,15 @@
             <form action="<?php echo e(route('invitation.confirm.post')); ?>" method="POST">
                 <?php echo csrf_field(); ?> 
                 <input type="text" name="token" hidden value="<?php echo e($token); ?>">
-            <button class="btn btn-primary" type="submit" style="width: 100px; height:40px">
-                Accept
-            </button>
+                <div class="d-flex">
+                    <button class="btn btn-primary me-2" type="submit" style="width: 100px; height:40px">
+                        Accept
+                    </button>
+                    <a href="<?php echo e(route('login')); ?>"  class="btn btn-secondary me-2" type="submit" style="width: 100px; height:40px">
+                        Decline
+                    </a>
+                </div>
         </form>
-        <a href="<?php echo e(route('login')); ?>">
-            <button  class="btn btn-secondary me-2" type="submit" style="width: 100px; height:40px">
-                Decline
-            </button>
-          </a>
         </div>
     </div>
 </div>

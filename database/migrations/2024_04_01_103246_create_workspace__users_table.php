@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('workspace__users', function (Blueprint $table) {
-            $table->id();
+            $table->id()->primaryKey;
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('workspace_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');

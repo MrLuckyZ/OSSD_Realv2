@@ -62,17 +62,68 @@
 
         </div>
         
-        <div class="ps-4 mt-5 ">
+        <div class="ps-4 mt-5">
             <form action="<?php echo e(route('invitation.post', ['workspace' => $selectedWorkspace->id])); ?>" method="POST">
                 <?php echo csrf_field(); ?>
-            <p class="text mt-4" style="font-size: 20px;">Invite People to this workspace</p>
-            <div class="d-flex align-items-center">
-                <input type="email" class="form-control me-3" id="input02" name="email"
-                    placeholder="Search by name or email" style="width: 313px; height:45px;">
-                <button style="height: 35px; width:69px; " class="btn btn-secondary" type="submit">Invite</button>
-            </div>
-        </form>
+                <p class="text mt-4" style="font-size: 20px;">Invite People to this workspace</p>
+                <div class="d-flex align-items-center">
+                    <input type="email" class="form-control me-3" id="input02" name="email" placeholder="Search by name or email" style="width: 313px; height:45px;">
+                    <button style="height: 35px; width:69px; " class="btn btn-secondary" type="submit">Invite</button>
+                </div>
+            </form>
+
+            <p class="text mt-4" style="font-size: 20px;">All-Users</p>
+            <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">User ID</th>
+                    <th scope="col">name</th>
+                    <th scope="col">kick</th>
+                  </tr>
+                </thead>
+            <tbody>
+                <?php $counter = 0; ?>
+                <?php $__currentLoopData = $Worksapce_User; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $W_user): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?> <!-- Here was the issue -->
+                 <?php if($W_user->workspace_id === $selectedWorkspace->id && $W_user->status != '0'): ?>
+                    <?php $counter++; ?>
+                    <tr>
+                        <td><?php echo e($counter); ?></td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <p style="font-size: 20px;"><?php echo e($W_user->user_id); ?></p>
+                            </div>
+                        </td>
+                        <td>
+                            <?php 
+                                $user = App\Models\User::find($W_user->user_id); // Assuming User model is App\User
+                            ?>
+                            <?php if($user): ?>
+                                <p style="font-size: 20px;"><?php echo e($user->name); ?></p>
+                            <?php else: ?>
+                                <p style="font-size: 20px;">User Not Found</p>
+                            <?php endif; ?>
+                        </td>
+                        <td>
+                            <form method="POST" action="<?php echo e(route('remove.user.team', $W_user->id )); ?>">
+                                <?php echo csrf_field(); ?>
+                                <button  type="submit" type="button" class="btn-sm btn-danger">Kick</button>
+                            </form>
+                        </td>
+                    </tr>
+
+                  
+                <?php endif; ?>
+                </td>
+
+                </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+
+              </tbody>
+               
         </div>
+    </table>
+
         
         <div class="ps-4 mt-5">
             <a href="" class="btn btn-primary me-4" type="button" style="width: 69px; height: 35px;">Ok</a>
