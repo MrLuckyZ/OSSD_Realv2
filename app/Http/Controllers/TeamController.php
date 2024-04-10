@@ -46,11 +46,31 @@ public function invitaion_post(Request $request, $id)
 }
 
 public function viewteam_invite($token) {
-    
-    $data['token'] = $token;
+    // Find the Workspace_User record with the provided token
+    $workspace_user = Workspace_User::where('token', $token)->first();
 
-    return view("TeamInviteComfirm",$data);
+    // Check if the record was found
+    if ($workspace_user) {
+        // If the record was found, retrieve the workspace_id
+        $workspace_id = $workspace_user->workspace_id;
+        
+        // Find the Workspace record with the retrieved workspace_id
+        $workspace = Workspace::find($workspace_id);
+        
+        // Check if the Workspace record was found
+        if ($workspace) {
+            // If both records are found, pass the data to the view
+            return view("TeamInviteComfirm", ['workspace' => $workspace, 'token' => $token]);
+        } else {
+            // If the Workspace record was not found, handle the error (e.g., redirect or display an error message)
+            return redirect()->route('errorPage')->with('error', 'Workspace not found.');
+        }
+    } else {
+        // If the Workspace_User record was not found, handle the error (e.g., redirect or display an error message)
+        return redirect()->route('errorPage')->with('error', 'Workspace_User record not found.');
+    }
 }
+
 
 public function confirm_post(Request $request)
 {

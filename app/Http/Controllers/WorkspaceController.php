@@ -39,7 +39,7 @@ class WorkspaceController extends Controller
         $data['User'] = User::get()->all();
         return view('setting_work', $data);
     }
-    public function create()
+        public function create()
     {
         $data['workspaces'] = Workspace::orderBy('id', 'desc')->paginate(5);
         return view('create', $data);
