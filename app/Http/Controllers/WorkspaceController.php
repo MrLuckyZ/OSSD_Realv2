@@ -32,10 +32,12 @@ class WorkspaceController extends Controller
         return view('workspace', $data);
     }
 
-    public function setting($id)
+    public function setting(Request $request, $id)
     {
         $data['workspaces'] = Workspace::get()->all();
-        $data['selectedWorkspace'] = Workspace::find($id);
+        $selectedWorkspace = Workspace::find($id);
+        $data['selectedWorkspace'] = $selectedWorkspace;
+        $request->session()->put('collection_tabs', $selectedWorkspace);
         return view('setting_work', $data);
     }
     public function create()
@@ -304,8 +306,9 @@ class WorkspaceController extends Controller
         return redirect()->back();
     }
 
-    public function setting_access(Request $request,$id){
-        $selectedWorkspace = Workspace::find($id);
+    public function setting_access(Request $request){
+        $selectedWorkspace = session('selectedWorkspace');
+        dd($selectedWorkspace);
         $user = auth()->user();
         
         if($selectedWorkspace -> user_create == $user -> id){

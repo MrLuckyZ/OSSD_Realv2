@@ -7,9 +7,9 @@
         <h2 class="ps-4">Workspace settings</h2>
         <p class="text ps-4 mt-4" style="font-size: 20px;">Who can acess your workspace</p>
         {{-- กล่องเลือก Team --}}
-        <div class="ps-4">
-            <div class="d-flex">
-                <form action="{{ route('access.setting', ['workspace' => $selectedWorkspace]) }}" method="POST">
+        <div class="ps-1">
+            <div class="ps-4  d-flex">
+                <form action="{{ route('access.setting') }}" method="POST">
                     @csrf
                     <select style="height:60px" name="access" id="mySelect" onchange="changeRole()">
                         <option value="personal">Only Me</option>
@@ -33,12 +33,22 @@
                         </div>
                     </label>
 
-                    <div class="ps-4 mt-5">
-                        <button class="btn btn-primary me-4" type="submit" style="width: 69px; height: 35px;">Save</button>
+                            {{-- กล่องเชิญเข้า Team --}}
+                    <div class="mt-5">
+                        <p class="text mt-4" style="font-size: 20px;">People in this workspace</p>
+                        <div class="d-flex align-items-center">
+                            <input type="text" class="form-control me-3" id="input02" name="name"
+                                placeholder="Search by name or email" style="width: 313px; height:45px;">
+                            <button style="height: 35px; width:69px; " class="btn btn-secondary" type="button">Invite</button>
+                        </div>
+                    </div>
+                    {{-- ปุ่ม OK กับ BACK --}}
+                    <div class="mt-5">
+                        <button class="btn btn-primary me-4" type="submit" style="width: 69px; height: 35px;">Ok</button>
+                        <button class="btn btn-secondary"
+                            type="cancel" style="width: 69px; height: 35px;">Back</button>
                     </div>
                 </form>
-
-
                 <script>
                     function changeRole() {
                         var x = document.getElementById("mySelect").value;
@@ -70,21 +80,7 @@
             </div>
 
         </div>
-        {{-- กล่องเชิญเข้า Team --}}
-        <div class="ps-4 mt-5 ">
-            <p class="text mt-4" style="font-size: 20px;">People in this workspace</p>
-            <div class="d-flex align-items-center">
-                <input type="text" class="form-control me-3" id="input02" name="name"
-                    placeholder="Search by name or email" style="width: 313px; height:45px;">
-                <button style="height: 35px; width:69px; " class="btn btn-secondary" type="button">Invite</button>
-            </div>
-        </div>
-        {{-- ปุ่ม OK กับ BACK --}}
-        <div class="ps-4 mt-5">
-            <a href="" class="btn btn-primary me-4" type="button" style="width: 69px; height: 35px;">Ok</a>
-            <a href="{{ route('workspace.collections', ['workspace' => $selectedWorkspace->id]) }}" class="btn btn-secondary"
-                type="button" style="width: 69px; height: 35px;">Back</a>
-        </div>
+       
     </div>
 @endsection
 
