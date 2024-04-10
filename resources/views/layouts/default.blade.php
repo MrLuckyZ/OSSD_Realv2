@@ -444,10 +444,12 @@
                 <div class="row">
                     <label style="color: #808080; font-size: 14px; font-weight: 500;">Recently visited</label>
                     <ul style="list-style-type:none;">
-                        
+
+                    <?php use Illuminate\Support\Facades\Auth; ?>
+
                         @foreach ($work_recently as $index => $workspace)
-                            @if ($index < 3)
-                                @if ($workspace['access'] == 'personal')
+                            @if ($index < 3  && Auth::user()->id == $workspace->id_user)
+                                @if ($workspace->access == 'personal')
                                     <div class="row custom-table" style="border: none">
                                         <div class="col">
                                             <li class="d-flex align-items-center mt-1 link-black" style="height: 30px">
@@ -458,7 +460,7 @@
                                             </li>
                                         </div>
                                     </div>
-                                @elseif ($workspace['access'] == 'team')
+                                @elseif ($workspace->access == 'team')
                                     <div class="row custom-table" style="border: none">
                                         <div class="col">
                                             <li class="d-flex align-items-center mt-1 link-black" style="height: 30px">
