@@ -2,34 +2,23 @@
 
 namespace App\Http\Controllers;
 
-use Session;
-use App\Models\User;
+use Illuminate\Http\Request;
 use App\Models\Workspace;
 use App\Models\Collection;
-use Illuminate\Http\Request;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 use App\Models\Method;
 use App\Models\Request_Header;
-use App\Models\Parameter;
+use App\Models\Request_Parameter;
 use App\Models\Response;
 use App\Models\Response_Body;
-use PhpOffice\PhpWord\TemplateProcessor;
+use App\Models\Request_Body;
+
+
+use Session;
+
 
 class WorkspaceController extends Controller
 {
-    public function wordExport(Request $request)
-    {
-        $templateProcessor = new TemplateProcessor('word-template/user.docx');
-        $templateProcessor->setValue('id', $request->id);
-        $templateProcessor->setValue('name', $request->name);
-        $templateProcessor->setValue('email', $request->email);
-        $templateProcessor->setValue('address', $request->address);
-        $fileName = 'api-apec';
-        $templateProcessor->saveAs($fileName . '.docx');
-        return response()->download($fileName . '.docx')->deleteFileAfterSend(true);
-    }
-
     public function index($id)
     {
         $data['workspaces'] = Workspace::get()->all();
@@ -43,10 +32,11 @@ class WorkspaceController extends Controller
         return view('workspace', $data);
     }
 
-    public function setting($id)
+    public function setting(Request $request, $id)
     {
         $data['workspaces'] = Workspace::get()->all();
-        $data['selectedWorkspace'] = Workspace::find($id);
+        $selectedWorkspace = Workspace::find($id);
+        $data['selectedWorkspace'] = $selectedWorkspace;
         return view('setting_work', $data);
     }
     public function create()
@@ -128,6 +118,7 @@ class WorkspaceController extends Controller
         $collection = $selectedWorkspace->collections();
         $data['collections'] = $collection;
 
+
         return view('trash', $data);
     }
 
@@ -182,7 +173,7 @@ class WorkspaceController extends Controller
         $data['selectedWorkspace'] = $workspace;
         $data['selectedCollection'] = $collection;
         $request->session()->put('collection_tabs', $collection_tabs);
-
+        
         return view('collection_template', $data);
     }
 
@@ -209,7 +200,7 @@ class WorkspaceController extends Controller
             return redirect()->back();
         }
     }
-    public function import_file(Request $request, $workspaceId, $id)
+     public function import_file(Request $request, $workspaceId, $id)
     {
         if ($request->hasFile('file')) {
             $file = $request->file('file');
@@ -237,36 +228,69 @@ class WorkspaceController extends Controller
                         if ($collection->id == $id) {
                             if (!is_null($data)) {
                                 $json_request_header = $data['request-header'];
+                                $json_request_body = $data['request-body'];
                                 $json_response = $data['data'];
                                 $json_status = $data['status'];
+                                $method = new Method;
 
                                 if(!is_null($json_request_header)){
-                                    $method = new Method;
                                     $method->type = $json_request_header['method'];
                                     $method->route = $json_request_header['route'];
+                                    $route = $json_request_header['route'];
                                     foreach($json_request_header as $key=>$value){
                                         if($key != 'method' && $key != 'route'){
                                             $request_header = new Request_Header;
                                             $request_header->key = $key;
                                             if($value['required'] == true){
                                                 $request_header->require = true;
-                                                $request_header_list[] = $request_header;
-
-                                            }                                          
+                                            }             
+                                            $request_header_list[] = $request_header;                             
                                         }
 
                                     }     
                                 }
-                                $method->request_header = $request_header_list;
+                                $method->request_header = $request_header_list; 
+
+                                $params = [];
+                                if (strpos($route, '?') !== false) {
+                                    $queryString = explode('?', $route)[1];
+                                    $parameters = explode('&', $queryString);
+                                    foreach ($parameters as $parameter) {
+                                        $request_parameter = new Request_Parameter;
+                                        $request_parameter->key = $parameter;
+                                        $request_parameter->type = 'Q';
+                                        $params[] = $request_parameter;
+                                    }
+                                }
+                                $method->parameter = $params;
+
                                 
+                                if(!is_null($json_request_body)){
+                                    foreach($json_request_body as $key=>$value){
+                                        $request_body = new Request_Body;
+                                        $request_body->key = $key;
+                                        if($value['required'] == true){
+                                            $request_body->require = true;
+                                        }        
+                                        $request_body_list[] = $request_body;
+
+                                    }     
+                                }
+                                $method->request_body = $request_body_list; 
+
                                 if(!is_null($json_response)){
                                     foreach($json_response as $key => $value){
                                         $response_body = new Response_body;
                                         $response_body->key = $key;
+                                        $response_body->type = 'Q';
                                         $response_list[] = $response_body;
                                     }
                                     $response = new Response;
                                     $response->response_body = $response_list;
+                                    if(!is_null($json_status)){
+                                        $response->status = $json_status['text'];
+                                        $response ->code= $json_status['code'];
+                                    }
                                 }
                                 $method->response = $response;
                                 $collection->method = $method;
@@ -280,93 +304,31 @@ class WorkspaceController extends Controller
             }
             
         }
+       
+        
         $request->session()->put('collection_tabs', $collection_tabs);
-        $request->session()->put('selectedCollection', $collection);
-        dd($collection);
-
         return redirect()->back();
     }
-    
 
-    public function addNewTabs(Request $request) {
-        $collection = new Collection;
-        $collection->name = 'New Collection';
-        $collection->user_create = auth()->user()->user_id;
-        $collection->id = -1;
-        if ($request->session()->has('collection_tabs')) {
-            $collection_tabs = $request->session()->get('collection_tabs');
-
-            if (!in_array(-1, array_column($collection_tabs, 'id'))) {
-                $collection_tabs[] = $collection;
+    public function setting_access(Request $request,$id){
+        $selectedWorkspace = Workspace::find($id);
+        $user = auth()->user();
+        if($selectedWorkspace -> user_create == $user -> id){
+            if($request->has('access')){
+            $access = $request->input('access');
+            if($access == "personal"){
+                $selectedWorkspace -> access = "persoanal";
+            }else if($access == "team"){
+                $selectedWorkspace -> access = "team";
             }
-        } else {
-            $collection_tabs = [];
-            $collection_tabs[] = $collection;
         }
-
-        $request->session()->put('collection_tabs', $collection_tabs);
-
-        return redirect()->back();
-    }
-
-    public function delete_collection(Request $request,$id){
-        $selectedCollection = Collection::find($id);
-
-        if (!$id) {
-            return redirect()->route('home.index')->with('error', 'Collection not found');
+        
+        $selectedWorkspace -> save();
+        }else{
+            return redirect()->back()->with('error', 'You not owner');
         }
-        else{
-            $selectedCollection->delete();
-            return redirect()->back();
-        }
+        
+        return redirect()->back()->with('success', 'You have change access');
+
     }
-
-    public function moveToTrash(Request $request, $id) // Use PascalCase for function names
-{
-    // Validate input for safety (consider using validation rules)
-    $validator = Validator::make(['id' => $id], [
-        'id' => 'required|integer|exists:collections,id', // Ensure ID exists in 'collections' table
-    ]);
-
-    if ($validator->fails()) {
-        return redirect()->back();
-    }
-
-    $selectedCollection = Collection::find($id);
-    Carbon::setLocale('th'); 
-    if ($selectedCollection) {
-        $selectedCollection->deleted_at =Carbon::now('Asia/Bangkok');
-        $selectedCollection->status = 'deleted'; // Update status to '0' to mark as trashed
-        $selectedCollection->save(); // Persist changes to the database
-
-        return redirect()->back()->with('success', 'Collection successfully moved to trash.'); // Display success message
-    } else {
-        return redirect()->back()->with('error', 'Collection not found.'); // Inform user if collection wasn't found
-    }
-}
-public function recovery_trash(Request $request, $id){
-    // Validate input for safety (consider using validation rules)
-    $validator = Validator::make(['id' => $id], [
-        'id' => 'required|integer|exists:collections,id', // Ensure ID exists in 'collections' table
-    ]);
-
-    if ($validator->fails()) {
-        return redirect()->back();
-    }
-
-    $selectedCollection = Collection::find($id);
-     
-    if ($selectedCollection) {
-        $selectedCollection->status = 'active'; 
-        $selectedCollection->save(); // Persist changes to the database
-
-        return redirect()->back()->with('success', 'Collection successfully recovered.'); // Display success message
-    } else {
-        return redirect()->back()->with('error', 'Collection not found.'); // Inform user if collection wasn't found
-    }
-    
-
-}
-    
-
 }

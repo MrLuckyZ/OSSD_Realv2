@@ -47,7 +47,7 @@
                 </div>
             </label><br>
 
-            <input type="radio" class="btn-check" name="access" id="public" value="public">
+            <!-- <input type="radio" class="btn-check" name="access" id="public" value="public">
             <label class="btn btn-outline d-flex p-0 cursor" for="public" style="width:100%; height:55px;">
                 <div class="col-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="currentColor" class="me-2 mt-3" viewBox="0 0 24 24"
@@ -61,10 +61,10 @@
                     <label for="public" class="cursor">Anyone on the internet</label>
                     <label for="public" class="cursor" style="color:#808080; font-size:12px;">Public</label>
                 </div>
-            </label><br>
+            </label><br> -->
             <div class="d-flex mt-2 justify-content-end">
                 <div class="py-1">
-                    <button class="btn btn-secondary me-2" type="button">Cancel</button>
+                    <button onclick="history.back()" class="btn btn-secondary me-2" type="button">Cancel</button>
                     <button class="btn btn-primary" type="submit">Create</button>
                 </div>
             </div>
