@@ -45,7 +45,7 @@
             $latestWorkspaces = array_reverse($workspaces);
         ?>
             <?php $__currentLoopData = $latestWorkspaces; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $index => $workspace): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                <?php if($index < 5): ?>
+                <?php if($index < 5 && Auth::user()->id == $workspace->userCreate->id): ?>
                     <li class="d-flex align-items-center custom-table" style="height: 50px">
                         <a class="link-black" style="width: 100%; height:100%"
                             href="<?php echo e(route('workspace.index', ['workspace' => $workspace->id])); ?>">

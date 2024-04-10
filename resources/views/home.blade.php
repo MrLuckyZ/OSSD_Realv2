@@ -47,7 +47,7 @@
             $latestWorkspaces = array_reverse($workspaces);
         @endphp
             @foreach ($latestWorkspaces as $index => $workspace)
-                @if ($index < 5)
+                @if ($index < 5 && Auth::user()->id == $workspace->userCreate->id)
                     <li class="d-flex align-items-center custom-table" style="height: 50px">
                         <a class="link-black" style="width: 100%; height:100%"
                             href="{{ route('workspace.index', ['workspace' => $workspace->id]) }}">
