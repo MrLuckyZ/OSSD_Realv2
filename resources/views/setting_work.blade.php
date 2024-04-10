@@ -84,44 +84,45 @@
                     <th scope="col">kick</th>
                   </tr>
                 </thead>
-            <tbody>
-                @php $counter = 0; @endphp
-                @foreach ($Worksapce_User as $W_user) <!-- Here was the issue -->
-                 @if ($W_user->workspace_id === $selectedWorkspace->id && $W_user->status != '0')
-                    @php $counter++; @endphp
-                    <tr>
-                        <td>{{ $counter }}</td>
-                        <td>
-                            <div class="d-flex align-items-center">
-                                <p style="font-size: 20px;">{{ $W_user->user_id }}</p>
-                            </div>
-                        </td>
-                        <td>
-                            @php 
-                                $user = App\Models\User::find($W_user->user_id); // Assuming User model is App\User
-                            @endphp
-                            @if ($user)
-                                <p style="font-size: 20px;">{{ $user->name }}</p>
-                            @else
-                                <p style="font-size: 20px;">User Not Found</p>
-                            @endif
-                        </td>
-                        <td>
-                            <form method="POST" action="{{route('remove.user.team', $W_user->id )}}">
-                                @csrf
-                                <button  type="submit" type="button" class="btn-sm btn-danger">Kick</button>
-                            </form>
-                        </td>
-                    </tr>
-
-                  
-                @endif
-                </td>
-
-                </tr>
-                @endforeach
-
-              </tbody>
+                <tbody>
+                    @php $counter = 0; @endphp
+                    @foreach ($Worksapce_User as $W_user)
+                        @if ($W_user->workspace_id === $selectedWorkspace->id && $W_user->status != '0')
+                            @php $counter++; @endphp
+                            <tr>
+                                <td>{{ $counter }}</td>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <p style="font-size: 20px;">{{ $W_user->user_id }}</p>
+                                    </div>
+                                </td>
+                                <td>
+                                    @php 
+                                        $user = App\Models\User::find($W_user->user_id);
+                                    @endphp
+                                    @if ($user)
+                                        <p style="font-size: 20px;">{{ $user->name }}</p>
+                                    @else
+                                        <p style="font-size: 20px;">User Not Found</p>
+                                    @endif
+                                </td>
+                                <td>
+                                    @php 
+                                        $workspace = App\Models\Workspace::find($W_user->workspace_id);
+                                    @endphp
+                                    @if ($workspace && $workspace->user_create != $W_user->user_id)             
+                                        <form method="POST" action="{{ route('remove.user.team', $W_user->id) }}">
+                                            @csrf
+                                            @method('DELETE') <!-- You may need to adjust the method if it's not DELETE -->
+                                            <button type="submit" class="btn-sm btn-danger">Kick</button>
+                                        </form>
+                                    @endif
+                                </td>
+                            </tr>
+                        @endif
+                    @endforeach
+                </tbody>
+                
                
         </div>
     </table>
