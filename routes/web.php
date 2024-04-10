@@ -37,6 +37,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/workspace/{workspace}/setting', [WorkspaceController::class, 'setting'])->name('workspace.setting');
     Route::get('/workspace/{workspace}/delete-collection', [WorkspaceController::class, 'deleteCollection'])->name('workspace.deleteCollection');
     Route::post('/workspace/{workspace}/collection/save',[WorkspaceController::class,'save_json_data'])->name('workspace.toJson');
+    Route::post('/workspace/{workspace}/collection/save-as-json',[WorkspaceController::class,'save_as_json'])->name('workspace.saveJson');
 
     Route::get('/delete-workspace/{workspace}', [WorkspaceController::class, 'delete_workspace'])->name('workspace.deleteWorkspace');
  

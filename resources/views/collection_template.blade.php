@@ -1,5 +1,7 @@
 @extends('collection')
 
+<script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
 @section('collection_template')
     <div class="container-fluid p-3">
         <div class="col d-flex flex-row justify-content-between align-items-center p-0 mb-2">
@@ -21,13 +23,15 @@
                         aria-expanded="false">
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li><a class="dropdown-item" href="#">Save As .json</a></li>
+                        <li>
+                            <button onclick="submitForm(event)" id="save-json" class="dropdown-item" type="button">Save As json</button>
+                        </li>
                         <li><a class="dropdown-item" href="#">Save As .docx</a></li>
                         <li>
                             <hr class="dropdown-divider">
                         </li>
                         <li>
-                            <button onclick="submitForm()" id="save-workspace" class="dropdown-item" type="button">Save to Workspace</button></li>
+                            <button onclick="submitForm(event)" id="save-workspace" class="dropdown-item" type="button">Save to Workspace</button></li>
 
                     </ul>
                 </div>
@@ -46,7 +50,7 @@
         </form> 
 
     </div>
-    <form action="{{route('workspace.toJson', ['workspace' => $selectedWorkspace->id])}}" id="form-data" method="POST">
+    <form action="{{route('workspace.toJson', ['workspace' => $selectedWorkspace->id])}}" name="form-data" id="form-data" method="POST">
         @csrf
         <div class="container-fluid p-3">
             @php
@@ -393,12 +397,30 @@
     </form>
 @endsection
 <script>
-    function submitForm() {
-        const form = document.getElementById('form-data')
+    function submitForm(event) {
+        const id = event.target.id
+        const form = $('#form-data')
+        
+        if (id == "save-json") {
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                url: "{{ route('workspace.saveJson', ['workspace' => $selectedWorkspace->id]) }}",
+                type: 'POST',
+                data: form,
+                contentType: 'application/json',
+                success: function(res) {
+                    window.open(res)
+                }
+            })
+        } else {
+            const formData = document.getElementById('form-data')
             console.log(1)
             if (form) {
-                form.submit()
+                formData.submit()
             }
+        }  
     }
 
     $(document).ready(function() {
