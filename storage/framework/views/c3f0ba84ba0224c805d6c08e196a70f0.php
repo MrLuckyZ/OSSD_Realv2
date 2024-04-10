@@ -79,4 +79,4 @@
 <?php $__env->startSection('js'); ?>
 <?php $__env->stopSection(); ?>
 
-<?php echo $__env->make('layouts.default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\OSSD_Realv2\resources\views/trash.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('layouts.default', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\htdocs\OSSD_Realv2\resources\views\trash.blade.php ENDPATH**/ ?>
