@@ -62,24 +62,24 @@
                 </div>
                 <!-- Collections List -->
                 @foreach ($selectedWorkspace->collections as $collection)
+                    @if($collection->status == "1")
                     <div class="row">
-                        <div class="col p-0">
-                            <button class="btn-collapse dropdown hover-black d-flex align-items-center"
-                                style="height: 30px; width: 100%; text-decoration:none;" type="button"
-                                data-bs-toggle="collapse" data-bs-target="#collection_{{ $collection->id }}"
-                                aria-expanded="false" aria-controls="collection_{{ $collection->id }}">
-                                <span class="material-symbols-outlined ms-1 me-2" name="expand"
-                                    id="{{ $collection->id }}">chevron_right</span>
-                                <span class="fs-6" style="font-weight: 500">{{ $collection->name }}</span>
+                        <div class="col p-0 d-flex">
+                            <a class="btn-collapse dropdown hover-black d-flex align-items-center"
+                                style="height: 30px; width: 100%; text-decoration:none; border-top:#f2f2f2 solid 2px" type="button"
+                                href="{{ route('workspace.editCollection', ['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}">
+                                <label class="fw-bold ms-4" for="">{{ $collection->name }}</label>
+                            </a>
+                            <button class="btn d-flex justify-content-center align-items-center mt-1" style="height: 25px;" type="button" id="workspace_option" data-bs-toggle="dropdown" aria-expanded="false">
+                                <span class="material-icons">more_horiz</span>
                             </button>
-                            <div class="collapse" id="collection_{{ $collection->id }}"
-                                @if (session()->has('collection_' . $collection->id . '_collapse') &&
-                                        session('collection_' . $collection->id . '_collapse')) aria-expanded="true" @endif>
-                                {{-- Method List --}}
-                                
-                            </div>
+                            <ul class="dropdown-menu pane" aria-labelledby="workspace_option">
+                                <li><a class="dropdown-item" href="#">Rename</a></li>
+                                <li><a class="dropdown-item" href="{{route('delete.collection',['collection' => $collection->id])}}">Delete</a></li>
+                            </ul>
                         </div>
                     </div>
+                    @endif
                 @endforeach
 
             </div>
@@ -99,7 +99,7 @@
                             role="tab" id="view_{{ $collection->id }}" data-bs-toggle="tab">
                             {{ $collection->name }}
                             <a class="btn fs-5 p-0 material-symbols-outlined"
-                                href='{{ route('delete.collection.tabs', ['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'">close</a>
+                                href='{{ route('delete.collection.tabs', ['workspace' => $selectedWorkspace->id, 'collection' => $collection->id]) }}'>close</a>
                         </button>
                     </li>
                 @endforeach

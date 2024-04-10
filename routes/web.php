@@ -54,6 +54,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/export', [WorkspaceController::class, 'wordExport'])->name('home.exportfile');
 
     Route::delete('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::post('/workspace/{workspace}/collection/importfile/{collection}',[WorkspaceController::class,'import_file'])->name('importFile');
+    Route::post('/workspace/{workspace}/collection/save',[WorkspaceController::class,'save_json_data'])->name('workspace.toWorkspace');
+    Route::post('/workspace/{workspace}/collection/save-as-json',[WorkspaceController::class,'save_as_json'])->name('workspace.toJson');
+    Route::get('/delete-collection/{collection}', [WorkspaceController::class, 'delete_collection'])->name('delete.collection');
+    Route::get('/delete-collection-form-trash/{collection}', [WorkspaceController::class, 'deletereal_collection'])->name('deletereal.collection');
+    Route::get('/recover-collection/{collection}', [WorkspaceController::class, 'recover_collection'])->name('recover.collection');
+
 });
 
 Route::get('/team', function () {
