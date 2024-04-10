@@ -536,8 +536,23 @@
                     <div class="row">
                         <label style="color: #808080; font-size: 14px; font-weight: 500;">Recently visited</label>
                         <ul style="list-style-type:none;">
-                            @foreach ($workspaces as $index => $workspace)
-                                @if ($index < 3)
+
+                            @php
+                            // Convert $Worksapce_User array to a collection
+                            $workspaceUserCollection = collect($Worksapce_User);
+                        
+                            // Filter workspaces based on user ID and status
+                            $filteredWorkspaces = [];
+                            foreach ($workspaces as $workspace) {
+                                $userWorkspace = $workspaceUserCollection->where('user_id', $User->id)
+                                                                         ->where('workspace_id', $workspace->id)
+                                                                         ->first();
+                                if ($userWorkspace && $userWorkspace->status == '1') {
+                                    $filteredWorkspaces[] = $workspace;
+                                }
+                            }
+                        @endphp
+                            @foreach ($filteredWorkspaces as $workspace)
                                     <div class="row custom-table" style="border: none">
                                         <div class="col">
                                             <li class="d-flex align-items-center mt-1 link-black" style="height: 30px">
@@ -556,7 +571,6 @@
                                             </li>
                                         </div>
                                     </div>
-                                @endif
                             @endforeach
                         </ul>
                     </div>
