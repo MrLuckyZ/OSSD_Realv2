@@ -305,10 +305,9 @@ class WorkspaceController extends Controller
         return redirect()->back();
     }
 
-    public function setting_access(Request $request){
-        $selectedWorkspace = session('selectedWorkspace');
+    public function setting_access(Request $request,$id){
+        $selectedWorkspace = Workspace::find($id);
         $user = auth()->user();
-        
         if($selectedWorkspace -> user_create == $user -> id){
             if($request->has('access')){
             $access = $request->input('access');
