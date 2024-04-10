@@ -171,12 +171,6 @@ class WorkspaceController extends Controller
         return view('collection_template', $data);
     }
 
-    public function saveToWorkspace(Request $request, $collectionId)
-    {
-        $collection = Workspace::find($workSpaceid);
-
-    }
-
     public function delete_workspace(Request $request, $id)
     {
         $selectedWorkspace = Workspace::find($id);
@@ -302,5 +296,11 @@ class WorkspaceController extends Controller
         
         $request->session()->put('collection_tabs', $collection_tabs);
         return redirect()->back();
+    }
+
+    public function saveToWorkspace(Request $request, $collectionId)
+    {
+        $collection = Workspace::find($workSpaceid);
+
     }
 }
