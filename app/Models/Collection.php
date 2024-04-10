@@ -10,7 +10,7 @@ class Collection extends Model
     use HasFactory;
 
     private $methods = [];
-    
+
     protected $casts = [
         'properties' => 'array'
     ];
@@ -22,10 +22,10 @@ class Collection extends Model
 
     public function setPropertiesAttribute($value)
     {
-    $properties = [];
-    foreach ($value as $key => $item) {
-        $properties[] = $item; 
-    }
+        $properties = [];
+        foreach ($value as $key => $item) {
+            $properties[] = $item;
+        }
 
         $this->attributes['properties'] = json_encode($properties);
     }

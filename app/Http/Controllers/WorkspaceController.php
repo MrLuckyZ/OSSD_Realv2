@@ -303,4 +303,46 @@ class WorkspaceController extends Controller
         $request->session()->put('collection_tabs', $collection_tabs);
         return redirect()->back();
     }
+
+    public function save_json_data(Request $request, $selectedWorkspace) {
+        $method_type = $request->input('method_type');
+        $req_header_key = $request->input('reqeuest-header-key');
+        $req_header_require = $request->input('request-header-required');
+        $req_header_desc = $request->input('request-header-desc');
+        $method_route = $request->input('method-route');
+        $req_param_key = $request->input('request-param-key');
+        $request_param_type = $request->input('request-param-type');
+        $req_param_data_type  = $request->input('request-param-data-type');
+        $req_param_require = $request->input('request-param-required');
+        $req_param_desc = $request->input('request-param-desc');
+        $req_body_key = $request->input('request-body-key');
+        $req_body_data_type = $request->input('request-body-data-type');
+        $req_body_require = $request->input('request-body-required');
+        $req_body_desc = $request->input('request-body-desc');
+        $res_body_code = $request->input('response-body-code');
+        $res_body_status = $request->input('response-body-status');
+        $res_body_key = $request->input('response-body-key');
+        $res_body_data_type = $request->input('response-body-data-type');
+        $res_body_desc = $request->input('response-body-desc');
+
+        $method = [
+            "type" => $method_type,
+            "route" => $method_route,
+            "request_header" => 'asd',
+            "parameter" => 'asd',
+            "request_body" => 'asd',
+            "response" => 'sad'
+        ];
+
+        dd($method);
+
+        $col = new Collection;
+        $col->name = 'untitle';
+        $col.setPropertiesAttribute();
+        $col->user_create = Auth::user()->id;
+        $col->workspace_id = $selectedWorkspace;
+        $col->status = '1';
+
+        return redirect()->back();
+    }
 }
